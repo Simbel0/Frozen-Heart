@@ -1,0 +1,15 @@
+local actor, super = Class("noelle")
+
+function actor:init()
+	super:init(self)
+
+	self.default = "walk_sad"
+
+	self.flip="left"
+
+	self.animations["cutscene_shock"]={"battle/intro", 1/16, false, next="walk_sad/right"}
+	self.animations["transition_snowgrave"]={"battle/trancesition", 0.2, false, next="battle/idleTrance"}
+	self.animations["battle/idleTrance"]={"battle/idleTrance", 0.2, true}
+end
+
+return actor

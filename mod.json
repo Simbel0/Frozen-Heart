@@ -1,0 +1,13 @@
+{
+    "id": "frozen_heart",
+    "name": "Frozen Heart",
+    "subtitle": "",
+
+    "version": "v0.0.0",
+    "engineVer": "v0.6.0-dev",
+
+    "chapter": 2,
+
+    "map": "noelle_room",
+    "party": ["susie"],
+}
