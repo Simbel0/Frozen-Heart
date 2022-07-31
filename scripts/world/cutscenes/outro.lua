@@ -130,6 +130,7 @@ return {
 		cutscene:look(susie, "down")
 		cutscene:wait(0.75)
 		cutscene:text("* ...[wait:1]What do I even do now?", "nervous", "susie")
+		cutscene:wait(1)
 		cutscene:wait(cutscene:walkTo(susie, 640, 287, 1, "up"))
 		cutscene:wait(0.75)
 		cutscene:look(susie, "right")
@@ -160,6 +161,6 @@ return {
 		cutscene:wait(0.5)
 	end,
 	killkill=function(cutscene)
-		cutscene:gotoCutscene("closing_fountain")
+		cutscene:gotoCutscene("TEST_ENDING")
 	end
 }
