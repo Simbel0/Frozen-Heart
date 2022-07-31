@@ -5,7 +5,9 @@ return function(cutscene)
     cutscene:fadeOut(0)
     cutscene:wait(2)
 
-    local theme = Music("ch2_credits")
+    Spamton = Game:getFlag("no_heal", false)
+    Astrogirl = Utils.random(0, 100)<10
+    local theme = Music(Astrogirl and "Beeg" or "ch2_credits")
     theme.source:setLooping(false)
 
     local text=Text("a", 0, (SCREEN_HEIGHT/2)-100, nil, nil, {style="none", skip=false, spacing=500})
@@ -14,51 +16,84 @@ return function(cutscene)
     text.layer=WORLD_LAYERS["top"]
     Game.world:addChild(text)
 
-    cutscene:wait(3.3)
+    wait_times={
+        3.3,
+        3,
+        5,
+        5.5,
+        3.5,
+        4
+    }
+
+    print("BBB")
+    print(wait_times[1])
+    
+    for i=1,#wait_times do
+        if not Spamton then
+            wait_times[i]=wait_times[i]+1
+        end
+        if Astrogirl then
+            wait_times[i]=wait_times[i]+1
+        end
+    end
+
+    print("AAA")
+    print(wait_times[1])
+
+    cutscene:wait(wait_times[1])
 
     text:setText("A fangame for\nDELTARUNE\n\nBy\nToby Fox")
 
-    cutscene:wait(3.3)
+    cutscene:wait(wait_times[1])
 
     text:setText("[color:555555]Game Engine[color:reset]\nKristal\n\nThe Kristal Team")
 
-    cutscene:wait(3)
+    cutscene:wait(wait_times[2])
 
     text:setText("[color:555555]Music[color:reset]\nUntil Next Time\nFlasback Excerpt\nLost Girl\n\nToby Fox")
 
-    cutscene:wait(5)
+    cutscene:wait(wait_times[3])
 
     text:setText("[color:555555]Music[color:reset]\nSnowgrave\n\nNick Nitro")
 
-    cutscene:wait(5)
+    if Spamton then
 
-    text:setText("[color:555555]Music[color:reset]\nSnowgrave NEO\n\nNetcavy")
+        cutscene:wait(wait_times[3])
 
-    cutscene:wait(5)
+        text:setText("[color:555555]Music[color:reset]\nSnowgrave NEO\n\nNetcavy")
 
-    text:setText("[color:555555]Music[color:reset]\nDeal gone wrong Orchestral\n\nFAYNALY\nOriginal by Toby Fox")
+        cutscene:wait(wait_times[3])
 
-    cutscene:wait(5.5)
+        text:setText("[color:555555]Music[color:reset]\nDeal gone wrong (Orchestral)\n\nFAYNALY\nOriginal by Toby Fox")
+    end
+
+    if Astrogirl then
+        cutscene:wait(wait_times[3])
+
+        text:setText("[color:555555]Music[color:reset]\nAstrogirl (Music Box)\n\nR3 Music Box\nOriginal by Tsukumo Sana")
+    end
+
+    cutscene:wait(wait_times[4])
 
     text:setText("[color:555555]Sprites[color:reset]\n\nRipped from\nDELTARUNE")
 
-    cutscene:wait(5)
+    cutscene:wait(wait_times[3])
 
     text:setText("[color:555555]Procrastination[color:reset]\n\nMyself")
 
-    cutscene:wait(5)
+    cutscene:wait(wait_times[3])
 
     text:setText("[color:555555]Betatesters[color:reset]\n\nNo one :')")
 
-    cutscene:wait(3.5)
+    cutscene:wait(wait_times[5])
 
     text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server for their help")
 
-    cutscene:wait(5)
+    cutscene:wait(wait_times[3])
 
     text:setText("[color:555555]Playing this game[color:reset]\n\n"..(Game.save_name~="PLAYER" and Game.save_name or "You"))
 
-    cutscene:wait(4)
+    cutscene:wait(wait_times[6])
 
     local fx = AlphaFX(0)
 
@@ -67,7 +102,7 @@ return function(cutscene)
     text.y=(SCREEN_HEIGHT/2)-50
     local yellow_text = "Can someone hear me?"
     if Game:getFlag("no_heal", true) then
-        if not Game:getFlag("secret_unlocked", false) then
+        if Game:getFlag("secret_unlocked", false)==false then
             Game:setFlag("secret_unlocked", true)
             yellow_text = "You have unlocked\na secret fight!"
         else
@@ -82,6 +117,11 @@ return function(cutscene)
 
     Game.world.timer:tween(3, fx, {alpha=0})
     cutscene:wait(5)
+
+    --Should be useless, but...
+    cutscene:wait(function()
+        return not theme:isPlaying()
+    end)
 
     Kristal:returnToMenu()
 end
