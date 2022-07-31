@@ -19,64 +19,101 @@ function spell:init()
     -- Target mode (ally, party, enemy, enemies, or none)
     self.target = "enemy"
 
+    self.tension =  0
+
     -- Tags that apply to this spell
     self.tags = {"tension"}
 end
 
-function spell:getTPCost(chara)
-    local cost = super:getTPCost(self, chara)
-    --if chara and chara:checkWeapon("thornring") then
-    --    cost = Utils.round(cost / 2)
-    --end
-    return cost
+function spell:getCastMessage(user, target)
+    local message = super:getCastMessage(self, user, target)
+    if Game.battle.noelle_tension_bar:getTension() == 0 then
+        return message .. "\n* But there is no tension to absorb!"
+    else
+        self.tension = Utils.round(Utils.random(15, 100))
+        while self.tension > Game.battle.noelle_tension_bar:getTension() do
+            self.tension = self.tension - 1
+        end
+        return message .. "\n* Absorbed [color:FFA040]" .. self.tension .. "%[color:reset] of TP!"
+    end
 end
 
 function spell:onCast(user, target)
-    --user.chara:addFlag("iceshocks_used", 1)
-
-    local function createParticle(x, y)
-        local sprite = Sprite("effects/icespell/snowflake", x, y)
-        sprite:setOrigin(0.5, 0.5)
-        sprite:setScale(1.5)
-        sprite.layer = BATTLE_LAYERS["above_battlers"]
-        Game.battle:addChild(sprite)
-        return sprite
+    if Game.battle.noelle_tension_bar:getTension() == 0 then
+        Game.battle:finishActionBy(user)
+        return false
     end
+
+    local function createEllipse(x, y)
+        local ellipse = Ellipse(x, y, 0, 0)
+        ellipse.color={ 100/255, 100/255, 255/255 }
+        ellipse.layer = BATTLE_LAYERS["above_battlers"]
+        Game.battle:addChild(ellipse)
+        return ellipse
+    end
+
+    local tension = self.tension
+    
+
+    local ellipses = {}
 
     local x, y = target:getRelativePos(target.width/2, target.height/2, Game.battle)
 
-    local particles = {}
+    for i=1, tension, 5 do
+        local ellipse = createEllipse(x, y)
+        table.insert(ellipses, ellipse)
+    end
+
     Game.battle.timer:script(function(wait)
         wait(1/30)
-        Assets.playSound("icespell")
-        particles[1] = createParticle(x-25, y-20)
-        wait(3/30)
-        particles[2] = createParticle(x+25, y-20)
-        wait(3/30)
-        particles[3] = createParticle(x, y+20)
-        wait(3/30)
-        Game.battle:addChild(IceSpellBurst(x, y))
-        for _,particle in ipairs(particles) do
-            for i = 0, 5 do
-                local effect = IceSpellEffect(particle.x, particle.y)
-                effect:setScale(0.75)
-                effect.physics.direction = math.rad(60 * i)
-                effect.physics.speed = 8
-                effect.physics.friction = 0.2
-                effect.layer = BATTLE_LAYERS["above_battlers"] - 1
-                Game.battle:addChild(effect)
-            end
-        end
-        wait(1/30)
-        for _,particle in ipairs(particles) do
-            particle:remove()
-        end
-        wait(4/30)
+        Assets.playSound("ghostappear")
+        local mask = ColorMaskFX({100/255, 100/255, 255/255}, 0)
+        --Add the fx effect to the target
+        target:addFX(mask)
 
-        local min_magic = Utils.clamp(user.chara:getStat("magic") - 10, 1, 999)
-        local damage = math.ceil((min_magic * 30) + 90 + Utils.random(10))
-        target:hurt(damage, user, function() target:freeze() end)
+        Game.battle.noelle_tension_bar:giveTension(-tension, true)
+        Game.battle.timer:tween(0.25, mask, {amount = 1}, "linear", function()
+            Game.battle.timer:tween(0.25, mask, {amount = 0}, "linear", function()
+                target:removeFX(mask)
+            end)
+        end)
+        for _, ellipse in ipairs(ellipses) do
+            Game.battle.timer:tween(1/30, ellipse, {width=20, height=20})
+            ellipse.physics.direction = math.rad(Utils.random(0, 360))
+            ellipse.physics.speed = Utils.random(2, 5)
+            ellipse.physics.friction = Utils.random(0.1, 0.15)
+        end
+        wait(0.65)
 
+        local u_x, u_y = user:getRelativePos(user.width/2, user.height/2, Game.battle)
+
+        for _, ellipse in ipairs(ellipses) do
+            ellipse.physics.direction = Utils.angle(x, y, ellipse.x, ellipse.y)
+            ellipse.physics.friction = 0
+            ellipse.physics.speed = 0
+        end
+
+        local count=0
+        --For each ellipse, use a timer tween to move it to the x and y variables
+        for _, ellipse in ipairs(ellipses) do
+            Game.battle.timer:tween(0.25, ellipse, {x=u_x, y=u_y, color={255/255, 160/255, 64/255}}, "linear", function()
+                count=count+1
+                Game.battle:removeChild(ellipse)
+            end)
+        end
+        while count<#ellipses do
+            wait(0.1)
+        end
+
+        Assets.playSound("cardrive")
+        Game:giveTension(tension)
+        mask:setColor(255/255, 160/255, 64/255)
+        user:addFX(mask)
+        Game.battle.timer:tween(0.25, mask, {amount = 1}, "linear", function()
+            Game.battle.timer:tween(0.25, mask, {amount = 0}, "linear", function()
+                user:removeFX(mask)
+            end)
+        end)
         Game.battle:finishActionBy(user)
     end)
 
