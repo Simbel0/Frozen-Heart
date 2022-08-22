@@ -68,7 +68,6 @@ function spell:onCast(user, target)
         wait(1/30)
         Assets.playSound("ghostappear")
         local mask = ColorMaskFX({100/255, 100/255, 255/255}, 0)
-        --Add the fx effect to the target
         target:addFX(mask)
 
         Game.battle.noelle_tension_bar:giveTension(-tension, true)
@@ -94,7 +93,6 @@ function spell:onCast(user, target)
         end
 
         local count=0
-        --For each ellipse, use a timer tween to move it to the x and y variables
         for _, ellipse in ipairs(ellipses) do
             Game.battle.timer:tween(0.25, ellipse, {x=u_x, y=u_y, color={255/255, 160/255, 64/255}}, "linear", function()
                 count=count+1

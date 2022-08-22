@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="16" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="8" nextobjectid="11">
+ <editorsettings>
+  <export target="data.lua" format="lua"/>
+ </editorsettings>
+ <properties>
+  <property name="light" type="bool" value="true"/>
+ </properties>
+ <tileset firstgid="1" name="computer_lab_stuff" tilewidth="222" tileheight="148" tilecount="5" columns="0">
+  <grid orientation="orthogonal" width="1" height="1"/>
+  <tile id="5">
+   <image width="50" height="44" source="../../../../assets/sprites/light/Berdly_fucking_dead.png"/>
+  </tile>
+  <tile id="6">
+   <image width="60" height="36" source="../../../../assets/sprites/light/bin.png"/>
+  </tile>
+  <tile id="7">
+   <image width="82" height="36" source="../../../../assets/sprites/light/books_Berdly.png"/>
+  </tile>
+  <tile id="8">
+   <image width="82" height="36" source="../../../../assets/sprites/light/books_Noelle.png"/>
+  </tile>
+  <tile id="9">
+   <image width="222" height="148" source="../../../../assets/sprites/light/desk.png"/>
+  </tile>
+ </tileset>
+ <imagelayer id="2" name="lab">
+  <image source="../../../../assets/sprites/light/computer_lab.png" width="640" height="480"/>
+ </imagelayer>
+ <objectgroup id="3" name="objects">
+  <object id="2" gid="7" x="490" y="406" width="60" height="36"/>
+  <object id="3" gid="10" x="304" y="340" width="222" height="148"/>
+ </objectgroup>
+ <objectgroup id="4" name="objects-nerd">
+  <object id="5" gid="2147483654" x="333" y="208" width="50" height="44"/>
+  <object id="6" gid="8" x="355.25" y="236" width="82" height="36"/>
+  <object id="7" gid="9" x="355" y="236.25" width="82" height="36"/>
+ </objectgroup>
+ <objectgroup id="6" name="markers">
+  <object id="8" name="susie" x="340" y="315.913">
+   <point/>
+  </object>
+  <object id="9" name="kris" x="394.133" y="315.978">
+   <point/>
+  </object>
+  <object id="10" name="noelle" x="428.313" y="205.938">
+   <point/>
+  </object>
+ </objectgroup>
+</map>
