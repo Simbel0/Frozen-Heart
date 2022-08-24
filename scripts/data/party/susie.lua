@@ -9,6 +9,8 @@ function character:init()
     self.stats["attack"]=18
     self.stats["magic"]=3
 
+    self.soul_color = {1, 0, 0}
+
     self.health=190
 
     self.max_stats = {}
@@ -26,6 +28,19 @@ function character:getGameOverMessage(main)
         "Come on,[wait:5]\nthat all you got!?",
         main.name..",[wait:5]\nget up...!"
     }
+end
+
+function character:getTitle()
+    if Game:getFlag("plot", 0)==3 then
+        if Game:getFlag("noelle_battle_status")=="no_trance" then
+            return "LV"..self:getLevel().. " Friendly Knight\nWill face death\nto save a friend."
+        elseif Game:getFlag("noelle_battle_status")=="thorn_kill" then
+            return "LV"..self:getLevel().. " Oblivious Knight\nForgot to notice\ncritical details."
+        elseif Game:getFlag("noelle_battle_status")=="killspare" then
+            return "LV"..self:getLevel().. " Violent Knight\nDidn't learn a\nthing."
+        end
+    end
+    return "LV"..self.level.." Healing Master\nCan use ultimate\nhealing. (Losers!)"
 end
 
 return character

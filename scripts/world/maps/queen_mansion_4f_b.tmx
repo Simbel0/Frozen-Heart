@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="31" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="15" nextobjectid="24">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="31" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="15" nextobjectid="26">
  <editorsettings>
   <export target="queen_mansion_4f_b.lua" format="lua"/>
  </editorsettings>
+ <properties>
+  <property name="music" value="wind_highplace"/>
+ </properties>
  <tileset firstgid="1" source="../tilesets/mansion_interior.tsx"/>
  <tileset firstgid="287" source="../tilesets/mansion.tsx"/>
  <tileset firstgid="917" source="../tilesets/mansion_pillars.tsx"/>
@@ -118,12 +121,21 @@
     <property name="marker" value="enter"/>
    </properties>
   </object>
+  <object id="25" name="transition" x="1240" y="320" width="20" height="80">
+   <properties>
+    <property name="map" value="queen_mansion_4f_c"/>
+    <property name="marker" value="entry_l"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#ffff00" id="11" name="markers">
   <object id="4" name="out_noelle_room" x="640" y="308">
    <point/>
   </object>
   <object id="21" name="spawn" x="160" y="360">
+   <point/>
+  </object>
+  <object id="24" name="entry" x="1200.33" y="360">
    <point/>
   </object>
  </objectgroup>

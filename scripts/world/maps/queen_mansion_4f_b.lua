@@ -9,26 +9,25 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 15,
-  nextobjectid = 24,
-  properties = {},
+  nextobjectid = 26,
+  properties = {
+    ["music"] = "wind_highplace"
+  },
   tilesets = {
     {
       name = "mansion_interior",
       firstgid = 1,
-      filename = "../tilesets/mansion_interior.tsx",
-      exportfilename = "../tilesets/mansion_interior.lua"
+      filename = "../tilesets/mansion_interior.tsx"
     },
     {
       name = "mansion",
       firstgid = 287,
-      filename = "../tilesets/mansion.tsx",
-      exportfilename = "../tilesets/mansion.lua"
+      filename = "../tilesets/mansion.tsx"
     },
     {
       name = "mansion_pillars",
       firstgid = 917,
-      filename = "../tilesets/mansion_pillars.tsx",
-      exportfilename = "../tilesets/mansion_pillars.lua"
+      filename = "../tilesets/mansion_pillars.tsx"
     }
   },
   layers = {
@@ -112,7 +111,7 @@ return {
       type = "imagelayer",
       image = "../../../assets/sprites/tilesets/mansion_interior_window.png",
       id = 9,
-      name = "Arrow Logo",
+      name = "Window",
       visible = true,
       opacity = 1,
       offsetx = 900,
@@ -502,6 +501,22 @@ return {
             ["map"] = "noelle_room",
             ["marker"] = "enter"
           }
+        },
+        {
+          id = 25,
+          name = "transition",
+          type = "",
+          shape = "rectangle",
+          x = 1240,
+          y = 320,
+          width = 20,
+          height = 80,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["map"] = "queen_mansion_4f_c",
+            ["marker"] = "entry_l"
+          }
         }
       }
     },
@@ -537,6 +552,19 @@ return {
           type = "",
           shape = "point",
           x = 160,
+          y = 360,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 24,
+          name = "entry",
+          type = "",
+          shape = "point",
+          x = 1200.33,
           y = 360,
           width = 0,
           height = 0,
