@@ -9,8 +9,15 @@ return function(cutscene)
         end
         if ending == "killkill" then
             Game:addPartyMember("kris")
+        elseif ending == "killspare" then
+            Game:addPartyMember("kris")
+            Game:addPartyMember("susie")
         elseif ending == "thorn_kill" then
             Game:addPartyMember("kris")
+            Game:addPartyMember("noelle")
+        elseif ending == "no_trance" then
+            Game:addPartyMember("kris")
+            Game:addPartyMember("susie")
             Game:addPartyMember("noelle")
         end
         cutscene:mapTransition("fountain_room")

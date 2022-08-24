@@ -1,8 +1,9 @@
 local snowflakeBullet, super = Class(Bullet)
 
-function snowflakeBullet:init(x, y, dir, speed, rotate, scale)
+function snowflakeBullet:init(x, y, dir, speed, rotate, scale, dirRot)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/snowflakeBullet")
+    self.dir=dirRot or "left"
 
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir
@@ -17,7 +18,11 @@ function snowflakeBullet:update()
     -- For more complicated bullet behaviours, code here gets called every update
 
     if self.rotate then
-        self.rotation=math.rad(math.deg(self.rotation)-2*DTMULT)
+        if self.dir=="left" then
+            self.rotation=math.rad(math.deg(self.rotation)-2*DTMULT)
+        else
+            self.rotation=math.rad(math.deg(self.rotation)+2*DTMULT)
+        end
     end
 
     super:update(self)

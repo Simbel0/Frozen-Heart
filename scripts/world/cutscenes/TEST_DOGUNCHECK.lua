@@ -19,6 +19,8 @@ return function(cutscene)
 	print(love.filesystem.getInfo("saves/frozen_heart/checkpass0")~=nil)
 	skip=love.filesystem.getInfo("saves/frozen_heart/checkpass0")~=nil
 
+	Kristal.hideBorder(0)
+
 	cutscene:wait(1)
 	local nextCut="intro.goner"
 	if skip then

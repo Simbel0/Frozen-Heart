@@ -5,6 +5,7 @@ return function(cutscene)
     cutscene:fadeOut(0)
     cutscene:wait(2)
 
+    Kristal.hideBorder(1)
     Spamton = Game:getFlag("no_heal", false)
     Astrogirl = Utils.random(0, 100)<10
     local theme = Music(Astrogirl and "Beeg" or "ch2_credits")

@@ -1,6 +1,7 @@
 return {
     closing_fountain=function(cutscene)
         cutscene:fadeOut(0)
+        Kristal.hideBorder(1)
         cutscene:wait(1)
 
         local soul = Sprite("player/heart", SCREEN_WIDTH/2, SCREEN_HEIGHT-100)
@@ -44,6 +45,8 @@ return {
             end)
         end
         cutscene:wait(2)
+        Kristal.showBorder(1)
+        cutscene:fadeIn(1)
         cutscene:mapTransition("computer_lab")
     end,
     killkill=function(cutscene)
@@ -118,6 +121,7 @@ return {
         noelle:setLayer(0.2)
         cutscene:look(kris, "down")
         cutscene:look(susie, "down")
+        Game.world.timer:after(0.20, function() noelle:setLayer(susie.layer) end)
         cutscene:wait(cutscene:walkToSpeed(noelle, 330, noelle.y, 8, "up"))
 
         cutscene:wait(0.5)
@@ -161,9 +165,15 @@ return {
         cutscene:text("* ...Well I sure hope not.", "", "susie")
         cutscene:text("* It's fucking terrifying...", "", "susie")
         CutMusic:stop()
-        cutscene:text("* When your choices don't matter anymore.", "", "susie")
-        
+        cutscene:text("[speed:0.75]* When your choices don't matter anymore.", "", "susie")
 
-        cutscene:wait(999)
+        Assets.playSound("snd_dooropen")
+
+        cutscene:wait(0.5)
+
+        cutscene:text("* Ah Kris. Got everything we need?", "", "susie")
+        cutscene:text("* Let's go.", "", "susie")
+
+        cutscene:gotoCutscene("CREDITS")
     end
 }

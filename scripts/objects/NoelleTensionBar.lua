@@ -71,6 +71,13 @@ function NoelleTensionBar:giveTension(amount, dont_clamp)
     self.nTension = self.nTension+(dont_clamp and amount or Utils.clamp(amount, 0, self.nMaxtension))
 end
 
+function NoelleTensionBar:removeTension(amount)
+    self.nTension = self.nTension-amount
+    if self.nTension<0 then
+        self.nTension=0
+    end
+end
+
 function NoelleTensionBar:getTension()
     return self.nTension or 0
 end

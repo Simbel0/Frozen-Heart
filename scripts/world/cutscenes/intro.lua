@@ -446,6 +446,7 @@ return {
 
         cutscene:wait(3)
 
+        Kristal.showBorder(1)
         cutsceneMusic=Music("flashback_excerpt")
         cutscene:setSpeaker("noelle")
         cutscene:text("* The moon is so weird tonight...")

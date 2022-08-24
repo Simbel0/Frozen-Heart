@@ -4,7 +4,7 @@ return function(cutscene)
 	local function createForcePull(b, e)
 		local data = {}
 		data["value"]=0.5
-		data["decrease"]=(Utils.random(5,10)/100)-(Game.battle.enemies[1].mercy)/1000
+		data["decrease"]=(Utils.random(3,7)/100)-(Game.battle.enemies[1].mercy)/1000
 		print(data["decrease"])
 		data["timer"]=Utils.random(120, 240)
 
@@ -84,6 +84,7 @@ return function(cutscene)
     	end
 
     	if Input.pressed("confirm") then
+    		Assets.stopAndPlaySound("noise")
     		local value=0.125+math.random()/10
     		print("Forced! Added "..value.." to the bar's value: "..forcePull["value"].."!")
     		forcePull["value"]=forcePull["value"]+value*DTMULT
@@ -110,6 +111,7 @@ return function(cutscene)
     end
     if Game.battle.enemies[1].mercy<100 then
     	cutscene:wait(1)
+    	Assets.playSound("hurt")
     	Game.battle.enemies[1]:hurt(Utils.round(10*(forcePull["value"]+Utils.random())), nil, function()
     		Game.battle.enemies[1]:onDefeatThorn()
     		Game.battle:setState("NONE")
@@ -118,6 +120,8 @@ return function(cutscene)
     	cutscene:text("* Noelle got hurt by the Thorn Ring!")
     	if first then
     		cutscene:text("* Oh great, I also have to be careful of that.", "annoyed", "susie")
+    		cutscene:text("* Maybe I can use my spell to heal her?", "neutral_side", "susie")
+    		cutscene:text("* Who said I couldn't heal an enemy,[wait:0.5] after all?", "closed_grin", "susie")
     	end
     	Game.battle:finishActionBy(Game.battle.party[1])
     else
@@ -128,6 +132,10 @@ return function(cutscene)
     	cutscene:wait(2.5)
     	cutscene:text("* Susie got the ThornRing!")
     	Game:setFlag("noelle_battle_status", "no_trance")
-    	Game.battle:returnToWorld()
+    	cutscene:after(function() Game.battle:returnToWorld() end)
+
+    	Game.battle:setState("TRANSITIONOUT")
+    	cutscene:wait(1)
+    	Game.battle:finishActionBy(Game.battle.party[1])
     end
 end

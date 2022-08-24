@@ -20,7 +20,7 @@ function Noelle:init()
 
     self.thorn_ring_timer = 0
 
-    self.confused = true
+    self.confused = false
     self.confusedTimer = 0
 
     self.exit_on_defeat = false
@@ -104,7 +104,10 @@ function Noelle:onAct(battler, name)
                 "bettersnowfall",
                 "snowabsorb",
                 "snowstorm",
-                "him"
+                "him",
+                "him-alter",
+                "snowshotter",
+                "snowshotter-alter"
             }
             Game.battle:startActCutscene(function(cutscene)
                 local susie=cutscene:getUser()
@@ -140,11 +143,11 @@ function Noelle:onAct(battler, name)
                 walkSusie=false
                 cutscene:setSprite(susie, "shock")
                 cur_x, cur_y=susie.x, susie.y
-                cutscene:enemyText(self, "NO!!")
-                cutscene:enemyText(self, "I CAN'T!!\nTheir voices!")
-                cutscene:enemyText(self, "I can hear them...\nI can hear...")
-                cutscene:enemyText(self, "I-... I...")
-                cutscene:enemyText(self, "...")
+                cutscene:battlerText(self, "NO!!")
+                cutscene:battlerText(self, "I CAN'T!!\nTheir voices!")
+                cutscene:battlerText(self, "I can hear them...\nI can hear...")
+                cutscene:battlerText(self, "I-... I...")
+                cutscene:battlerText(self, "...")
 
                 cutscene.textbox_actor=nil
                 cutscene:text("* Noelle casts Ice Shock.", nil, nil, {wait=false, skip=false})
@@ -160,6 +163,7 @@ function Noelle:onAct(battler, name)
     elseif name=="Pirouette-X" then
         Game.battle:startActCutscene(function(cutscene)
             if not self.confused then
+                self.encounter.spell_countdown=self.encounter.spell_countdown+1
                 if self.pirou_first then
                     cutscene:text("* (Kr-Kris,[wait:1] is that you...?)", "surprise", "susie")
                     cutscene:choicer({"Yes", "Maybe", "No, but yes", "Sure"})
@@ -175,8 +179,8 @@ function Noelle:onAct(battler, name)
                     }})
                     self.pirou_first=false
                 else
-                    cutscene:text("* Hey! Can you SHUT UP!?", "angry_c")
-                    cutscene:text("* I can think without a weird voice telling me what to do.", "angry_b")
+                    cutscene:text("* Hey! Can you SHUT UP!?", "angry_c", "susie")
+                    cutscene:text("* I can think without a weird voice telling me what to do.", "angry_b", "susie")
                     cutscene:text("* [speed:0.6]What...?", "trance-surprise", "noelle")
                     Assets.playSound("snd_pirouette")
                     cutscene:text("* Noelle was CONFUSED by Susie talking to herself!")
@@ -412,7 +416,7 @@ function Noelle:castSleepMist(target)
 
         local effect = SleepMistEffect(x, y, false)
         effect.layer = target.layer + 0.1
-        parent:addChild(effect)
+        target:addChild(effect)
     end)
 end
 

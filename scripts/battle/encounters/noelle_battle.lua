@@ -28,18 +28,18 @@ function Noelle_Battle:init()
     -- Add the dummy enemy to the encounter
     self.noelle=self:addEnemy("noelle", 550, 228)
 
-    Game.battle:registerXAction("susie", "Pirouette-X", "CONFUSE\nenemies", 45)
+    Game.battle:registerXAction("susie", "Pirouette-X", "CONFUSE\nenemies", 30)
     Game.battle:registerXAction("susie", "Wake Up", "Un-proceed", 15)
 end
 
 function Noelle_Battle:beforeStateChange(old, new)
     if new=="DEFENDINGBEGIN" then
-        if self.spell_countdown<=0 and self.noelle.killed_once then
+        if self.spell_countdown<=0 and not self.noelle.killed_once then
             if Game.battle.noelle_tension_bar:getTension()>=100 then
                 print("Cast SNOWGRAVE")
                 Game.battle:startCutscene(function(cutscene)
                     cutscene:text("* Noelle casts SNOWGRAVE!", nil, nil, {wait=false, skip=false})
-                    Game.battle.noelle_tension_bar:giveTension(-100)
+                    Game.battle.noelle_tension_bar:removeTension(100)
                     self.noelle:castSnowGrave(Game.battle.party[1])
                     cutscene:wait(8)
                     cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
@@ -52,7 +52,7 @@ function Noelle_Battle:beforeStateChange(old, new)
                 Game.battle:startCutscene(function(cutscene)
                     local wait, text = cutscene:text("* Noelle casts HEALTH PRAYER!", nil, nil, {wait=false})
                     local heal_susie = Utils.random(self.noelle.mercy)>50
-                    Game.battle.noelle_tension_bar:giveTension(-100)
+                    Game.battle.noelle_tension_bar:removeTension(32)
                     self.noelle:castHealthPrayer(heal_susie and Game.battle.party[1] or Game.battle.enemies[1])
                     cutscene:wait(wait)
                     cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
@@ -64,7 +64,7 @@ function Noelle_Battle:beforeStateChange(old, new)
                 self.spell_countdown=2
                 Game.battle:startCutscene(function(cutscene)
                     cutscene:text("* Noelle casts SLEEP MIST!", nil, nil, {wait=false, skip=false})
-                    Game.battle.noelle_tension_bar:giveTension(-100)
+                    Game.battle.noelle_tension_bar:removeTension(32)
                     self.noelle:castSleepMist(Game.battle.party[1])
                     cutscene:wait(1.5)
                     cutscene:text("* But Susie was not [color:blue]TIRED[color:reset].")
@@ -76,9 +76,14 @@ function Noelle_Battle:beforeStateChange(old, new)
             elseif Game.battle.noelle_tension_bar:getTension()>=8 and math.random(1,10)>=7 then
                 print("Cast ICESHOCK")
                 self.spell_countdown=2
+                if self.noelle.confused then
+                    if math.random(1,10)>=7 then
+                        return true
+                    end
+                end
                 Game.battle:startCutscene(function(cutscene)
                     cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
-                    Game.battle.noelle_tension_bar:giveTension(-8)
+                    Game.battle.noelle_tension_bar:removeTension(8)
                     self.noelle:castIceShock(Game.battle.party[1])
                     cutscene:wait(1.4)
                     cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
@@ -169,6 +174,27 @@ function Noelle_Battle:onTurnEnd()
     if self.noelle.killed_once then
         Game:setTension(0)
     end
+end
+
+function Noelle_Battle:dSB()
+    if Game:getFlag("plot", 0)~=2 then
+        Game:setFlag("plot", 2)
+    end
+    Game.battle.music:play("SnowGrave")
+    Game.battle.noelle_tension_bar:show()
+    self.noelle.waves={
+        "snowfall",
+        "bettersnowfall",
+        "snowabsorb",
+        "snowstorm",
+        "him",
+        "him-alter",
+        "snowshotter",
+        "snowshotter-alter"
+    }
+    self.noelle:setAnimation({"battle/trancesition", 0.2, false, next="battle/idleTrance"})
+    self.noelle.actor.animations["battle/idle"]=self.noelle.actor.animations["battle/idleTrance"]
+    print("Battle ready")
 end
 
 return Noelle_Battle

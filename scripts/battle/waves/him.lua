@@ -2,7 +2,7 @@ local him, super = Class(Wave)
 
 function him:init()
     super:init(self)
-    self.time=20
+    self.time=12
 end
 
 function him:onArenaEnter()

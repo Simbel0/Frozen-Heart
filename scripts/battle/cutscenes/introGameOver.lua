@@ -3,6 +3,7 @@ return function(cutscene)
         Game.battle:setState("ACTIONSELECT")
     end)
 
+    Kristal.hideBorder(0)
     cutsceneMusic:stop()
     Game.battle.party[1].sprite.frozen=true
     Game.battle.party[1].sprite.freeze_progress=1
@@ -168,6 +169,7 @@ return function(cutscene)
     susie:remove()
     susie_soul:remove()
     heart:remove()
+    Kristal.showBorder(0.75)
     cutscene:fadeIn(0.5, {color={1, 1, 1}})
     cutscene:wait(0.75)
     cutscene:text("* [speed:0.6]It was easy...", "sad", "noelle")
@@ -247,6 +249,7 @@ return function(cutscene)
         eyeR:remove()
         Game.battle.music:play("SnowGrave")
         cutscene:setAnimation(noelle, {"battle/trancesition", 0.2, false, next="battle/idleTrance"})
+        noelle.actor.animations["battle/idle"]=noelle.actor.animations["battle/idleTrance"]
         noelle.x=noelle.x+6
     end)
     cutscene:wait(wait)
