@@ -1,21 +1,19 @@
-local Dummy, super = Class(Encounter)
+local Spamton_NEO, super = Class(Encounter)
 
-function Dummy:init()
+function Spamton_NEO:init()
     super:init(self)
 
     -- Text displayed at the bottom of the screen at the start of the encounter
-    self.text = "* It's freezing."
+    self.text = "* ..."
 
     -- Battle music ("battle" is rude buster)
     self.music = "SnowGrave NEO"
     -- Enables the purple grid battle background
     self.background = false
 
-    -- Add the dummy enemy to the encounter
-    self:addEnemy("dummy")
-
-    --- Uncomment this line to add another!
-    --self:addEnemy("dummy")
+    self.sneo=self:addEnemy("Spamton_NEO", 550, 240)
+    --self.sneo.sprite.frozen = true
+    --self.sneo.sprite.freeze_progress = 0.15
 end
 
-return Dummy
+return Spamton_NEO
