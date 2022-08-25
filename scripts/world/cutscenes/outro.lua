@@ -151,6 +151,7 @@ return {
 		Game.world:addChild(noelle_head)
 		Game.world:getEvent(26):remove()
 		cutscene:wait(0.25)
+		cutscene.textbox_actor=nil
 		cutscene:text("* (Susie took Noelle's ThornRing.)", nil, nil)
 		cutscene:fadeIn(0.5)
 		cutscene:wait(1)

@@ -8,6 +8,8 @@ function Noelle_Battle:init()
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "* It will be your fault."
 
+    self.turns = 0
+
     -- Battle music ("battle" is rude buster)
     self.music = nil
     -- Enables the purple grid battle background
@@ -182,6 +184,7 @@ function Noelle_Battle:onTurnEnd()
     if self.noelle.killed_once then
         Game:setTension(0)
     end
+    self.turns=self.turns+1
 end
 
 function Noelle_Battle:getEncounterText()

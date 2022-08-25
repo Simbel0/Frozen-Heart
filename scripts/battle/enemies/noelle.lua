@@ -122,6 +122,9 @@ function Noelle:onAct(battler, name)
                     if walkSusie then
                         if susie.x<=noelle.x-40 then
                             susie.x=susie.x+0.35
+                        else
+                            cutscene:setSprite(susie, "walk")
+                            cutscene:look(susie, "right")
                         end
                     else
                         if cur_x then
@@ -354,6 +357,9 @@ function Noelle:onDefeat()
         self.confused=false
         self.confusedTimer=4
         self.encounter.no_end_message = true
+        if self.encounter.turns<1 then
+            Game:setFlag("no_heal", false)
+        end
         Game.battle.party[1].spells = {}
         self.text={
             "* ...",

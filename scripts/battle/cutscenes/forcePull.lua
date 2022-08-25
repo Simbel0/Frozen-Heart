@@ -4,7 +4,16 @@ return function(cutscene)
 	local function createForcePull(b, e)
 		local data = {}
 		data["value"]=0.5
-		data["decrease"]=(Utils.random(3,7)/100)-(Game.battle.enemies[1].mercy)/1000
+		data["decrease"]=(0.085-Game.battle.enemies[1].mercy/100)-Utils.random(-1/2, 1/2)/10
+		if data["decrease"]>0.085 then data["decrease"]=0.085 end
+		if data["decrease"]<=0 then
+			if Game.battle.enemies[1].mercy<90 then
+				data["decrease"]=0.03
+			else
+				data["decrease"]=Utils.clamp(data["decrease"], -0.030, 0)
+			end
+		end
+		--(1.09)
 		print(data["decrease"])
 		data["timer"]=Utils.random(120, 240)
 
@@ -61,6 +70,8 @@ return function(cutscene)
     if first then
     	cutscene:text("* Wh-Wha-", "trance-surprise", "noelle")
     	cutscene:text("* Merry Christmas!!!", "teeth", "susie")
+    else
+    	cutscene:wait(0.5)
     end
     local firsttime=true
     cutscene:wait(function()
@@ -85,9 +96,9 @@ return function(cutscene)
 
     	if Input.pressed("confirm") then
     		Assets.stopAndPlaySound("noise")
-    		local value=0.125+math.random()/10
+    		local value=0.25+math.random()/10
     		print("Forced! Added "..value.." to the bar's value: "..forcePull["value"].."!")
-    		forcePull["value"]=forcePull["value"]+value*DTMULT
+    		forcePull["value"]=forcePull["value"]+value
     	end
 
     	if forcePull["timer"]<=0 then

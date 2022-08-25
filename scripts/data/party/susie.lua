@@ -30,6 +30,15 @@ function character:getGameOverMessage(main)
     }
 end
 
+function character:onAttackHit(enemy, damage)
+    if damage > 0 then
+        Assets.playSound("impact", 0.8)
+        if Game.battle then
+            Game.battle:shakeCamera(4)
+        end
+    end
+end
+
 function character:getTitle()
     if Game:getFlag("plot", 0)==3 then
         if Game:getFlag("noelle_battle_status", "no_trance")=="no_trance" then

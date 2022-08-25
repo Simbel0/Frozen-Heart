@@ -281,7 +281,7 @@ return {
                 gonerText("YOUR DATA HAS BEEN\nPERFECTLY ENREGISTRED\nINTO THE NEXT\nEXPERIENCE.")
                 gonerText("NOW...[wait:20]\nLET'S GET BACK\nTO THE TOPIC,[wait:20]\nSHALL WE?")
             else
-                gonerText("OF COURSE, OF COURSE.[wait:20]\nI UNDERSTAND.")
+                gonerText("OF COURSE, OF COURSE.[wait:20]\nIT IS UNDERSTANDABLE.")
                 gonerText("IN THAT CASE,[wait:20]\nLET'S GET TO THE\nPOINT,[wait:20] SHALL WE?")
             end
         end
@@ -293,6 +293,7 @@ return {
         gonerText("CONSEQUENCES[wait:20]\nJUST[wait:20]\nFOR[wait:20]\nYOU.[wait:20]")
         gonerText("BUT I ASSUME YOU ARE\nAWARE OF THIS PART.")
         local starShow=math.random()>=0.8
+        local starIsBeegBrain=starShow and math.random()>=0.8
         local fx=ColorMaskFX({0, 0, 0})
         local kris=Sprite("party/kris/dark/walk/down", starShow and 130 or 160, 300)
         kris:setScale(2)
@@ -351,12 +352,15 @@ return {
         Game.world.timer:tween(2, lancer, {alpha = 0})
         gonerText("SOME WILL STAY IN\nBLISSFUL IGNORANCE.")
         Game.world.timer:tween(2, ralsei, {alpha = 0})
+        if starIsBeegBrain then
+            Game.world.timer:tween(2, starwalker, {alpha = 0})
+        end
         gonerText("SOME MAY KNOW MORE\nTHAN THEY LET IT BE.")
         Game.world.timer:tween(2, berdly, {alpha = 0})
         gonerText("SOME WILL PAY THE\nPRICE FOR FACING\nAN UNKNOWN FORCE.")
         Game.world.timer:tween(2, kris, {alpha = 0})
         gonerText("SOME ARE THE DIRECT\nVICTIM OF THIS\nFORCE.")
-        if starShow then
+        if starShow and not starIsBeegBrain then
             Game.world.timer:tween(2, starwalker, {alpha = 0})
             gonerText("SOME...[wait:10]\nARE JUST THERE.")
         end
@@ -364,7 +368,7 @@ return {
         Game.world.timer:tween(4, noelle, {x = 370}, "out-cubic")
         gonerText("AND THE LAST TWO...")
         gonerText("ONE IS A VICTIM,[wait:20]\nONE IS IGNORANT.")
-        gonerText("ONE IS OBEDIANT,[wait:20]\nONE IS REBELLIOUS.")
+        gonerText("ONE IS OBEDIENT,[wait:20]\nONE IS REBELLIOUS.")
         gonerText("SO DIFFERENT\nAND YET...[wait:20]\nSO CLOSE.")
         gonerText("HOW MUCH CAN\nTHOSE TWO INFLUENCE[wait:10]\nFATE?")
         gonerText("DOESN'T IT SOUND[wait:20]\nINTRIGING?")
@@ -401,6 +405,9 @@ return {
         text:remove()
         hider:remove()
         love.window.setTitle("Frozen Heart")
+        if not love.filesystem.getInfo("saves/frozen_heart") then
+            love.filesystem.createDirectory("saves/frozen_heart")
+        end
         love.filesystem.write("saves/frozen_heart/checkpass0", "0")
         cutscene:gotoCutscene("intro.intro")
     end,
