@@ -64,7 +64,11 @@
 </data>
  </layer>
  <objectgroup id="7" name="objects_queen">
-  <object id="1" gid="939" x="597" y="348" width="640" height="216"/>
+  <object id="1" gid="939" x="597" y="348" width="640" height="216">
+   <properties>
+    <property name="music" value="wind_highplace"/>
+   </properties>
+  </object>
  </objectgroup>
  <objectgroup color="#ff00ff" id="3" name="objects">
   <object id="2" name="big_fountain" x="900" y="40" width="40" height="40"/>

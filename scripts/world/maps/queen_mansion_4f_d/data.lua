@@ -216,7 +216,9 @@ return {
           rotation = 0,
           gid = 939,
           visible = true,
-          properties = {}
+          properties = {
+            ["music"] = "wind_highplace"
+          }
         }
       }
     },

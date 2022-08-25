@@ -12,6 +12,7 @@ return {
   nextobjectid = 25,
   backgroundcolor = { 2, 2, 29 },
   properties = {
+    ["music"] = "wind_highplace",
     ["name"] = "Queen's Mansion - Rooftop"
   },
   tilesets = {

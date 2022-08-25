@@ -9,7 +9,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 15,
-  nextobjectid = 26,
+  nextobjectid = 27,
   properties = {
     ["music"] = "wind_highplace"
   },
@@ -483,7 +483,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text"] = "* Uh...[wait:1] That's the wrong way, dude."
+            ["cutscene"] = "overworld.incorrectway"
           }
         },
         {
@@ -516,6 +516,21 @@ return {
           properties = {
             ["map"] = "queen_mansion_4f_c",
             ["marker"] = "entry_l"
+          }
+        },
+        {
+          id = 26,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 240,
+          y = 240,
+          width = 160,
+          height = 20,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "overworld.incorrectFloor"
           }
         }
       }

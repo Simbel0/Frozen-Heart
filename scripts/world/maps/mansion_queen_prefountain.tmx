@@ -4,6 +4,7 @@
   <export target="mansion_queen_prefountain.lua" format="lua"/>
  </editorsettings>
  <properties>
+  <property name="music" value="wind_highplace"/>
   <property name="name" value="Queen's Mansion - Rooftop"/>
  </properties>
  <tileset firstgid="1" source="../tilesets/city_girder.tsx"/>

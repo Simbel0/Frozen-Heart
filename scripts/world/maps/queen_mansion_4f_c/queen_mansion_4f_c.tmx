@@ -187,6 +187,9 @@
    <point/>
   </object>
   <object id="27" name="entry_r" x="2600" y="460">
+   <properties>
+    <property name="music" value="wind_highplace"/>
+   </properties>
    <point/>
   </object>
  </objectgroup>

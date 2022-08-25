@@ -32,11 +32,11 @@ end
 
 function character:getTitle()
     if Game:getFlag("plot", 0)==3 then
-        if Game:getFlag("noelle_battle_status")=="no_trance" then
+        if Game:getFlag("noelle_battle_status", "no_trance")=="no_trance" then
             return "LV"..self:getLevel().. " Friendly Knight\nWill face death\nto save a friend."
-        elseif Game:getFlag("noelle_battle_status")=="thorn_kill" then
+        elseif Game:getFlag("noelle_battle_status", "no_trance")=="thorn_kill" then
             return "LV"..self:getLevel().. " Oblivious Knight\nForgot to notice\ncritical details."
-        elseif Game:getFlag("noelle_battle_status")=="killspare" then
+        elseif Game:getFlag("noelle_battle_status", "no_trance")=="killspare" then
             return "LV"..self:getLevel().. " Violent Knight\nDidn't learn a\nthing."
         end
     end
