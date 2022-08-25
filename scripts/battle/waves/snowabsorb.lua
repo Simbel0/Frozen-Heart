@@ -23,7 +23,7 @@ function snowAbsorb:onStart()
         bigBullet.rotate=true
         bigBullet.damage=nil
         bigBullet.tp=1
-        self.timer:every(0.4, function()
+        self.timer:everyInstant(0.4, function()
 
             for i=1,10 do
                 local angle=self.s_a + 360 / 60 * i
@@ -59,7 +59,8 @@ function snowAbsorb:onStart()
                 bullet.layer=bigBullet.layer-20
                 bullet.damage=0
                 bullet.tp=0
-                bullet.alpha=0.2
+                bullet.alpha=0.15
+                bullet:setScale(0.75)
 
                 -- Dont remove the bullet offscreen, because we spawn it offscreen
                 bullet.remove_offscreen = false
