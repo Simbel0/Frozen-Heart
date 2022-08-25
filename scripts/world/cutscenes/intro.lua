@@ -393,7 +393,7 @@ return {
         Game.world:addChild(text)
 
         cutscene:wait(function() return text.done end)
-        text:setText("[speed:0.1]Because\nsomeone\nsure\nwon't.", 250, 150)
+        text:setText("[speed:0.1]Because\nsomeone\nsure\nwon't.")
         text.state["typing_sound"]=nil
         text.state["noskip"]=true
         local hider=Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
