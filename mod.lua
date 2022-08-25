@@ -25,7 +25,7 @@ function Mod:postInit(newfile)
             local tea_flavor=Utils.pick(tea_flavors)
             Game.inventory:addItem(tea_flavor.."_tea")
         elseif diff==1 then
-            for i=1,3 do
+            for i=1,5 do
                 Game.inventory:addItem("lightcandy")
             end
 
