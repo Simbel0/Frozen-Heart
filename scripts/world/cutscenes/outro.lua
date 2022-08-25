@@ -45,6 +45,7 @@ return {
 		Game:addPartyMember("noelle")
 		cutscene:attachFollowers(0.25)
 		cutscene:wait(cutscene:attachCamera(1))
+		Game:setFlag("plot", 3)
 	end,
 	thorn_kill=function(cutscene)
 		local susie = cutscene:getCharacter("susie")
@@ -82,6 +83,7 @@ return {
 		cutscene:text("* IT'S A FUCKING HEART-SHAPED FERRIS WHEEL!!!", "teeth", "susie")
 		cutscene:wait(waitFade)
 		cutscene:wait(1)
+		Game:setFlag("plot", 3)
 		cutscene:gotoCutscene("TEST_ENDING")
 	end,
 	killspare=function(cutscene)
@@ -160,8 +162,10 @@ return {
 		cutscene:look(susie, "left")
 		cutscene:attachCamera(0.5)
 		cutscene:wait(0.5)
+		Game:setFlag("plot", 3)
 	end,
 	killkill=function(cutscene)
+		Game:setFlag("plot", 3)
 		cutscene:gotoCutscene("TEST_ENDING")
 	end
 }

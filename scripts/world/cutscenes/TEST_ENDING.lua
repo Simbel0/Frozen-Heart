@@ -1,3 +1,4 @@
+--TODO: remove that useless mess
 return function(cutscene)
     local ending = Game:getFlag("noelle_battle_status")
 
