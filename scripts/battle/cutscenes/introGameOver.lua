@@ -261,5 +261,6 @@ return function(cutscene)
     noelle:setAnimation("battle/idleTrance")
     Game.battle.noelle_tension_bar:show()
     Game:setFlag("plot", 2)
+    Game:saveQuick("spawn")
     cutscene:endCutscene()
 end

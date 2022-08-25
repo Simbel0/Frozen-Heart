@@ -519,5 +519,103 @@ return {
 
         cutscene:startEncounter("noelle_battle", true, {{"noelle", noelle}})
         cutscene:gotoCutscene("outro."..Game:getFlag("noelle_battle_status"))
+    end,
+    quickintro=function(cutscene)
+
+        local function castIceShock(user, target)
+            user:setAnimation("battle/spell")
+            --user.actor.animations["battle/idle"]=user.actor.animations["battle/idleTrance"]
+            local function createParticle(x, y)
+                local sprite = Sprite("effects/icespell/snowflake", x, y)
+                sprite:setOrigin(0.5, 0.5)
+                sprite:setScale(1.5)
+                sprite.layer = WORLD_LAYERS["bullets"]
+                Game.world:addChild(sprite)
+                return sprite
+            end
+
+            local x, y = target:getRelativePos(target.width/2, target.height/2, Game.world)
+
+            local particles = {}
+            Game.world.timer:script(function(wait)
+                wait(1/30)
+                Assets.playSound("icespell")
+                particles[1] = createParticle(x-25, y-20)
+                wait(3/30)
+                particles[2] = createParticle(x+25, y-20)
+                wait(3/30)
+                particles[3] = createParticle(x, y+20)
+                wait(3/30)
+                Game.world:addChild(IceSpellBurst(x, y))
+                for _,particle in ipairs(particles) do
+                    for i = 0, 5 do
+                        local effect = IceSpellEffect(particle.x, particle.y)
+                        effect:setScale(0.75)
+                        effect.physics.direction = math.rad(60 * i)
+                        effect.physics.speed = 8
+                        effect.physics.friction = 0.2
+                        effect.layer = WORLD_LAYERS["bullets"] - 1
+                        Game.world:addChild(effect)
+                    end
+                end
+                wait(1/30)
+                for _,particle in ipairs(particles) do
+                    particle:remove()
+                end
+            end)
+
+            return false
+        end
+
+        cutscene:fadeOut(0)
+        cutscene:detachCamera()
+        local susie=cutscene:getCharacter("susie")
+        local noelle=cutscene:getCharacter("noelle")
+
+        if Game.battle then
+            noelle.visible=false
+            cutscene:endCutscene()
+        end
+
+        susie.y=320
+        cutscene:panTo(635, susie.y, 0)
+        cutscene:walkTo(noelle, noelle.x+20, noelle.y, 2.5)
+        cutscene:wait(cutscene:fadeIn(2))
+        cutscene:wait(cutscene:walkTo(susie, 540, susie.y, 1.5))
+        cutscene:wait(0.5)
+        cutscene:look(noelle, "down")
+        cutscene:wait(0.5)
+        cutscene:look(noelle, "left")
+        cutscene:wait(1)
+        castIceShock(noelle, susie)
+        cutscene:wait(0.25)
+        cutscene:look(susie, "right")
+        cutscene:setSprite(susie, "shock")
+        cutscene:slideTo(susie, susie.x-100, susie.y, nil, "out-cubic")
+        cutscene:wait(1)
+        Assets.playSound("boost")
+
+        local offset = susie.sprite:getOffset()
+
+        local flash_x = susie.x - (susie.actor:getWidth() / 2 - offset[1]) * 2
+        local flash_y = susie.y - (susie.actor:getHeight() - offset[2]) * 2
+
+        local flash = FlashFade("party/susie/dark/shock_right", flash_x, flash_y)
+        flash.flash_speed = 0.5
+        flash:setScale(2, 2)
+        flash.layer = susie.layer + 1
+        susie.parent:addChild(flash)
+
+        local bx, by = susie:getRelativePos(susie.width/2, susie.height/2, Game.world)
+        local soul = Sprite("effects/susiesoulshine", bx-30, by-15)
+        soul:play(1/15, false, function() soul:remove() end)
+        soul:setOrigin(0.25, 0.25)
+        soul:setScale(2, 2)
+        soul:setLayer(susie.layer + 2)
+        Game.world:addChild(soul)
+        cutscene:wait(1)
+
+        cutscene:startEncounter("noelle_battle", true, {{"noelle", noelle}})
+        cutscene:gotoCutscene("outro."..Game:getFlag("noelle_battle_status"))
     end
 }

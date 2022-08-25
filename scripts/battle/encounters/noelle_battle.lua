@@ -32,11 +32,19 @@ function Noelle_Battle:init()
     Game.battle:registerXAction("susie", "Wake Up", "Un-proceed", 15)
 end
 
+function Noelle_Battle:onBattleStart()
+    if Game:getFlag("plot", 0)==2 then
+        self.text = self:getEncounterText()
+        self:quickBattle(false)
+    end
+end
+
 function Noelle_Battle:beforeStateChange(old, new)
     if new=="DEFENDINGBEGIN" then
         if self.spell_countdown<=0 and not self.noelle.killed_once then
             if Game.battle.noelle_tension_bar:getTension()>=100 then
                 print("Cast SNOWGRAVE")
+                self.spell_cast = "SNOWGRAVE"
                 Game.battle:startCutscene(function(cutscene)
                     cutscene:text("* Noelle casts SNOWGRAVE!", nil, nil, {wait=false, skip=false})
                     Game.battle.noelle_tension_bar:removeTension(100)
@@ -176,9 +184,24 @@ function Noelle_Battle:onTurnEnd()
     end
 end
 
-function Noelle_Battle:dSB()
-    if Game:getFlag("plot", 0)~=2 then
-        Game:setFlag("plot", 2)
+function Noelle_Battle:getEncounterText()
+    print("called")
+    if Game:getFlag("plot", 0)==2 and not self.firstencountertext then
+        self.firstencountertext=true
+        return "* Noelle attacks...?"
+    end
+    return super:getEncounterText(self)
+end
+
+function Noelle_Battle:onGameOver()
+    return true
+end
+
+function Noelle_Battle:quickBattle(debug)
+    if debug then
+        if Game:getFlag("plot", 0)~=2 then
+            Game:setFlag("plot", 2)
+        end
     end
     Game.battle.music:play("SnowGrave")
     Game.battle.noelle_tension_bar:show()
@@ -194,6 +217,13 @@ function Noelle_Battle:dSB()
     }
     self.noelle:setAnimation({"battle/trancesition", 0.2, false, next="battle/idleTrance"})
     self.noelle.actor.animations["battle/idle"]=self.noelle.actor.animations["battle/idleTrance"]
+
+    Game.battle.party[1].chara.stats["health"]=190*2
+    Game.battle.party[1].chara.stats["attack"]=18*2
+    Game.battle.party[1].chara.stats["defense"]=2*2
+    Game.battle.party[1].chara.stats["magic"]=3*2
+    Game.battle.party[1].chara.health=190*2
+    Game:saveQuick("spawn")
     print("Battle ready")
 end
 
