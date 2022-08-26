@@ -29,7 +29,7 @@ return function(cutscene)
         "[voice:susie]What... happened...?",
         "[voice:susie]Oh right... I was talking\nto Noelle...",
         "[voice:susie]Did she kill me?",
-        "[voice:susie]When did she became so\npowerful...?",
+        "[voice:susie]When did she become so\npowerful...?",
         "[voice:susie]...[wait:2]Man,\n[wait:1]this is so wrong.",
         "[voice:susie]But what can I do about\nit?",
         "[voice:susie]It's not like I can do\nanything now."
