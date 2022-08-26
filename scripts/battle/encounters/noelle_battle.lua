@@ -44,6 +44,7 @@ end
 function Noelle_Battle:beforeStateChange(old, new)
     if new=="DEFENDINGBEGIN" then
         if self.spell_countdown<=0 and not self.noelle.killed_once then
+            print(self.noelle.health>=22, self.noelle.health)
             if Game.battle.noelle_tension_bar:getTension()>=100 then
                 print("Cast SNOWGRAVE")
                 self.spell_cast = "SNOWGRAVE"
@@ -52,7 +53,7 @@ function Noelle_Battle:beforeStateChange(old, new)
                     Game.battle.noelle_tension_bar:removeTension(100)
                     self.noelle:castSnowGrave(Game.battle.party[1])
                     cutscene:wait(8)
-                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
+                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
                     cutscene:endCutscene()
                 end)
                 return true
@@ -65,41 +66,43 @@ function Noelle_Battle:beforeStateChange(old, new)
                     Game.battle.noelle_tension_bar:removeTension(32)
                     self.noelle:castHealthPrayer(heal_susie and Game.battle.party[1] or Game.battle.enemies[1])
                     cutscene:wait(wait)
-                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
+                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
                     cutscene:endCutscene()
                 end)
                 return true
-            elseif Game.battle.noelle_tension_bar:getTension()>=32 and math.random(1,10)==1 then
-                print("Cast SLEEP MIST")
-                self.spell_countdown=2
-                Game.battle:startCutscene(function(cutscene)
-                    cutscene:text("* Noelle casts SLEEP MIST!", nil, nil, {wait=false, skip=false})
-                    Game.battle.noelle_tension_bar:removeTension(32)
-                    self.noelle:castSleepMist(Game.battle.party[1])
-                    cutscene:wait(1.5)
-                    cutscene:text("* But Susie was not [color:blue]TIRED[color:reset].")
-                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
-                    cutscene:endCutscene()
-                end)
-                return true
-                
-            elseif Game.battle.noelle_tension_bar:getTension()>=8 and math.random(1,10)>=7 then
-                print("Cast ICESHOCK")
-                self.spell_countdown=2
-                if self.noelle.confused then
-                    if math.random(1,10)>=7 then
-                        return true
+            elseif self.noelle.health>=22 then
+                print("Check here")
+                if Game.battle.noelle_tension_bar:getTension()>=32 and math.random(1,10)==1 then
+                    print("Cast SLEEP MIST")
+                    self.spell_countdown=2
+                    Game.battle:startCutscene(function(cutscene)
+                        cutscene:text("* Noelle casts SLEEP MIST!", nil, nil, {wait=false, skip=false})
+                        Game.battle.noelle_tension_bar:removeTension(32)
+                        self.noelle:castSleepMist(Game.battle.party[1])
+                        cutscene:wait(1.5)
+                        cutscene:text("* But Susie was not [color:blue]TIRED[color:reset].")
+                        cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
+                        cutscene:endCutscene()
+                    end)
+                    return true
+                elseif Game.battle.noelle_tension_bar:getTension()>=8 and math.random(1,10)>=7 then
+                    print("Cast ICESHOCK")
+                    self.spell_countdown=2
+                    if self.noelle.confused then
+                        if math.random(1,10)>=7 then
+                            return true
+                        end
                     end
+                    Game.battle:startCutscene(function(cutscene)
+                        cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
+                        Game.battle.noelle_tension_bar:removeTension(8)
+                        self.noelle:castIceShock(Game.battle.party[1])
+                        cutscene:wait(1.4)
+                        cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
+                        cutscene:endCutscene()
+                    end)
+                    return true
                 end
-                Game.battle:startCutscene(function(cutscene)
-                    cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
-                    Game.battle.noelle_tension_bar:removeTension(8)
-                    self.noelle:castIceShock(Game.battle.party[1])
-                    cutscene:wait(1.4)
-                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
-                    cutscene:endCutscene()
-                end)
-                return true
             end
         end
     end

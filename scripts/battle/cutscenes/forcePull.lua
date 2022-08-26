@@ -106,6 +106,8 @@ return function(cutscene)
     	end
     	return false
     end)
+    forcePull["barPlayer"].width=(430*forcePull["value"])
+    forcePull["barEnemy"].width=430-forcePull["barPlayer"].width
     Game.battle.timer:tween(0.5, forcePull["bg"], {alpha=0}, "linear", function() forcePull["bg"]:remove() end)
 	Game.battle.timer:tween(0.5, forcePull["barPlayer"], {alpha=0}, "linear", function() forcePull["barPlayer"]:remove() end)
 	Game.battle.timer:tween(0.5, forcePull["barEnemy"], {alpha=0}, "linear", function() forcePull["barEnemy"]:remove() end)
@@ -116,7 +118,7 @@ return function(cutscene)
     end
     cutscene:wait(0.5)
     if forcePull["value"]>0 then
-    	Game.battle.enemies[1]:addMercy(math.ceil((forcePull["value"]*2)*2.3)+Utils.round(Game.battle.enemies[1].mercy/100))
+    	Game.battle.enemies[1]:addMercy(Utils.round(10*forcePull["value"]))
     else
     	Game.battle.enemies[1]:addMercy(0)
     end
