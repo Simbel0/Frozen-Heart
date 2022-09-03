@@ -29,90 +29,56 @@ return function(cutscene)
 		print(c)
 		if c==2 then
 			nextCut="intro.intro"
-			cutscene:wait(0.5)
-			cutscene:text("* Would you like to load a save file from DELTARUNE?")
-			local c2=cutscene:choicer({"Yes", "No"})
-			if c2==1 then
-				local current_os = love.system.getOS()
-			    oriSaves={{}, {}, {}}
-			    local fileFound = false
-			    if current_os == "Windows" then
-			        for i=0,2 do
-			            file = string.gsub(os.getenv('UserProfile'), "\\", "/").."/AppData/Local/DELTARUNE/filech2_".. i
-			            if file_exists(file) then
-			                print("Save file "..i.." found!")
-			                oriSaves[i+1]=getFileLines(file)
-			                fileFound=true
-			            end
-			        end
-			    end
-			    cutscene:wait(0.5)
-			    if fileFound then
-			    	cutscene:text("* Please select the save file you want to load.")
-			    	local t={}
-	                for i=1,3 do
-	                    if #oriSaves[i]>0 then
-	                        if tonumber(oriSaves[i][1468])>=1 then
-	                            table.insert(t, "F"..i.." - "..oriSaves[i][1].." [S]")
-	                        else
-	                            table.insert(t, "F"..i.." - "..oriSaves[i][1])
-	                        end
-	                    end
-	                end
-	                local c=cutscene:choicer(t)
-	                Game.save_name=oriSaves[c][1]
-	                Game:setFlag("deltarune_data", {
-	                    gonername=oriSaves[c][2],
-	                    krisStats={
-	                        hp=oriSaves[c][79],
-	                        maxhp=oriSaves[c][80],
-	                        atk=oriSaves[c][81],
-	                        def=oriSaves[c][82],
-	                        mag=oriSaves[c][83],
-	                        weapon=oriSaves[c][85],
-	                        armor1=oriSaves[c][86],
-	                        armor2=oriSaves[c][87]
-	                    },
-	                    susieStats={
-	                        hp=oriSaves[c][141],
-	                        maxhp=oriSaves[c][142],
-	                        atk=oriSaves[c][143],
-	                        def=oriSaves[c][144],
-	                        mag=oriSaves[c][145],
-	                        weapon=oriSaves[c][147],
-	                        armor1=oriSaves[c][148],
-	                        armor2=oriSaves[c][149]
-	                    },
-	                    ralseiStats={
-	                        hp=oriSaves[c][203],
-	                        maxhp=oriSaves[c][204],
-	                        atk=oriSaves[c][205],
-	                        def=oriSaves[c][206],
-	                        mag=oriSaves[c][207],
-	                        weapon=oriSaves[c][209],
-	                        armor1=oriSaves[c][210],
-	                        armor2=oriSaves[c][211],
-	                    },
-	                    noelleStats={
-	                        armor1=oriSaves[c][272],
-	                        armor2=oriSaves[c][273]
-	                    },
-	                    jevil=oriSaves[c][832],
-	                    vessel={
-	                        head=oriSaves[c][1453],
-	                        body=oriSaves[c][1454],
-	                        legs=oriSaves[c][1455]
-	                    }
-	                })
-	                Game.money=oriSaves[c][11]
-	                Game.playtimer=oriSaves[c][3055]
-	                cutscene:text("* It is done.")
-	            else
-	            	cutscene:text("* You have no save file for DELTARUNE.\nImpossible to load data.")
-	            end
-	        end
 	    end
 	end
+
+	-- Save File Reading
+	local current_os = love.system.getOS()
+    oriSaves={}
+    local fileFound = false
+    if current_os == "Windows" then
+        for i=0,2 do
+            file = string.gsub(os.getenv('UserProfile'), "\\", "/").."/AppData/Local/DELTARUNE/filech2_".. i
+            if file_exists(file) then
+            	if tonumber(getFileLines(file)[1468])>=1 then
+                	print("Snowgrave Save file "..i.." found!")
+                	oriSaves=getFileLines(file)
+                	fileFound=true
+                	break
+                end
+            end
+        end
+    end
+    cutscene:wait(0.5)
+    if fileFound then
+    	print("Loading data from save file...")
+    	Game.save_name=oriSaves[1]
+    	print("Welcome to Frozen Heart, "..Game.save_name)
+
+        print("---STORAGE---")
+        for i=452, 475 do
+        	local item = Mod:getKristalID(tonumber(oriSaves[i]), "item")
+        	print(oriSaves[i], item)
+        	Game.inventory:addItemTo("storage", item)
+        end
+
+        Game:setFlag("vessel", {
+            name=oriSaves[2],
+            head=tonumber(oriSaves[1453])+1,
+            body=tonumber(oriSaves[1454])+1,
+            legs=tonumber(oriSaves[1455])+1,
+        })
+
+        print("---VESSEL---")
+        for k,v in pairs(Game:getFlag("vessel")) do
+        	print(k,v)
+        end
+
+        print("It is done.")
+    else
+    	print("No save data found")
+    end
+
 	cutscene:wait(1)
 	cutscene:gotoCutscene(nextCut)
 end

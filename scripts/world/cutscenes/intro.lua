@@ -3,47 +3,8 @@ return {
         love.window.setTitle("RECONTACT")
         cutscene:fadeOut(0)
 
-        --[[local skipDialogue --NEVER try to run this code
-        if canSkip then
-            print("hello")
-            skipDialogue = DialogueText("Press "..Input.getText("cancel").." to skip", 10, 10, {skip=false, auto_size=true})
-            skipDialogue:setLayer(WORLD_LAYERS["top"] + 100)
-            Game.world:addChild(skipDialogue)
-
-            cutscene:during(function()
-                if canSkip then
-                    if Input.pressed("cancel") then
-                        if beforeSkiptext then
-                            beforeSkiptext:remove()
-                        end
-                        gonerMusic:remove()
-                        skipDialogue:remove()
-                        canSkip=nil
-                        cutscene:gotoCutscene("intro.gonerSkip")
-                    end
-                end
-            end)
-        end]]
-
         gonerMusic=Music("AUDIO_DRONE")
         cutscene:wait(1.5)
-
-        local function file_exists(name)
-           local f = io.open(name, "r")
-           return f ~= nil and io.close(f)
-        end
-
-        local function getFileLines(fileName)
-            local f = io.open(fileName, "r")
-
-            tab={}
-            for l in f:lines() do
-                table.insert(tab, l)
-            end
-
-            f:close()
-            return tab
-        end
 
         local function gonerText(str)
             local text = DialogueText("[speed:0.3][spacing:6][style:GONER][voice:none]" .. str, 80 * 2, 50 * 2, 640, 480, {auto_size = true})
@@ -57,15 +18,6 @@ return {
             Game.world.timer:tween(1, text, {alpha = 0})
             cutscene:wait(1)
             text:remove()
-        end
-
-        local function gonerSetText(str, text)
-            text.alpha=1
-            text:setText("[speed:0.3][spacing:6][style:GONER][voice:none]" .. str)
-
-            cutscene:wait(function() return text.done end)
-            Game.world.timer:tween(1, text, {alpha = 0})
-            cutscene:wait(1)
         end
 
         local function gonerChoicer(choices)
@@ -150,10 +102,10 @@ return {
         beforeSkiptext.parallax_y = 0
         Game.world:addChild(beforeSkiptext)
 
-        gonerSetText("WELCOME AGAIN.", beforeSkiptext)
-        gonerText("IT SEEMS YOU ARE\nSEEKING FOR...\n[wait:20]MORE SECRETS.", beforeSkiptext)
-        gonerText("SECRETS THAT\nSHOULD NOT\nEXIST.", beforeSkiptext)
-        gonerText("INTERESTING.[wait:20]\nTRULY[wait:10]\nINTERESTING.", beforeSkiptext)
+        gonerText("WELCOME AGAIN.")
+        gonerText("IT SEEMS YOU ARE\nSEEKING FOR...\n[wait:20]MORE SECRETS.")
+        gonerText("SECRETS THAT\nSHOULD NOT\nEXIST.")
+        gonerText("INTERESTING.[wait:20]\nTRULY[wait:10]\nINTERESTING.")
 
         beforeSkiptext:remove()
         
@@ -168,128 +120,12 @@ return {
         background.layer = WORLD_LAYERS["top"]
         Game.world:addChild(background)
 
-        if canSkip then
-            canSkip=false
-            Game.world.timer:tween(0.5, skipDialogue, {alpha=0}, "linear", function() skipDialogue:remove() end)
-        end
-
-        local current_os = love.system.getOS()
-        oriSaves={{}, {}, {}}
-        local fileFound = false
-        if current_os == "Windows" then
-            for i=0,2 do
-                file = string.gsub(os.getenv('UserProfile'), "\\", "/").."/AppData/Local/DELTARUNE/filech2_".. i
-                if file_exists(file) then
-                    print("Save file "..i.." found!")
-                    oriSaves[i+1]=getFileLines(file)
-                    fileFound=true
-                end
-            end
-        end
-
         gonerText("I THINK...[wait:20]\nWE CAN FIND AN\nARRANGEMENT.")
         gonerText("YES...[wait:40]\nI AM SURE WE CAN.")
-        if fileFound then
-            gonerText("BUT BEFOREHAND,[wait:20]\nI MUST ASK YOU[wait:10]\nSOMETHING IMPORTANT.")
-            gonerText("I SEE YOU POSSESS\nA COPY OF DELTARUNE\nON YOUR MACHINE.")
-            gonerText("FOR THE SAKE OF\nAMELIORATING YOUR\nEXPERIENCE...")
-            gonerText("YOUR NAME[wait:10]\nYOUR CREATION'S NAME[wait:10]\nYOUR INVENTORY[wait:10]\nTHE PATH YOU\nHAVE CHOSEN")
-            gonerText("ALL CAN BE USED\nSO YOU SHOULD FEEL...[wait:20]\n\"AT HOME.\"")
-            local text = DialogueText("[speed:0.3][spacing:6][style:GONER][voice:none]DO YOU AGREE TO\nTHE USE OF YOUR\nSAVE DATA?", 80 * 2, 50 * 2, 640, 480, {auto_size = true})
-            text.layer = WORLD_LAYERS["top"] + 100
-            text.skip_speed = true
-            text.parallax_x = 0
-            text.parallax_y = 0
-            Game.world:addChild(text)
-
-            local c=gonerChoicer({"YES", "NO"})
-            Game.world.timer:tween(1, text, {alpha = 0})
-            cutscene:wait(1)
-            text:remove()
-            if c==1 then
-                gonerText("EXCELLENT.")
-                gonerText("NOW...")
-                local text = DialogueText("[speed:0.3][spacing:6][style:GONER][voice:none]WHICH SAVE FILE\nSHOULD WE USE?", 80 * 2, 50 * 2, 640, 480, {auto_size = true})
-                text.layer = WORLD_LAYERS["top"] + 100
-                text.skip_speed = true
-                text.parallax_x = 0
-                text.parallax_y = 0
-                Game.world:addChild(text)
-
-                local t={}
-                for i=1,3 do
-                    if #oriSaves[i]>0 then
-                        if tonumber(oriSaves[i][1468])>=1 then
-                            table.insert(t, "[color:red]FILE "..i.." - "..oriSaves[i][1])
-                        else
-                            table.insert(t, "FILE "..i.." - "..oriSaves[i][1])
-                        end
-                    end
-                end
-
-                local c=gonerChoicer(t)
-                Game.world.timer:tween(1, text, {alpha = 0})
-                cutscene:wait(1)
-                text:remove()
-                Game.save_name=oriSaves[c][1]
-                Game:setFlag("deltarune_data", {
-                    gonername=oriSaves[c][2],
-                    krisStats={
-                        hp=oriSaves[c][79],
-                        maxhp=oriSaves[c][80],
-                        atk=oriSaves[c][81],
-                        def=oriSaves[c][82],
-                        mag=oriSaves[c][83],
-                        weapon=oriSaves[c][85],
-                        armor1=oriSaves[c][86],
-                        armor2=oriSaves[c][87]
-                    },
-                    susieStats={
-                        hp=oriSaves[c][141],
-                        maxhp=oriSaves[c][142],
-                        atk=oriSaves[c][143],
-                        def=oriSaves[c][144],
-                        mag=oriSaves[c][145],
-                        weapon=oriSaves[c][147],
-                        armor1=oriSaves[c][148],
-                        armor2=oriSaves[c][149]
-                    },
-                    ralseiStats={
-                        hp=oriSaves[c][203],
-                        maxhp=oriSaves[c][204],
-                        atk=oriSaves[c][205],
-                        def=oriSaves[c][206],
-                        mag=oriSaves[c][207],
-                        weapon=oriSaves[c][209],
-                        armor1=oriSaves[c][210],
-                        armor2=oriSaves[c][211],
-                    },
-                    noelleStats={
-                        armor1=oriSaves[c][272],
-                        armor2=oriSaves[c][273]
-                    },
-                    jevil=oriSaves[c][832],
-                    vessel={
-                        head=oriSaves[c][1453],
-                        body=oriSaves[c][1454],
-                        legs=oriSaves[c][1455]
-                    }
-                })
-                Game.money=oriSaves[c][11]
-                Game.playtimer=oriSaves[c][3055]
-                gonerText("THANK YOU.")
-                gonerText("YOUR DATA HAS BEEN\nPERFECTLY ENREGISTRED\nINTO THE NEXT\nEXPERIENCE.")
-                gonerText("NOW...[wait:20]\nLET'S GET BACK\nTO THE TOPIC,[wait:20]\nSHALL WE?")
-            else
-                gonerText("OF COURSE, OF COURSE.[wait:20]\nIT IS UNDERSTANDABLE.")
-                gonerText("IN THAT CASE,[wait:20]\nLET'S GET TO THE\nPOINT,[wait:20] SHALL WE?")
-            end
-        end
-
         gonerText("AS YOU MAY KNOW, OUR EXPERIENCE'S CURRENT\nRESULTS ARE...")
         gonerText("EXCELLENT.[wait:20]\nVERY INTERESTING,[wait:10]\nEVEN.")
         gonerText("USING SOMEONE ELSE'S\nCHOICES TO CHANGE THE\nNATURAL TRACK OF\nTHIS WORLD IS\nFACINATING.")
-        gonerText("BUT I HOPE YOU\nACKNOWLEDGE THAT\nBRINGING CHOICES\nALSO BRING\nCONSEQUENCES.")
+        gonerText("BUT I HOPE YOU'LL\nALSO ACKNOWLEDGE\nCONSEQUENCES.")
         gonerText("CONSEQUENCES[wait:20]\nJUST[wait:20]\nFOR[wait:20]\nYOU.[wait:20]")
         gonerText("BUT I ASSUME YOU ARE\nAWARE OF THIS PART.")
         local starShow=math.random()>=0.8
@@ -465,12 +301,17 @@ return {
         local susie=cutscene:getCharacter("susie")
         local noelle=cutscene:getCharacter("noelle")
 
+        local transition = Game.world:getEvent(20)
+        local ts_orix = transition.x
+
+        transition.x=999
         susie.y=560
 
         cutscene:fadeIn(0)
         Assets.playSound("snd_dooropen")
         cutscene:wait(cutscene:walkTo(susie, susie.x, 320, 1, "right"))
         cutscene:setSpeaker("susie")
+        transition.x=ts_orix
         cutscene:text("* Noelle?[wait:1] I'm back!", "sincere_smile")
         cutscene:text("* Everything will soon be over.", "small_smile")
         cutscene:walkTo(susie, 540, susie.y, 1.5)

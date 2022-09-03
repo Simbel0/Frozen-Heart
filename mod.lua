@@ -1,5 +1,92 @@
 function Mod:init()
     print("Loaded "..self.info.name.."!")
+
+    self.kristal_ids = {
+        item={
+            "dark_candy",
+            "revivemint",
+            "glowshard",
+            "manual",
+            nil,
+            "top_cake",
+            "spincake",
+            "darkburger",
+            "lancercookie",
+            "gigasalad",
+            "clubssandwich",
+            "heartsdonut",
+            "chocdiamond",
+            "favwich",
+            "rouxlsroux",
+            "cd_bagel",
+            "mannequin",
+            "kris_tea",
+            "noelle_tea",
+            "ralsei_tea",
+            "susie_tea",
+            "dd_burger",
+            "lightcandy",
+            "butjuice",
+            "spagetticode",
+            "javacookie",
+            "tensionbit",
+            "tensiongem",
+            "tensionmax",
+            "revivedust",
+            "revivebrite",
+            "s_poison",
+            "dogdollar"
+        },
+        weapon={
+            "wood_blade",
+            "mane_ax",
+            "red_scarf",
+            "everybodyweapon",
+            "spookysword",
+            "brave_ax",
+            "devilsknife",
+            "trefoil",
+            "ragger",
+            "daintyscarf",
+            "twistedswd",
+            "snowring",
+            "thornring",
+            "bounceblade",
+            "cheerscarf",
+            "mechasaber",
+            "autoaxe",
+            "fiberscarf",
+            "ragger2",
+            "brokenswd",
+            "puppetscarf",
+            "freezering"
+        },
+        armor={
+            "amber_card",
+            "dice_brace",
+            "pink_ribbon",
+            "white_ribbon",
+            "ironshackle",
+            "mousetoken",
+            "jevilstail",
+            "silver_card",
+            "twinribbon",
+            "glowwrist",
+            "chainmail",
+            "bshotbowtie",
+            "spikeband",
+            "silver_watch",
+            "tensionbow",
+            "mannequin",
+            "darkgoldband",
+            "skymantle",
+            "spikeshackle",
+            "frayedbowtie",
+            "dealmaker",
+            "royalpin"
+        }
+    }
+
 end
 
 function Mod:postInit(newfile)
@@ -47,4 +134,8 @@ function Mod:load(data, newfile, index)
             Game.world:startCutscene("intro.quickintro")
         end
     end
+end
+
+function Mod:getKristalID(id, type)
+    return self.kristal_ids[type][id]
 end
