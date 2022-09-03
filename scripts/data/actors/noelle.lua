@@ -12,4 +12,11 @@ function actor:init()
 	self.animations["battle/idleTrance"]={"battle/idleTrance", 0.2, true}
 end
 
+function actor:getDefault()
+	if Game:getFlag("plot")==3 then
+		return "walk_blush"
+	end
+	return super:getDefault(self)
+end
+
 return actor

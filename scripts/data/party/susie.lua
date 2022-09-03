@@ -52,4 +52,11 @@ function character:getTitle()
     return "LV"..self.level.." Healing Master\nCan use ultimate\nhealing. (Losers!)"
 end
 
+function character:getSoulColor()
+    if Game:getFlag("plot", 0)==3 then
+        return 1, 1, 1, 1
+    end
+    return super:getSoulColor(self)
+end
+
 return character

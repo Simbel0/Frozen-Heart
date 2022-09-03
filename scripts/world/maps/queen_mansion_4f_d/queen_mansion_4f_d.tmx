@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="46" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="8" nextobjectid="18">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="46" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="8" nextobjectid="21">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
+ <properties>
+  <property name="music" value="wind_highplace"/>
+ </properties>
  <tileset firstgid="1" source="../../tilesets/mansion_interior.tsx"/>
  <tileset firstgid="287" source="../../tilesets/mansion.tsx"/>
  <tileset firstgid="917" source="../../tilesets/mansion_pillars.tsx"/>
@@ -13,38 +16,24 @@
   </tile>
  </tileset>
  <tileset firstgid="940" source="../../tilesets/mansion_top.tsx"/>
- <tileset firstgid="1030" name="big_fountain" tilewidth="175" tileheight="45" tilecount="4" columns="0">
-  <grid orientation="orthogonal" width="1" height="1"/>
-  <tile id="3">
-   <image width="175" height="45" source="../../../../assets/sprites/tilesets/spr_cc_fountainbg_ch1_3.png"/>
-  </tile>
-  <tile id="0">
-   <image width="175" height="45" source="../../../../assets/sprites/tilesets/spr_cc_fountainbg_ch1_0.png"/>
-  </tile>
-  <tile id="1">
-   <image width="175" height="45" source="../../../../assets/sprites/tilesets/spr_cc_fountainbg_ch1_1.png"/>
-  </tile>
-  <tile id="2">
-   <image width="175" height="45" source="../../../../assets/sprites/tilesets/spr_cc_fountainbg_ch1_2.png"/>
-  </tile>
- </tileset>
- <imagelayer id="4" name="Calque d'Images 1" offsetx="0" offsety="-200" repeatx="1">
+ <tileset firstgid="1030" source="../../tilesets/mansion_pillars_dark.tsx"/>
+ <imagelayer id="4" name="Calque d'Images 1" offsetx="0" offsety="-200" parallaxx="1.3" repeatx="1">
   <image source="../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
  </imagelayer>
  <layer id="2" name="dark_pillars" width="46" height="12">
   <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,926,927,928,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,929,930,931,0,0,0,0,929,930,931,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,929,930,931,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,926,927,928,0,0,0,0,929,930,931,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,929,930,931,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,926,927,928,0,0,0,0,929,930,931,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,929,930,931,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,926,927,928,0,0,0,0,929,930,931,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,920,921,922,0,0,0,0,920,921,922,0,0,0,0,0,0,0,929,930,931,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,923,924,925,0,0,0,0,923,924,925,0,0,0,0,0,0,0,926,927,928,0,0,0,0,929,930,931,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,926,927,928,0,0,0,0,926,927,928,0,0,0,0,0,0,0,926,927,928,0,0,0,0,926,927,928,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,929,930,931,0,0,0,0,929,930,931,0,0,0,0,0,0,0,929,930,931,0,0,0,0,929,930,931,0
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1033,1034,1035,0,0,0,0,1033,1034,1035,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1036,1037,1038,0,0,0,0,1036,1037,1038,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,0,0,0,0,0,0,1039,1040,1041,0,0,0,0,1039,1040,1041,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0,0,0,0,0,0,0,1042,1043,1044,0,0,0,0,1042,1043,1044,0
 </data>
  </layer>
  <layer id="1" name="Calque de Tuiles 1" width="46" height="12">
@@ -71,7 +60,7 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff00ff" id="3" name="objects">
-  <object id="2" name="big_fountain" x="900" y="40" width="40" height="40"/>
+  <object id="2" name="far_fountain" x="900" y="40" width="40" height="40"/>
   <object id="3" name="transition" x="1840" y="280" width="20" height="80">
    <properties>
     <property name="map" value="queen_mansion_top"/>
@@ -82,6 +71,11 @@
    <properties>
     <property name="map" value="queen_mansion_4f_c"/>
     <property name="marker" value="entry_r"/>
+   </properties>
+  </object>
+  <object id="20" name="script" x="520" y="280" width="40" height="80">
+   <properties>
+    <property name="cutscene" value="overworld.doubts"/>
    </properties>
   </object>
  </objectgroup>

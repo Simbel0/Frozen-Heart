@@ -226,7 +226,7 @@ function Battle:updateTransitionOut()
     if self.encounter.battleMod then
         local map={Game.world.map:getImageLayer("room"), Game.world.map:getImageLayer("moon"), Game.world.map:getImageLayer("ferris_wheel")}
         for _,layer in ipairs(map) do
-            layer.y = Utils.lerp(-30, 30, self.transition_timer / 10)
+            layer.y = Utils.lerp(0, -30, -(self.transition_timer / 10))
         end
     end
 

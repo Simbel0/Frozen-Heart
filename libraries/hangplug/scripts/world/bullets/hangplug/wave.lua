@@ -68,4 +68,12 @@ function PlugWave:update()
     super:update(self)
 end
 
+function PlugWave:onDamage(soul)
+    super:onDamage(self, soul)
+    Game:addFlag("hangplug_hits", 1)
+    if Game:getFlag("hangplug_hits", 1)>=5 then
+        Game.world:startCutscene("overworld.tooMuchElec")
+    end
+end
+
 return PlugWave

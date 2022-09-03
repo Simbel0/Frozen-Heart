@@ -175,7 +175,7 @@ function Noelle_Battle:onTurnEnd()
         if self.noelle.confusedTimer==3 then
             self.noelle.confusedTimer=0
             self.noelle.confused=false
-            self.noelle.comment=""
+            self.noelle.comment="(Tired)"
             Game.battle:startCutscene(function(cutscene)
                 cutscene:text("* Noelle snapped out of the confusion!")
                 cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)

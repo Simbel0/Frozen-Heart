@@ -9,7 +9,8 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 27,
+  nextobjectid = 28,
+  backgroundcolor = { 27, 27, 42 },
   properties = {},
   tilesets = {
     {
@@ -27,9 +28,9 @@ return {
       name = "moon",
       visible = true,
       opacity = 1,
-      offsetx = 0,
+      offsetx = -100,
       offsety = 0,
-      parallaxx = 1,
+      parallaxx = 0.7,
       parallaxy = 1,
       repeatx = false,
       repeaty = false,
@@ -213,8 +214,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text1"] = "* (There are all sorts of clothes inside.)",
-            ["text2"] = "* (..[wait:1]. huh[wait:1], never seen Noelle wear anything like this...?)"
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 1
           }
         },
         {
@@ -229,8 +230,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text1"] = "* (There are catalogues of search results.)",
-            ["text2"] = "* (Seems like most things couldn't be made into objects...)"
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 2
           }
         },
         {
@@ -245,8 +246,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text1"] = "* (It's a calendar.)",
-            ["text2"] = "* (Every page is the last month[wait:1], every day is the twenty-fifth.)"
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 3
           }
         },
         {
@@ -261,7 +262,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text1"] = "* (Noelle's bed.)"
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 4
           }
         },
         {
@@ -276,7 +278,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["text1"] = "* (It's a wardrobe.)"
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 5
           }
         },
         {
@@ -312,6 +315,22 @@ return {
             ["aura"] = false,
             ["chase"] = false,
             ["encounter"] = "noelle_battle"
+          }
+        },
+        {
+          id = 27,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 1240,
+          y = 200,
+          width = 80,
+          height = 200,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 6
           }
         }
       }

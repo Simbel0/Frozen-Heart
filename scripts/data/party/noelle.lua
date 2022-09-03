@@ -22,23 +22,25 @@ function character:getTitle()
 end
 
 function character:drawPowerStat(index, x, y, menu)
+    local less=Game:getFlag("doubtDiscussion", false)
     if index == 1 then
         local icon = Assets.getTexture("ui/menu/icon/snow")
         love.graphics.draw(icon, x-26, y+6, 0, 2, 2)
         love.graphics.print("Coldness", x, y)
-        local coldness = 54
+        local coldness = less and Utils.round(54/2) or 54
         love.graphics.print(coldness, x+130, y)
         return true
     elseif index == 2 then
         local icon = Assets.getTexture("ui/menu/icon/exclamation")
         love.graphics.draw(icon, x-26, y+6, 0, 2, 2)
         love.graphics.print("Boldness", x, y, 0, 0.8, 1)
-        love.graphics.print(self:getFlag("boldness", 1), x+130, y)
+        love.graphics.print(less and 0 or 1, x+130, y)
         return true
     elseif index == 3 then
         local icon = Assets.getTexture("ui/menu/icon/fire")
         love.graphics.draw(icon, x-26, y+6, 0, 2, 2)
         love.graphics.print("Guts:", x, y)
+        love.graphics.draw(icon, x+26, y+6, 0, 2, 2)
         return true
     end
 end

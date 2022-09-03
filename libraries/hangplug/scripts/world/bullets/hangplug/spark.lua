@@ -97,4 +97,12 @@ function PlugSpark:draw()
     super:draw(self)
 end
 
+function PlugSpark:onDamage(soul)
+    super:onDamage(self, soul)
+    Game:addFlag("hangplug_hits", 1)
+    if Game:getFlag("hangplug_hits", 1)>=5 then
+        Game.world:startCutscene("overworld.tooMuchElec")
+    end
+end
+
 return PlugSpark

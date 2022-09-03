@@ -6,7 +6,7 @@ return function(cutscene)
     cutscene:wait(2)
 
     Kristal.hideBorder(1)
-    Spamton = Game:getFlag("no_heal", false)
+    Spamton = false--Game:getFlag("no_heal", false)
     Astrogirl = Utils.random(0, 100)<10
     local theme = Music(Astrogirl and "Beeg" or "ch2_credits")
     theme.source:setLooping(false)
@@ -51,7 +51,7 @@ return function(cutscene)
 
     cutscene:wait(wait_times[2])
 
-    text:setText("[color:555555]Music[color:reset]\nUntil Next Time\nFlasback Excerpt\nLost Girl\n\nToby Fox")
+    text:setText("[color:555555]Music[color:reset]\nUntil Next Time\nFlasback Excerpt\nLost Girl\nmus_mysteriousroom2\n\nToby Fox")
 
     cutscene:wait(wait_times[3])
 
@@ -80,15 +80,20 @@ return function(cutscene)
 
     cutscene:wait(wait_times[3])
 
-    text:setText("[color:555555]Procrastination[color:reset]\n\nMyself")
+    local lib_credits = "Queen actor, Hangplugs - Nyako\n"
+    if Spamton then
+        lib_credits = lib_credits.."Yellow Soul, Spamton NEO actor - vitellary"
+    end
+
+    text:setText("[color:555555]Librairies[color:reset]\n\n"..lib_credits)
 
     cutscene:wait(wait_times[3])
 
-    text:setText("[color:555555]Betatesters[color:reset]\n\nNo one :')")
+    text:setText("[color:555555]Betatesters[color:reset]\n\nRacckoon\nOctoBox\nGlavvrach")
 
     cutscene:wait(wait_times[5])
 
-    text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server for their help")
+    text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server\nfor their help and feedbacks")
 
     cutscene:wait(wait_times[3])
 

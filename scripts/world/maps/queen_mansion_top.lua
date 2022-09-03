@@ -9,21 +9,21 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 10,
+  nextobjectid = 11,
   backgroundcolor = { 2, 2, 29 },
-  properties = {},
+  properties = {
+    ["music"] = "wind_highplace"
+  },
   tilesets = {
     {
       name = "mansion_top",
       firstgid = 1,
-      filename = "../tilesets/mansion_top.tsx",
-      exportfilename = "../tilesets/mansion_top.lua"
+      filename = "../tilesets/mansion_top.tsx"
     },
     {
       name = "city_girder",
       firstgid = 91,
-      filename = "../tilesets/city_girder.tsx",
-      exportfilename = "../tilesets/city_girder.lua"
+      filename = "../tilesets/city_girder.tsx"
     }
   },
   layers = {
@@ -36,7 +36,7 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = -40,
-      parallaxx = 1,
+      parallaxx = 1.3,
       parallaxy = 1,
       repeatx = true,
       repeaty = false,
@@ -99,6 +99,7 @@ return {
           visible = true,
           properties = {
             ["actor"] = "ralsei",
+            ["cutscene"] = "overworld.ralsei_dialogue",
             ["facing"] = "up"
           }
         },
@@ -114,7 +115,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["actor"] = "queen"
+            ["actor"] = "queen",
+            ["cutscene"] = "overworld.queen_dialogue"
           }
         },
         {
@@ -145,8 +147,23 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["map"] = "mansion_queen_4f_d",
+            ["map"] = "queen_mansion_4f_d",
             ["marker"] = "entry_r"
+          }
+        },
+        {
+          id = 10,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 1700,
+          y = 280,
+          width = 41,
+          height = 70,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "overworld.together"
           }
         }
       }

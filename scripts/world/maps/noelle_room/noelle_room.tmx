@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="11" nextobjectid="27">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#1b1b2a" nextlayerid="11" nextobjectid="28">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
  <tileset firstgid="1" source="../../tilesets/noelle_room.tsx"/>
- <imagelayer id="9" name="moon">
+ <imagelayer id="9" name="moon" offsetx="-100" offsety="0" parallaxx="0.7">
   <image source="../../../../assets/sprites/tilesets/noelle_room_moon.png" width="1586" height="480"/>
  </imagelayer>
  <imagelayer id="8" name="room">
@@ -30,30 +30,32 @@
   </object>
   <object id="15" name="interactable" x="232" y="200" width="58" height="35">
    <properties>
-    <property name="text1" value="* (There are all sorts of clothes inside.)"/>
-    <property name="text2" value="* (..[wait:1]. huh[wait:1], never seen Noelle wear anything like this...?)"/>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="1"/>
    </properties>
   </object>
   <object id="16" name="interactable" x="295.725" y="205.871" width="74.219" height="29.4848">
    <properties>
-    <property name="text1" value="* (There are catalogues of search results.)"/>
-    <property name="text2" value="* (Seems like most things couldn't be made into objects...)"/>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="2"/>
    </properties>
   </object>
   <object id="17" name="interactable" x="448" y="176" width="54" height="40">
    <properties>
-    <property name="text1" value="* (It's a calendar.)"/>
-    <property name="text2" value="* (Every page is the last month[wait:1], every day is the twenty-fifth.)"/>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="3"/>
    </properties>
   </object>
   <object id="18" name="interactable" x="580" y="195" width="122" height="40">
    <properties>
-    <property name="text1" value="* (Noelle's bed.)"/>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="4"/>
    </properties>
   </object>
   <object id="19" name="interactable" x="826.143" y="195.174" width="54" height="40">
    <properties>
-    <property name="text1" value="* (It's a wardrobe.)"/>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="5"/>
    </properties>
   </object>
   <object id="20" name="transition" x="229.975" y="477.641" width="76.6585" height="17.6904">
@@ -71,6 +73,12 @@
     <property name="encounter" value="noelle_battle"/>
    </properties>
    <point/>
+  </object>
+  <object id="27" name="interactable" x="1240" y="200" width="80" height="200">
+   <properties>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="6"/>
+   </properties>
   </object>
  </objectgroup>
  <objectgroup color="#0000ff" id="5" name="collisions_objects" visible="0">
