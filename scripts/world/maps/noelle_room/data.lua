@@ -294,7 +294,6 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["cond"] = "Game:getFlag(\"plot\", 0)>=2",
             ["map"] = "queen_mansion_4f_b",
             ["marker"] = "out_noelle_room"
           }

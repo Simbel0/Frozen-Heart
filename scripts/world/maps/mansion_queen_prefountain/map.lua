@@ -2,6 +2,8 @@ local prefountain, super = Class(Map)
 
 function prefountain:load()
   super:load(self)
+  Game:setBorder("mansion")
+  
   self.sounds={"hurt", "damage", "import", "chargeshot_fire", "laz_c", "power", "ui_select"}
   self.volume=1
 end

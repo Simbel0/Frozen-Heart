@@ -60,7 +60,6 @@
   </object>
   <object id="20" name="transition" x="229.975" y="477.641" width="76.6585" height="17.6904">
    <properties>
-    <property name="cond" value="Game:getFlag(&quot;plot&quot;, 0)&gt;=2"/>
     <property name="map" value="queen_mansion_4f_b"/>
     <property name="marker" value="out_noelle_room"/>
    </properties>

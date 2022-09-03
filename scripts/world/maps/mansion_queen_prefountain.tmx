@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="16" height="27" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="11" nextobjectid="27">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="16" height="27" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="11" nextobjectid="28">
  <editorsettings>
   <export target="mansion_queen_prefountain/data.lua" format="lua"/>
  </editorsettings>
@@ -12,6 +12,7 @@
  <tileset firstgid="145" source="../tilesets/overlay.tsx"/>
  <tileset firstgid="179" source="../tilesets/mansion_interior.tsx"/>
  <tileset firstgid="465" source="../tilesets/mansion.tsx"/>
+ <tileset firstgid="1095" source="../tilesets/mansion_objects.tsx"/>
  <imagelayer id="10" name="Calque d'Images 1" offsetx="0" offsety="600" parallaxx="1.3" repeatx="1">
   <image source="../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
  </imagelayer>
@@ -170,37 +171,6 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="6" name="lustre" width="16" height="27">
-  <data encoding="csv">
-0,0,0,0,0,0,609,610,611,612,0,0,0,0,0,0,
-0,0,0,0,0,0,627,628,629,630,0,0,0,0,0,0,
-0,0,0,0,0,0,645,646,647,648,0,0,0,0,0,0,
-0,0,0,0,0,0,663,664,665,666,0,0,0,0,0,0,
-0,0,0,0,0,0,681,682,683,684,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
- </layer>
  <objectgroup color="#0000ff" id="8" name="collisions">
   <object id="3" x="400" y="320" width="40" height="320"/>
   <object id="4" x="400" y="640" width="80" height="40"/>
@@ -250,6 +220,7 @@
     <property name="cutscene" value="overworld.nopower"/>
    </properties>
   </object>
+  <object id="27" name="chandeler" gid="1102" x="240" y="187.5" width="160" height="185"/>
  </objectgroup>
  <objectgroup color="#aa00ff" id="9" name="markers">
   <object id="19" name="spawn" x="80" y="920">

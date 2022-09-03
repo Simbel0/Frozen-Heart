@@ -18,17 +18,17 @@ return {
     {
       name = "mansion",
       firstgid = 1,
-      filename = "../../tilesets/mansion.tsx"
+      filename = "../tilesets/mansion.tsx"
     },
     {
       name = "mansion_interior",
       firstgid = 631,
-      filename = "../../tilesets/mansion_interior.tsx"
+      filename = "../tilesets/mansion_interior.tsx"
     },
     {
       name = "mansion_pillars",
       firstgid = 917,
-      filename = "../../tilesets/mansion_pillars.tsx"
+      filename = "../tilesets/mansion_pillars.tsx"
     },
     {
       name = "mansion_battleborder",
@@ -38,7 +38,7 @@ return {
       spacing = 0,
       margin = 0,
       columns = 18,
-      image = "../../../../assets/sprites/tilesets/bg_dw_mansion_battle.png",
+      image = "../../../assets/sprites/tilesets/bg_dw_mansion_battle.png",
       imagewidth = 720,
       imageheight = 1360,
       objectalignment = "unspecified",
@@ -59,14 +59,14 @@ return {
     {
       name = "mansion_pillars_dark",
       firstgid = 1550,
-      filename = "../../tilesets/mansion_pillars_dark.tsx",
-      exportfilename = "../../tilesets/mansion_pillars_dark.lua"
+      filename = "../tilesets/mansion_pillars_dark.tsx",
+      exportfilename = "../tilesets/mansion_pillars_dark.lua"
     }
   },
   layers = {
     {
       type = "imagelayer",
-      image = "../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png",
+      image = "../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png",
       id = 3,
       name = "city_bg",
       visible = true,

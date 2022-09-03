@@ -18,17 +18,17 @@ return {
     {
       name = "mansion_interior",
       firstgid = 1,
-      filename = "../../tilesets/mansion_interior.tsx"
+      filename = "../tilesets/mansion_interior.tsx"
     },
     {
       name = "mansion",
       firstgid = 287,
-      filename = "../../tilesets/mansion.tsx"
+      filename = "../tilesets/mansion.tsx"
     },
     {
       name = "mansion_pillars",
       firstgid = 917,
-      filename = "../../tilesets/mansion_pillars.tsx"
+      filename = "../tilesets/mansion_pillars.tsx"
     },
     {
       name = "queen_symbol_floor",
@@ -54,7 +54,7 @@ return {
       tiles = {
         {
           id = 1,
-          image = "../../../../assets/sprites/queen_symbol.png",
+          image = "../../../assets/sprites/queen_symbol.png",
           width = 640,
           height = 216
         }
@@ -63,19 +63,19 @@ return {
     {
       name = "mansion_top",
       firstgid = 940,
-      filename = "../../tilesets/mansion_top.tsx"
+      filename = "../tilesets/mansion_top.tsx"
     },
     {
       name = "mansion_pillars_dark",
       firstgid = 1030,
-      filename = "../../tilesets/mansion_pillars_dark.tsx",
-      exportfilename = "../../tilesets/mansion_pillars_dark.lua"
+      filename = "../tilesets/mansion_pillars_dark.tsx",
+      exportfilename = "../tilesets/mansion_pillars_dark.lua"
     }
   },
   layers = {
     {
       type = "imagelayer",
-      image = "../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png",
+      image = "../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png",
       id = 4,
       name = "Calque d'Images 1",
       visible = true,

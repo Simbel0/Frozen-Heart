@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="66" height="22" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="11" nextobjectid="65">
  <editorsettings>
-  <export target="data.lua" format="lua"/>
+  <export target="queen_mansion_4f_c/data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="music" value="wind_highplace"/>
  </properties>
- <tileset firstgid="1" source="../../tilesets/mansion.tsx"/>
- <tileset firstgid="631" source="../../tilesets/mansion_interior.tsx"/>
- <tileset firstgid="917" source="../../tilesets/mansion_pillars.tsx"/>
+ <tileset firstgid="1" source="../tilesets/mansion.tsx"/>
+ <tileset firstgid="631" source="../tilesets/mansion_interior.tsx"/>
+ <tileset firstgid="917" source="../tilesets/mansion_pillars.tsx"/>
  <tileset firstgid="938" name="mansion_battleborder" tilewidth="40" tileheight="40" tilecount="612" columns="18">
-  <image source="../../../../assets/sprites/tilesets/bg_dw_mansion_battle.png" width="720" height="1360"/>
+  <image source="../../../assets/sprites/tilesets/bg_dw_mansion_battle.png" width="720" height="1360"/>
  </tileset>
- <tileset firstgid="1550" source="../../tilesets/mansion_pillars_dark.tsx"/>
+ <tileset firstgid="1550" source="../tilesets/mansion_pillars_dark.tsx"/>
  <imagelayer id="3" name="city_bg" parallaxx="1.3" repeatx="1">
-  <image source="../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
+  <image source="../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
   <properties>
    <property name="map" value="queen_mansion_4f_d"/>
    <property name="marker" value="entry_l"/>

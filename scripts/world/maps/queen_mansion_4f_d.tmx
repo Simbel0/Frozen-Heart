@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="46" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="8" nextobjectid="21">
  <editorsettings>
-  <export target="data.lua" format="lua"/>
+  <export target="queen_mansion_4f_d/data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="music" value="wind_highplace"/>
  </properties>
- <tileset firstgid="1" source="../../tilesets/mansion_interior.tsx"/>
- <tileset firstgid="287" source="../../tilesets/mansion.tsx"/>
- <tileset firstgid="917" source="../../tilesets/mansion_pillars.tsx"/>
+ <tileset firstgid="1" source="../tilesets/mansion_interior.tsx"/>
+ <tileset firstgid="287" source="../tilesets/mansion.tsx"/>
+ <tileset firstgid="917" source="../tilesets/mansion_pillars.tsx"/>
  <tileset firstgid="938" name="queen_symbol_floor" tilewidth="640" tileheight="216" tilecount="1" columns="0">
   <grid orientation="orthogonal" width="1" height="1"/>
   <tile id="1">
-   <image width="640" height="216" source="../../../../assets/sprites/queen_symbol.png"/>
+   <image width="640" height="216" source="../../../assets/sprites/queen_symbol.png"/>
   </tile>
  </tileset>
- <tileset firstgid="940" source="../../tilesets/mansion_top.tsx"/>
- <tileset firstgid="1030" source="../../tilesets/mansion_pillars_dark.tsx"/>
+ <tileset firstgid="940" source="../tilesets/mansion_top.tsx"/>
+ <tileset firstgid="1030" source="../tilesets/mansion_pillars_dark.tsx"/>
  <imagelayer id="4" name="Calque d'Images 1" offsetx="0" offsety="-200" parallaxx="1.3" repeatx="1">
-  <image source="../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
+  <image source="../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png" width="428" height="480"/>
  </imagelayer>
  <layer id="2" name="dark_pillars" width="46" height="12">
   <data encoding="csv">
