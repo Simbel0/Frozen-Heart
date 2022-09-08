@@ -213,6 +213,7 @@ return function(cutscene)
     Game.battle.party[1]:heal(999)
     Game.battle.party[1].sprite.frozen=false
     Game.battle.party[1].sprite.freeze_progress=0
+    Game.battle.battle_ui.action_boxes[1]:resetHeadIcon()
     Game.battle.party[1]:resetSprite()
     cutscene:wait(0.75)
     local dialogue = DialogueText({

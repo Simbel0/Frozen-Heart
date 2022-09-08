@@ -49,7 +49,7 @@ return function(cutscene)
             end
         end
     end
-    cutscene:wait(0.5)
+    
     if fileFound then
     	print("Loading data from save file...")
     	Game.save_name=oriSaves[1]
