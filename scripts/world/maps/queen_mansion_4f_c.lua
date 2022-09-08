@@ -9,7 +9,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 65,
+  nextobjectid = 66,
   backgroundcolor = { 2, 2, 29 },
   properties = {
     ["music"] = "wind_highplace"
@@ -59,8 +59,7 @@ return {
     {
       name = "mansion_pillars_dark",
       firstgid = 1550,
-      filename = "../tilesets/mansion_pillars_dark.tsx",
-      exportfilename = "../tilesets/mansion_pillars_dark.lua"
+      filename = "../tilesets/mansion_pillars_dark.tsx"
     }
   },
   layers = {
@@ -658,22 +657,6 @@ return {
           }
         },
         {
-          id = 37,
-          name = "transition",
-          type = "",
-          shape = "rectangle",
-          x = 2640,
-          y = 400,
-          width = 20,
-          height = 120,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["map"] = "queen_mansion_4f_d",
-            ["marker"] = "entry_l"
-          }
-        },
-        {
           id = 38,
           name = "script",
           type = "",
@@ -701,6 +684,22 @@ return {
           visible = true,
           properties = {
             ["cutscene"] = "overworld.electricity2"
+          }
+        },
+        {
+          id = 65,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 2639,
+          y = 400.333,
+          width = 20,
+          height = 120,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "man_check",
+            ["once"] = false
           }
         }
       }

@@ -625,5 +625,20 @@ return {
 		cutscene:wait(1.5)
 		cutscene:mapTransition("fountain_room")
 		cutscene:gotoCutscene("ending.killing_spamton")
+	end,
+	man=function(cutscene)
+		if not Game.inventory:hasItem("egg") then
+			cutscene:text("* (Well[wait:1], there is a man here.)")
+			cutscene:text("* (The man might be happy again.)")
+			cutscene:text("* (He wants to express his gratitude to you.)")
+			cutscene:choicer({"Yes", "No"})
+			if cutscene.choice==1 then
+				Assets.stopAndPlaySound("egg")
+				Game.inventory:addItemTo("key_items", "egg", false)
+				cutscene:text("* (You received an Egg.)")
+			end
+		else
+			cutscene:text("* (Well[wait:1], there was not a man here.)")
+		end
 	end
 }

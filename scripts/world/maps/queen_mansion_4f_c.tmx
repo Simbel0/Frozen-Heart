@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="66" height="22" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="11" nextobjectid="65">
+<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="66" height="22" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#02021d" nextlayerid="11" nextobjectid="66">
  <editorsettings>
-  <export target="queen_mansion_4f_c/data.lua" format="lua"/>
+  <export target="queen_mansion_4f_c.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="music" value="wind_highplace"/>
@@ -173,12 +173,6 @@
    </properties>
    <point/>
   </object>
-  <object id="37" name="transition" x="2640" y="400" width="20" height="120">
-   <properties>
-    <property name="map" value="queen_mansion_4f_d"/>
-    <property name="marker" value="entry_l"/>
-   </properties>
-  </object>
   <object id="38" name="script" x="80" y="400" width="20" height="120">
    <properties>
     <property name="cutscene" value="overworld.electricity1"/>
@@ -187,6 +181,12 @@
   <object id="39" name="script" x="2320" y="400" width="20" height="120">
    <properties>
     <property name="cutscene" value="overworld.electricity2"/>
+   </properties>
+  </object>
+  <object id="65" name="script" x="2639" y="400.333" width="20" height="120">
+   <properties>
+    <property name="cutscene" value="man_check"/>
+    <property name="once" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
