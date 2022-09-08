@@ -95,13 +95,6 @@ return {
             return choice
         end
 
-        beforeSkiptext = DialogueText("aaa", 80 * 2, 50 * 2, 640, 480, {auto_size = true})
-        beforeSkiptext.layer = WORLD_LAYERS["top"] + 100
-        beforeSkiptext.skip_speed = true
-        beforeSkiptext.parallax_x = 0
-        beforeSkiptext.parallax_y = 0
-        Game.world:addChild(beforeSkiptext)
-
         gonerText("WELCOME AGAIN.")
         gonerText("IT SEEMS YOU ARE\nSEEKING FOR...\n[wait:20]MORE SECRETS.")
         gonerText("SECRETS THAT\nSHOULD NOT\nEXIST.")
@@ -287,7 +280,7 @@ return {
     intro=function(cutscene)
         cutscene:fadeOut(0)
 
-        cutscene:wait(3)
+        cutscene:wait(2)
 
         Kristal.showBorder(1)
         cutsceneMusic=Music("flashback_excerpt")
