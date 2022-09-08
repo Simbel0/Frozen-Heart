@@ -9,5 +9,24 @@
     "chapter": 2,
 
     "map": "noelle_room",
-    "party": ["susie"]
+    "party": ["susie"],
+
+    "equipment": {
+        "kris": {
+            "weapon": "mechasaber",
+            "armor": ["silver_watch", "amber_card"]
+        },
+        "susie": {
+            "weapon": "autoaxe",
+            "armor": ["jevilstail", "ironshackle"]
+        },
+        "ralsei": {
+            "weapon": "ragger2",
+            "armor": ["pink_ribbon", "amber_card"]
+        },
+        "noelle": {
+            "weapon": null,
+            "armor": [null, null]
+        }
+    },
 }

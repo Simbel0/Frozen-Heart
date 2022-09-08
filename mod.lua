@@ -107,19 +107,23 @@ function Mod:postInit(newfile)
             for i=1,4 do
                 Game.inventory:addItem("lightcandy")
             end
+            Game.inventory:addItem("candy_cone")
 
             local tea_flavors={"susie", "noelle"}
             local tea_flavor=Utils.pick(tea_flavors)
             Game.inventory:addItem(tea_flavor.."_tea")
         elseif diff==1 then
-            for i=1,5 do
+            for i=1,3 do
                 Game.inventory:addItem("lightcandy")
             end
+            Game.inventory:addItem("candy_cone")
 
             local tea_flavors={"kris", "susie", "ralsei", "noelle"}
             local tea_flavor=Utils.pick(tea_flavors)
             Game.inventory:addItem(tea_flavor.."_tea")
         end
+
+        Game.inventory:removeItem("cell_phone")
 
         Game.world:startCutscene("TEST_DOGUNCHECK")
     end
