@@ -201,6 +201,7 @@ function Noelle_Battle:getDialogueCutscene()
 end
 
 function Noelle_Battle:onTurnEnd()
+    self.spell_cast=""
     self.spell_countdown=self.spell_countdown-1
     if self.noelle.confused then
         self.noelle.confusedTimer=self.noelle.confusedTimer+1
