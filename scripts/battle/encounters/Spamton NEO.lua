@@ -7,13 +7,22 @@ function Spamton_NEO:init()
     self.text = "* ..."
 
     -- Battle music ("battle" is rude buster)
-    self.music = "SnowGrave NEO"
+    self.music = nil
     -- Enables the purple grid battle background
     self.background = false
 
-    self.sneo=self:addEnemy("Spamton_NEO", 550, 240)
+    self.sneo=self:addEnemy("Spamton_NEO", 525, 240)
     --self.sneo.sprite.frozen = true
     --self.sneo.sprite.freeze_progress = 0.15
+end
+
+function Spamton_NEO:onBattleStart()
+    if spamtonMusic:isPlaying() then
+        Game.battle.music=spamtonMusic
+    else
+        Game.battle.music:play("SnowGrave NEO")
+    end
+    Game.world:getEvent(2).adjust=3
 end
 
 return Spamton_NEO

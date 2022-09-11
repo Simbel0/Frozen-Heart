@@ -187,5 +187,15 @@ return {
 		cutscene:fadeOut(0)
 		Game:setFlag("plot", 3)
 		cutscene:gotoCutscene("ending.killing_spamton")
+	end,
+
+	iceshock=function(cutscene)
+		Game:setFlag("plot", 3)
+		cutscene:wait(cutscene:mapTransition("fountain_room"))
+		cutscene:gotoCutscene("ending.closing_fountain")
+	end,
+	snowgrave=function(cutscene)
+		cutscene:wait(cutscene:mapTransition("fountain_room"))
+		cutscene:gotoCutscene("ending.closing_fountain")
 	end
 }

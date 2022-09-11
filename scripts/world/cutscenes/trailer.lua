@@ -1,0 +1,10 @@
+return function(c)
+	c:fadeOut(0)
+	c:wait(2)
+	Assets.playSound("icespell")
+	c:wait(1)
+	c:text("* So... You're probably wondering how I got into this situation...", nil, "susie")
+	local wait, text = c:text("*[speed:0.3]Well...", nil, "susie", {wait=false})
+	c:fadeOut(1, {color=COLORS["white"]})
+	c:wait(wait)
+end

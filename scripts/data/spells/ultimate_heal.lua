@@ -1,4 +1,4 @@
-local spell, super = Class("ultimate_heal", true)
+local spell, super = Class("ultimate_heal")
 
 function spell:init()
     super:init(self)

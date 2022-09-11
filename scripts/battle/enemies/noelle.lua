@@ -342,8 +342,6 @@ function Noelle:castIceShock(target)
         --Game.battle:finishActionBy(user)
         return fatal
     end)
-
-    return false
 end
 
 function Noelle:onDefeat()
@@ -406,9 +404,6 @@ function Noelle:castSnowGrave(user)
     object.damage = math.ceil(((13 * 40) + 600))
     object.layer = BATTLE_LAYERS["above_ui"]
     Game.battle:addChild(object)
-    self.encounter.snowgrave = object --Gives the encounter the object so it can deletes on Game over it to prevent a crash
-
-    return false
 end
 
 function Noelle:castHealthPrayer(target)

@@ -18,7 +18,7 @@ return {
             Game.world:addChild(percent)
         end
 
-        spamton_boss = false--Game:getFlag("no_heal")
+        spamton_boss = true--Game:getFlag("no_heal")
 
         if Game.world.map.id~="fountain_room" then
             cutscene:wait(cutscene:loadMap("fountain_room"))
@@ -28,9 +28,9 @@ return {
         Kristal.hideBorder(1)
         cutscene:wait(1)
 
-        if spamton_boss then
-            cutscene:gotoCutscene("spamton_cutscenes.standing_here")
-        end
+        --if spamton_boss then
+        --    cutscene:gotoCutscene("spamton_cutscenes.standing_here")
+        --end
 
         local laugh=Assets.playSound("snd_sneo_laugh_long")
         cutscene:wait(function()
@@ -100,18 +100,37 @@ return {
             Assets.stopAndPlaySound("damage")
             statusMessage({1, 1, 0}, 2)
         end
-        cutscene:wait(1.5)
+        cutscene:wait(2.5)
 
         if spamton_boss then
+            Game:addPartyMember("kris")
+            Game:movePartyMember("kris", 1)
+
+            if ending=="thorn_kill" then
+                Game:removePartyMember("susie")
+                Game:addPartyMember("noelle")
+            end
+
+
             local laugh=Assets.playSound("snd_sneo_laugh_long")
-            Game.world.timer:every(0.3, function()
+            Game.world.timer:every(0.5, function()
                 if not laugh:isPlaying() then return false end
 
-                laugh.pitch=Utils.random(1, 4)
+                laugh:setPitch(Utils.random(1, 2))
             end)
             cutscene:wait(function()
                 return not laugh:isPlaying()
             end)
+            cutscene:wait(0.5)
+            spamtonMusic=Music("SnowGrave NEO")
+            Game:setBorder("simple")
+            Kristal.showBorder(1)
+            cutscene:wait(function()
+                print(spamtonMusic:tell())
+                return spamtonMusic:tell()>=8
+            end)
+            cutscene:fadeIn(0)
+            cutscene:startEncounter("Spamton NEO", false)
         else
             cutscene:gotoCutscene("ending.closing_fountain")
         end
@@ -165,6 +184,7 @@ return {
         Kristal.showBorder(1)
         cutscene:fadeIn(1)
         cutscene:mapTransition("computer_lab")
+        cutscene:endCutscene()
     end,
     killkill=function(cutscene)
         local kris   = Game.world:spawnNPC("kris_lw", Game.world.map.markers["kris"].x, Game.world.map.markers["kris"].y, {facing="up"})
@@ -780,5 +800,255 @@ return {
         cutscene:text("* A big shot...?", "", "susie")
 
         cutscene:gotoCutscene("CREDITS")
+    end,
+    iceshock=function(cutscene)
+        local kris   = Game.world:spawnNPC("kris_lw", Game.world.map.markers["kris"].x, Game.world.map.markers["kris"].y, {facing="up"})
+        local susie  = Game.world:spawnNPC("susie_lw", Game.world.map.markers["susie"].x, Game.world.map.markers["susie"].y, {facing="up"})
+        local noelle = Game.world:spawnNPC("noelle_lw", 417, 226, {facing="down"})
+        noelle:setLayer(Game.world:getEvent(3).layer+1)
+        noelle:setSprite("desk/desk_sleep")
+
+        cutscene:wait(3)
+
+        Assets.playSound("phone")
+        noelle:setSprite("desk/desk_wake_up_left")
+
+        cutscene:wait(1)
+
+        Assets.playSound("phone")
+
+        cutscene:wait(1)
+
+        cutscene:text("* H-Huh?[wait:1] Berdly's...[wait:1] alarm...?", "shock_b", "noelle")
+        cutscene:text("* A dream...?[wait:1] It was really just a...", "smile_closed", "noelle")
+
+        noelle:setSprite("desk/desk_shocked")
+        noelle:shake(4)
+
+        cutscene:wait(1.5)
+
+        cutscene:text("* Susie?!", "shock", "noelle")
+        cutscene:text("* Susie![wait:1] What are you doing here?", "blush_question", "noelle")
+        cutscene:text("* Uhh...", "nervous", "susie")
+        cutscene:text("* You invited us to study,[wait:1] remember?", "smirk", "susie")
+        noelle:setSprite("desk/desk_awake")
+        cutscene:text("* Oh,[wait:1] right![wait:1] I did, didn't I?[wait:1] Haha!", "smile_closed", "noelle")
+        cutscene:text("* ... uhh,[wait:1] you're in a good mood.", "nervous", "susie")
+        cutscene:text("* Did you, uh, have a good dream?", "small_smile", "susie")
+        cutscene:text("* It was a nightmare.", "smile_closed", "noelle")
+        cutscene:text("* Oh.", "surprise", "susie")
+        cutscene:text("* I'm... just happy I woke up.", "sad_smile_b", "noelle")
+        cutscene:text("* ...", "annoyed_down", "susie")
+        cutscene:text("* ...", "sad_smile", "noelle")
+        cutscene:look(susie, "right")
+        cutscene:text("* By the way,[wait:1] did you guys turn on the AC or something?", "neutral", "susie")
+        cutscene:text("* I feel so cold, like I just came out of a fridge.", "neutral_side", "susie")
+        cutscene:text("* What?[wait:1] Cold like you just...", "question", "noelle")
+        noelle:setSprite("desk/desk_shocked")
+        noelle:shake(4)
+        cutscene:wait(0.7)
+        cutscene:text("* A-AH, well, umm ---", "shock_b", "noelle")
+        noelle:setSprite("desk/desk_awake_left")
+        cutscene:look(susie, "up")
+        cutscene:text("* HAHA HEY, Berdly time to get up and go!", "surprise_smile_b", "noelle")
+
+        cutscene:wait(1.3)
+
+        noelle:setSprite("desk/desk_awake_left_unhappy")
+        cutscene:text("* ...Berdly?", "frown", "noelle")
+
+        cutscene:wait(1.3)
+
+        cutscene:wait(cutscene:slideTo(noelle, noelle.x-40, noelle.y, 0.15))
+        cutscene:wait(0.25)
+        noelle:setSprite("walk_books")
+        noelle:setLayer(0.15)
+        Game.world:getEvent(6):remove()
+        Game.world:getEvent(7):remove()
+        Assets.playSound("wing")
+        cutscene:wait(cutscene:slideTo(noelle, noelle.x, noelle.y-40, 0.15))
+
+        cutscene:text("* Go-Gosh,[wait:1] you've been studying too much,[wait:1] Berdly.", "smile_closed", "noelle")
+        cutscene:text("* But it's good to just... sleep, sometimes. Yeah...", "smile_side", "noelle")
+        cutscene:text("* Sweet dreams!", "smile_closed", "noelle")
+
+        cutscene:wait(cutscene:walkToSpeed(noelle, 550, noelle.y, 8))
+        cutscene:look(kris, "right")
+        cutscene:look(susie, "right")
+        cutscene:wait(cutscene:walkToSpeed(noelle, noelle.x, 380, 8))
+        noelle:setLayer(0.2)
+        Game.world.timer:after(0.20, function() noelle:setLayer(susie.layer) end)
+        cutscene:wait(cutscene:walkToSpeed(noelle, 330, noelle.y, 8, "up"))
+        cutscene:look(kris, "down")
+        cutscene:look(susie, "down")
+        noelle:setAnimation({"head_tilt", 0.35, false})
+        cutscene:wait(1.5)
+
+        cutscene:setTextboxTop(true)
+
+        cutscene:text("* Wh... What are you doing?", "nervous_side", "susie")
+        cutscene:text("* You don't have a tail, do you, Susie?", "smile", "noelle")
+        cutscene:text("* H-Huh!? N-No way, of course not!", "teeth_b", "susie")
+        cutscene:text("* Phew, thank you!", "smile_closed", "noelle")
+        noelle:setSprite("walk_books")
+        cutscene:wait(cutscene:walkToSpeed(noelle, noelle.x, noelle.y+300, 8))
+        cutscene:wait(1.5)
+
+        cutscene:look(kris, "left")
+        cutscene:look(susie, "right")
+        cutscene:text("* That was weird,[wait:1] Kris.", "neutral_side", "susie")
+        cutscene:text("* Somehow, it doesn't feel like we just saved the world...", "sus_nervous", "susie")
+        cutscene:wait(0.2)
+        susie:shake(5)
+        susie:setSprite("shocked")
+        cutscene:wait(1)
+        susie:setSprite("shake")
+        susie:play(1/12)
+        kris.visible=false
+        susie.flip_x=true
+        susie.x=susie.x+10
+        cutscene:text("* KRIS!! Hey, wait a sec, Kris!!", "shock_down", "susie")
+        cutscene:text("* We... We just actually saved the world, didn't we!?", "shy_b", "susie")
+        cutscene:text("* Damn, we really are heroes!", "shy_b", "susie")
+        cutscene:text("* And no one even knows!", "shy", "susie")
+        kris.visible=true
+        susie.flip_x=false
+        susie.x=susie.x-10
+        susie:setSprite("walk")
+        cutscene:look(susie, "down")
+        cutscene:text("* ... guess it's better that way though, right?", "shy_down", "susie")
+        cutscene:look(susie, "right")
+        cutscene:text("* People'd freak out if they knew the world's in danger.", "shy_b", "susie")
+        susie:setSprite("scratch")
+        susie:play(1/6)
+        cutscene:text("* It just sucks Noelle has to forget too.", "smirk", "susie")
+        cutscene:text("* ...", "neutral", "susie")
+        susie:setSprite("walk")
+        cutscene:text("* Whatever, let's get out of here.", "neutral_side", "susie")
+        cutscene:wait(cutscene:walkToSpeed(susie, 320, susie.y, 8))
+        cutscene:wait(0.15)
+        Game.world.timer:after(0.20, function() cutscene:look(kris, "down") end)
+        cutscene:wait(cutscene:walkToSpeed(susie, susie.x, susie.y+400, 8))
+
+        cutscene:wait(1)
+
+        cutscene:fadeOut(2)
+        cutscene:wait(2)
+
+        cutscene:wait(2)
+
+        local CutMusic = Music("flashback_excerpt")
+        CutMusic.pitch = 0.3
+
+        cutscene:text("* Brr...[wait:1] Damn, they studied the lifehood of pinguins or what??", "","susie")
+        cutscene:text("* ...[wait:1]Unless it was caused in the dark world?", "", "susie")
+        cutscene:text("* Hmm...[wait:1] Everything I did before Kris sealed the fountain is blurry...", "", "susie")
+        cutscene:text("* Maybe I just took a nap without realizing it?", "", "susie")
+        cutscene:text("* ...", "", "susie")
+        cutscene:text("* Now that I think about it,[wait:0.5] Kris looked so weird when we reunited.", "", "susie")
+        cutscene:text("* Like something terrible just happened.", "", "susie")
+        cutscene:text("* Could it be that...?", "", "susie")
+        cutscene:text("* ...well I don't know.", "", "susie")
+        cutscene:text("* If something happened between me and Noelle, I guess only she knows.", "", "susie")
+        CutMusic:stop()
+        cutscene:text("* I should probably ask her later.", "", "susie")
+
+        Assets.playSound("snd_dooropen")
+
+        cutscene:wait(1)
+
+        cutscene:text("* ... Man, it got late, didn't it...?", nil, "susie")
+        cutscene:wait(0.75)
+        cutscene:text("* ... guess you should go home, huh?", nil, "susie")
+        cutscene:wait(0.75)
+        cutscene:text("* Alright, you don't have to say it.", nil, "susie")
+        cutscene:text("* Don't wanna walk home by yourself, huh?", nil, "susie")
+        cutscene:wait(0.75)
+        cutscene:text("* Well I'm still freezing but if you're going to MAKE me, I guess...", nil, "susie")
+        cutscene:wait(0.75)
+        cutscene:text("* Let's go.", nil, "susie")
+
+        cutscene:gotoCutscene("CREDITS")
+    end,
+    snowgrave=function(cutscene)
+        local kris   = Game.world:spawnNPC("kris_lw", Game.world.map.markers["kris"].x, Game.world.map.markers["kris"].y, {facing="up"})
+        local susie  = Game.world:spawnNPC("susie_lw", Game.world.map.markers["susie"].x, Game.world.map.markers["susie"].y, {facing="up"})
+        local noelle = Game.world:spawnNPC("noelle_lw", 417, 226, {facing="down"})
+        noelle:setLayer(Game.world:getEvent(3).layer+1)
+        susie:setSprite("asleep")
+        susie.y=susie.y+30
+        noelle:setSprite("desk/desk_sleep")
+
+        cutscene:wait(3)
+
+        Assets.playSound("phone")
+        noelle:setSprite("desk/desk_wake_up_left")
+
+        cutscene:wait(1)
+
+        Assets.playSound("phone")
+
+        cutscene:wait(1)
+
+        cutscene:text("* H-Huh?[wait:1] Berdly's...[wait:1] alarm...?", "shock_b", "noelle")
+        cutscene:text("* A dream...?[wait:1] It was really just a...", "smile_closed", "noelle")
+
+        noelle:setSprite("desk/desk_shocked")
+        noelle:shake(4)
+
+        cutscene:wait(1.5)
+
+        cutscene:text("* Kris?!", "shock", "noelle")
+        cutscene:text("* Kris![wait:1] What are you doing here?", "blush_question", "noelle")
+        noelle:setSprite("desk/desk_awake")
+        cutscene:text("* Oh,[wait:1] right![wait:1] I invited you and Susie here.[wait:1] Haha!", "smile_closed", "noelle")
+        noelle:setSprite("desk/desk_shocked")
+        noelle:shake(4)
+        cutscene:text("* Wait, you actually brought Susie too?!", "blush_big_smile", "noelle")
+        cutscene:text("* Tha-Thanks, Kris, I didn't expect you to do it...", "blush_smile", "noelle")
+        noelle:setSprite("desk/desk_awake")
+        cutscene:text("* But uh... Is she still sleeping?", "smile_closed", "noelle")
+        cutscene:text("* We might need to go soon so it might be better to wake her.", "smile", "noelle")
+        cutscene:look(kris, "left")
+        cutscene:wait(1)
+        cutscene:text("* (She doesn't seem to be awake.)")
+        cutscene:wait(0.5)
+        cutscene:text("* Kris?[wait:1] What's wrong?", "question", "noelle")
+        cutscene:text("* Come on, stop doing that face!", "smile_closed_b", "noelle")
+        cutscene:text("* You'll almost make me believe something's wrong with Susie.", "smile_closed_b", "noelle")
+        cutscene:text("* Haha...[wait:1] Ha...[wait:2] Ha...", "smile_closed", "noelle")
+        cutscene:wait(1)
+        noelle:setSprite("desk/desk_shocked")
+        cutscene:text("* ...", "shock_b", "noelle")
+        cutscene:text("* [speed:0.3]Wa...[wait:1] Wait...[wait:1] Do-Don't...", "surprise_frown_b", "noelle")
+        cutscene:wait(3)
+        noelle:setLayer(0.15)
+        noelle:setSprite("walk_terrified")
+        noelle:shake(1)
+        cutscene:wait(5)
+        local traumashaker = Game.world.timer:every(1, function()
+            noelle:shake(0.5)
+        end)
+        cutscene:wait(cutscene:walkToSpeed(noelle, noelle.x, 150, 0.5, nil, true))
+        cutscene:wait(0.5)
+        noelle:shake(1)
+        cutscene:wait(0.35)
+        noelle:shake(1)
+        cutscene:wait(0.25)
+        noelle:shake(1)
+        cutscene:wait(0.15)
+        noelle:shake(1)
+        cutscene:wait(0.10)
+        noelle:setSprite("guilt")
+        noelle:shake(5)
+        Assets.playSound("wing")
+        cutscene:wait(2)
+        cutscene:look(kris, "down")
+        cutscene:wait(5)
+        cutscene:wait(cutscene:fadeOut(5))
+        cutscene:wait(2)
+        Assets.playSound("hurt")
+        Assets.playSound("hurt")
+        Game:gameOver(kris.x+kris.width/2, kris.y+kris.height/2)
     end
 }

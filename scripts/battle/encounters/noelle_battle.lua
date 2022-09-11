@@ -26,12 +26,38 @@ function Noelle_Battle:init()
     }
 
     self.spell_cast = ""
+    self.susie_dead = false
 
     -- Add the dummy enemy to the encounter
     self.noelle=self:addEnemy("noelle", 550, 228)
 
     Game.battle:registerXAction("susie", "Pirouette-X", "CONFUSE\nenemies", 30)
     Game.battle:registerXAction("susie", "Wake Up", "Un-proceed", 15)
+
+    Utils.hook(Game.battle.party[1], "down", function(orig)
+        print(self.spell_cast, self.spell_cast=="")
+        Game.battle.party[1].is_down = true
+        Game.battle.party[1].sleeping = false
+        Game.battle.party[1]:toggleOverlay(true)
+        if self.spell_cast=="Snowgrave" then
+            Game.battle.party[1].overlay_sprite:setAnimation("ice")
+        elseif self.spell_cast=="Ice Shock" then
+            Game.battle.party[1].overlay_sprite:setSprite("battle/hurt")
+        else
+            Game.battle.party[1].overlay_sprite:setAnimation("battle/defeat")
+        end
+        if self.spell_cast=="Ice Shock" then
+            print("Chillin")
+            Assets.playSound("petrify")
+            Game.battle.party[1].overlay_sprite.frozen=true
+            Game.battle.party[1].overlay_sprite.freeze_progress=0
+            Game.battle.timer:tween(20/30, Game.battle.party[1].overlay_sprite, {freeze_progress=1})
+        end
+        if Game.battle.party[1].action then
+            Game.battle:removeAction(Game.battle:getPartyIndex(Game.battle.party[1].chara.id))
+        end
+        Game.battle:checkGameOver()
+    end)
 end
 
 function Noelle_Battle:onBattleStart()
@@ -52,8 +78,13 @@ function Noelle_Battle:beforeStateChange(old, new)
                     cutscene:text("* Noelle casts SNOWGRAVE!", nil, nil, {wait=false, skip=false})
                     Game.battle.noelle_tension_bar:removeTension(100)
                     self.noelle:castSnowGrave(Game.battle.party[1])
+                    Game.battle.timer:after(2.75, function()
+                        print("KKAKLJ")
+                        Game.battle.music:fade(0, 1)
+                        Game.battle.party[1]:setAnimation("ice")
+                    end)
+                    cutscene:after(function() Game.battle:setState(self.susie_dead and "NONE" or "ACTIONSELECT") end, true)
                     cutscene:wait(8)
-                    cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
                     cutscene:endCutscene()
                 end)
                 return true
@@ -93,12 +124,13 @@ function Noelle_Battle:beforeStateChange(old, new)
                             return true
                         end
                     end
+                    self.spell_cast = "Ice Shock"
                     Game.battle:startCutscene(function(cutscene)
                         cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
                         Game.battle.noelle_tension_bar:removeTension(8)
                         self.noelle:castIceShock(Game.battle.party[1])
+                        cutscene:after(function() Game.battle:setState(self.susie_dead and "NONE" or "ACTIONSELECT") end, true)
                         cutscene:wait(1.4)
-                        cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
                         cutscene:endCutscene()
                     end)
                     return true
@@ -200,7 +232,55 @@ function Noelle_Battle:getEncounterText()
 end
 
 function Noelle_Battle:onGameOver()
-    return true
+    if Game:getFlag("plot", 0)<2 then
+        Game.battle:finishActionBy(Game.battle.party[1])
+        Game.battle.cutscene:endCutscene()
+        Game.battle.party[1].sprite.frozen=true
+        Game.battle.battle_ui.action_boxes[1]:setHeadIcon("head_error")
+        Game.battle:startCutscene("introGameOver")
+        return true
+    end
+    print("oof")
+    print(self.spell_cast)
+    self.susie_dead = true
+    if self.spell_cast=="Ice Shock" then
+        Game.battle.cutscene:endCutscene()
+        Game.battle:startCutscene(function(cutscene)
+            --Assets.playSound("petrify")
+            --Game.battle.party[1].sprite.frozen=true
+            --Game.battle.timer:tween(20/30, Game.battle.party[1].sprite, {freeze_progress=1})
+            local noelle = cutscene:getCharacter("noelle")
+
+            Game.battle.music:fade(0, 1)
+            cutscene:wait(3)
+            cutscene:text("* [speed:0.6]It was...[wait:1] not easy.", "trance", "noelle")
+            cutscene:text("* [speed:0.6]But I still did it.[wait:1] I became stronger, after all...", "down_smile", "noelle")
+            cutscene:text("* [speed:0.6]...", "trance", "noelle")
+            noelle:setSprite("walk_kill/left")
+            noelle.sprite:play(1/8)
+            cutscene:slideTo(noelle, noelle.x+500, noelle.y, 10)
+            cutscene:wait(cutscene:fadeOut(5))
+            cutscene:wait(1)
+            Game:setFlag("noelle_battle_status", "iceshock")
+            Game.battle:returnToWorld()
+        end)
+        return true
+    elseif self.spell_cast=="Snowgrave" then
+        print("a")
+        Game.battle.cutscene:endCutscene()
+        print("b")
+        Game.battle:startCutscene(function(cutscene)
+            cutscene:wait(1)
+            self.noelle:setSprite("battle/defeat")
+            cutscene:wait(5)
+            cutscene:wait(cutscene:fadeOut(3))
+            cutscene:wait(1)
+            Game:setFlag("noelle_battle_status", "snowgrave")
+            Game.battle:returnToWorld()
+        end)
+        return true
+    end
+    return false
 end
 
 function Noelle_Battle:quickBattle(debug)

@@ -18,6 +18,8 @@ function SnowGraveSpell:init(user)
     self.siner = 0
     self.hurt = false
 
+    self.sprite_change = false
+
     self.since_last_snowflake = 0
     self.reset_once = true
 
@@ -107,9 +109,9 @@ function SnowGraveSpell:draw()
         end
 
         if self.since_last_snowflake > 1 then
-            self:createSnowflake(185, 560) --455
-            self:createSnowflake(140, 600) --500
-            self:createSnowflake(95, 520) --545
+            self:createSnowflake(165, 560) --455
+            self:createSnowflake(120, 600) --500
+            self:createSnowflake(75, 520) --545
             self.since_last_snowflake = self.since_last_snowflake - 1
         end
 
@@ -129,7 +131,7 @@ function SnowGraveSpell:draw()
         end
     end
     if (self.timer >= 120) then
-        Game.battle.encounter.spell_cast=""
+        --Game.battle.encounter.spell_cast=""
         self:remove()
     end
 end

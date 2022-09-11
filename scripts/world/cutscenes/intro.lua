@@ -99,8 +99,6 @@ return {
         gonerText("IT SEEMS YOU ARE\nSEEKING FOR...\n[wait:20]MORE SECRETS.")
         gonerText("SECRETS THAT\nSHOULD NOT\nEXIST.")
         gonerText("INTERESTING.[wait:20]\nTRULY[wait:10]\nINTERESTING.")
-
-        beforeSkiptext:remove()
         
         cutscene:wait(0.8)
 

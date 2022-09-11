@@ -252,22 +252,6 @@ function Battle:updateTransitionOut()
     end
 end
 
-function Battle:checkGameOver()
-    for _,battler in ipairs(self.party) do
-        if not battler.is_down then
-            return
-        end
-    end
-    self.music:stop()
-    if Game:getFlag("plot", 0)>=2 then
-        Game:gameOver(self:getSoulLocation())
-    else
-        self.cutscene:endCutscene()
-        self.party[1].sprite.frozen=true
-        self:startCutscene("introGameOver")
-    end
-end
-
 function Battle:spawnSoul(x, y)
     if Game:getFlag("plot", 0)>=2 then
         local bx, by = self:getSoulLocation()
@@ -380,6 +364,7 @@ function Battle:keypressed(key)
                     elseif menu_item.data.target == "enemies" then
                         self:pushAction("SPELL", self:getActiveEnemies(), menu_item)
                     elseif menu_item.data.target == "all" then
+                        print("ello")
                         self:setState("ALLSELECT", "SPELL")
                     end
                 end
