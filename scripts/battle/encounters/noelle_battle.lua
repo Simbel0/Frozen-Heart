@@ -8,7 +8,7 @@ function Noelle_Battle:init()
     -- Text displayed at the bottom of the screen at the start of the encounter
     self.text = "* It will be your fault."
 
-    self.turns = 0
+    self.turns = -1
 
     -- Battle music ("battle" is rude buster)
     self.music = nil
