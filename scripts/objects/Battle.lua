@@ -286,7 +286,7 @@ function Battle:isHighlighted(battler)
     return super:isHighlighted(self, battler)
 end
 
-function Battle:keypressed(key)
+function Battle:onKeyPressed(key)
     if OVERLAY_OPEN then return end
 
     if Kristal.Config["debug"] and Input.ctrl() then
@@ -364,7 +364,6 @@ function Battle:keypressed(key)
                     elseif menu_item.data.target == "enemies" then
                         self:pushAction("SPELL", self:getActiveEnemies(), menu_item)
                     elseif menu_item.data.target == "all" then
-                        print("ello")
                         self:setState("ALLSELECT", "SPELL")
                     end
                 end
