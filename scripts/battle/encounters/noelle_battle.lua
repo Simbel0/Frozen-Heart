@@ -60,6 +60,20 @@ function Noelle_Battle:init()
     end)
 end
 
+function Noelle_Battle:draw(fade)
+    super:draw(self)
+
+    local font = Assets.getFont("main", 16)
+    love.graphics.setFont(font)
+
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print("Nb of turns: ".. self.turns, 4, (DEBUG_RENDER and 16 or -16)+16)
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print("No heal: "    .. tostring(Game:getFlag("no_heal", "undefined")), 4, (DEBUG_RENDER and 16 or -16)+(16*2))
+    love.graphics.setColor(1, 1, 1, 1)
+    love.graphics.print("No hit: "      .. tostring(Game:getFlag("no_hit", "undefined")), 4, (DEBUG_RENDER and 16 or -16)+(16*3))
+end
+
 function Noelle_Battle:onBattleStart()
     if Game:getFlag("plot", 0)==2 then
         self.text = self:getEncounterText()
@@ -220,7 +234,9 @@ function Noelle_Battle:onTurnEnd()
     if self.noelle.killed_once then
         Game:setTension(0)
     end
-    self.turns=self.turns+1
+    if Game:getFlag("plot", 0)==2 then
+        self.turns=self.turns+1
+    end
 end
 
 function Noelle_Battle:getEncounterText()

@@ -101,6 +101,9 @@ function Mod:postInit(newfile)
         if Game:getFlag("no_heal", nil)==nil then
             Game:setFlag("no_heal", true)
         end
+        if Game:getFlag("no_hit", nil)==nil then
+            Game:setFlag("no_hit", true)
+        end
 
         local diff=Game:getFlag("difficulty", 1)
         if diff==0 then

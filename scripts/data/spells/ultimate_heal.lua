@@ -18,6 +18,9 @@ function spell:getCastMessage(user, target)
 end
 
 function spell:onCast(user, target)
+    if target.chara then
+        Game:setFlag("no_heal", false)
+    end
     Game.battle.timer:script(function(wait)
         Assets.playSound("boost")
         user:flash()

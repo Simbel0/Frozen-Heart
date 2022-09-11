@@ -286,6 +286,67 @@ function Battle:isHighlighted(battler)
     return super:isHighlighted(self, battler)
 end
 
+function Battle:commitSingleAction(action)
+    local battler = self.party[action.character_id]
+
+    if action.action == "ITEM" and action.data then
+        local result = action.data:onBattleSelect(battler, action.target)
+        if result ~= false then
+            local storage, index = Game.inventory:getItemIndex(action.data)
+            action.item_storage = storage
+            action.item_index = index
+            if action.data:hasResultItem() then
+                local result_item = action.data:createResultItem()
+                Game.inventory:setItem(storage, index, result_item)
+                action.result_item = result_item
+            else
+                Game.inventory:removeItem(action.data)
+            end
+            action.consumed = true
+            Game:setFlag("no_heal", false)
+        else
+            action.consumed = false
+        end
+    end
+    
+    local anim = action.action:lower()
+    if action.action == "SPELL" and action.data then
+        local result = action.data:onSelect(battler, action.target)
+        if result ~= false then
+            if action.tp then
+                if action.tp > 0 then
+                    Game:giveTension(action.tp)
+                elseif action.tp < 0 then
+                    Game:removeTension(-action.tp)
+                end
+            end
+            battler:setAnimation("battle/"..anim.."_ready")
+            action.icon = anim
+        end
+    else
+        if action.tp then
+            if action.tp > 0 then
+                Game:giveTension(action.tp)
+            elseif action.tp < 0 then
+                Game:removeTension(-action.tp)
+            end
+        end
+        
+        if action.action == "SKIP" and action.reason then
+            anim = action.reason:lower()
+        end
+    
+        if (action.action == "ITEM" and action.data and (not action.data.instant)) or (action.action ~= "ITEM") then
+            battler:setAnimation("battle/"..anim.."_ready")
+            action.icon = anim
+        end
+    end
+
+    battler.action = action
+
+    self.character_actions[action.character_id] = action
+end
+
 function Battle:onKeyPressed(key)
     if OVERLAY_OPEN then return end
 
