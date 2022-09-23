@@ -17,9 +17,13 @@ end
 
 function her_room:update()
 	if Game:getFlag("plot", 0)==3 and not Game:getFlag("susie_reaction", false) then
-		if Input.down("left") or Input.down("up") or Input.down("right") or Input.down("down") then
-			Game:setFlag("susie_reaction", true)
-			Game.world:startCutscene("susie_reaction")
+		if not Game.world.menu and not (Kristal.Console and Kristal.Console.is_open) and not (Kristal.DebugSystem and Kristal.DebugSystem:isMenuOpen()) then
+			if Input.down("left") or Input.down("up") or Input.down("right") or Input.down("down") then
+				Game:setFlag("susie_reaction", true)
+				Game.world.timer:after(1/8, function()
+					Game.world:startCutscene("susie_reaction")
+				end)
+			end
 		end
 	end
 end

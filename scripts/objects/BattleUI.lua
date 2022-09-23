@@ -1,5 +1,13 @@
 local BattleUI_o, super = Class(BattleUI, false)
 
+function BattleUI_o:init()
+    super:init(self)
+
+    if Game:getFlag("plot")<=3 then
+        self.heart_sprite = Assets.getTexture("player/heart_rotated")
+    end
+end
+
 function BattleUI_o:drawState()
     if Game.battle.state == "ALLSELECT" then
     	local enemies = Game.battle:getActiveEnemies()

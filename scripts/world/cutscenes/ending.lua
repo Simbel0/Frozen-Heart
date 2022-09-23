@@ -18,7 +18,8 @@ return {
             Game.world:addChild(percent)
         end
 
-        spamton_boss = true--Game:getFlag("no_heal")
+        local spamton_boss = Game:getFlag("spamton_boss")
+        local ending = Game:getFlag("noelle_battle_status", "no_trance")
 
         if Game.world.map.id~="fountain_room" then
             cutscene:wait(cutscene:loadMap("fountain_room"))
@@ -28,9 +29,12 @@ return {
         Kristal.hideBorder(1)
         cutscene:wait(1)
 
-        --if spamton_boss then
-        --    cutscene:gotoCutscene("spamton_cutscenes.standing_here")
-        --end
+        if spamton_boss and ending=="killkill" then
+            Game:removePartyMember("susie")
+            Game:addPartyMember("kris")
+            Game:movePartyMember("kris", 1)
+            cutscene:gotoCutscene("spamton_cutscenes.standing_here")
+        end
 
         local laugh=Assets.playSound("snd_sneo_laugh_long")
         cutscene:wait(function()
@@ -47,8 +51,6 @@ return {
             return i>=19
         end)
         cutscene:wait(0.75)
-
-        local ending = Game:getFlag("noelle_battle_status", "no_trance")
 
         if ending == "no_trance" then
             Assets.playSound("icespell")
@@ -103,6 +105,8 @@ return {
         cutscene:wait(2.5)
 
         if spamton_boss then
+            Game:setFlag("plot", 4)
+
             Game:addPartyMember("kris")
             Game:movePartyMember("kris", 1)
 
@@ -112,7 +116,7 @@ return {
             end
 
 
-            local laugh=Assets.playSound("snd_sneo_laugh_long")
+            laugh:play()
             Game.world.timer:every(0.5, function()
                 if not laugh:isPlaying() then return false end
 
@@ -130,7 +134,7 @@ return {
                 return spamtonMusic:tell()>=8
             end)
             cutscene:fadeIn(0)
-            cutscene:startEncounter("Spamton NEO", false)
+            cutscene:startEncounter("bonus_battle", false)
         else
             cutscene:gotoCutscene("ending.closing_fountain")
         end
@@ -142,6 +146,7 @@ return {
 
         local soul = Sprite("player/heart", SCREEN_WIDTH/2, SCREEN_HEIGHT-100)
         soul.color={1, 0, 0}
+        soul.rotation=160
         soul.layer=WORLD_LAYERS["top"]+10
         soul:setOrigin(0.5, 0.5)
         Game.world:addChild(soul)

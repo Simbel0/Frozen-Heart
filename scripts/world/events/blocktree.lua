@@ -25,7 +25,7 @@ end
 function blocktree:update()
 	local oo = 0
 	if (self.spec < 2) then
-	    self.blocktimer = self.blocktimer + 1*DTMULT
+	    self.blocktimer = self.blocktimer + DTMULT
 	end
 	if (Utils.round(self.blocktimer) == 20) then
 	    local xv = (((self.width / 4)) + love.math.random((self.width / 2)))
@@ -63,7 +63,7 @@ function blocktree:update()
 end
 
 function blocktree:draw()
-	self.siner=self.siner+1*DTMULT
+	self.siner=self.siner+DTMULT
 	love.graphics.draw(self.sprites[2], 0, 0, 0)
     love.graphics.draw(self.sprites[3], (math.sin((self.siner / 12)) * 2), (math.cos((self.siner / 20)) * 2), 0)
     love.graphics.draw(self.sprites[4], (math.sin((self.siner / 14)) * 1), (math.cos((self.siner / 24)) * 1), 0)

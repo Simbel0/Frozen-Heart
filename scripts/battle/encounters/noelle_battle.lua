@@ -60,7 +60,7 @@ function Noelle_Battle:init()
     end)
 end
 
-function Noelle_Battle:draw(fade)
+--[[function Noelle_Battle:draw(fade)
     super:draw(self)
 
     local font = Assets.getFont("main", 16)
@@ -68,16 +68,20 @@ function Noelle_Battle:draw(fade)
 
     love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("Nb of turns: ".. self.turns, 4, (DEBUG_RENDER and 16 or -16)+16)
-    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("No heal: "    .. tostring(Game:getFlag("no_heal", "undefined")), 4, (DEBUG_RENDER and 16 or -16)+(16*2))
-    love.graphics.setColor(1, 1, 1, 1)
     love.graphics.print("No hit: "      .. tostring(Game:getFlag("no_hit", "undefined")), 4, (DEBUG_RENDER and 16 or -16)+(16*3))
-end
+end]]
 
 function Noelle_Battle:onBattleStart()
     if Game:getFlag("plot", 0)==2 then
         self.text = self:getEncounterText()
         self:quickBattle(false)
+    end
+end
+
+function Noelle_Battle:onReturnToWorld(events)
+    if self.turns<30 then
+        Game:setFlag("spamton_boss", true)
     end
 end
 
@@ -132,12 +136,13 @@ function Noelle_Battle:beforeStateChange(old, new)
                     return true
                 elseif Game.battle.noelle_tension_bar:getTension()>=8 and math.random(1,10)>=7 then
                     print("Cast ICESHOCK")
-                    self.spell_countdown=2
                     if self.noelle.confused then
-                        if math.random(1,10)>=7 then
-                            return true
+                        if math.random(1,10)<=7 then
+                            print("Or not!")
+                            return false
                         end
                     end
+                    self.spell_countdown=2
                     self.spell_cast = "Ice Shock"
                     Game.battle:startCutscene(function(cutscene)
                         cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
@@ -150,6 +155,18 @@ function Noelle_Battle:beforeStateChange(old, new)
                     return true
                 end
             end
+        end
+    end
+end
+
+function Noelle_Battle:onStateChange(old, new)
+    if new=="DEFENDING" then
+        print("---onStateChange---")
+        print(old, new)
+        print(Game.battle.waves, Game.battle.soul, Game.battle.arena)
+        -- Due to a weird softlock possibly caused by Iceshock for some reason, we check if a wave was actually loaded. If not, go back to DEFENDINGBEGIN to retry
+        if ((Game.battle.waves and #Game.battle.waves==0) or Game.battle.waves==nil) and Game.battle.soul==nil and Game.battle.arena==nil then
+            Game.battle:setState("DEFENDINGBEGIN")
         end
     end
 end
@@ -211,6 +228,12 @@ function Noelle_Battle:getDialogueCutscene()
                 cutscene:text("* Noelle doesn't need to be confused anymore!")
             end
         end
+    end
+end
+
+function Noelle_Battle:onTurnStart()
+    if self.noelle.comment~="(Confused)" and self.noelle.confused then
+        self.noelle.comment="(Confused)"
     end
 end
 

@@ -86,7 +86,6 @@ function Mod:init()
             "royalpin"
         }
     }
-
 end
 
 function Mod:postInit(newfile)
@@ -103,6 +102,10 @@ function Mod:postInit(newfile)
         end
         if Game:getFlag("no_hit", nil)==nil then
             Game:setFlag("no_hit", true)
+        end
+
+        if Game:getFlag("spamton_boss", nil)==nil then
+            Game:setFlag("spamton_boss", false)
         end
 
         local diff=Game:getFlag("difficulty", 1)
@@ -145,4 +148,55 @@ end
 
 function Mod:getKristalID(id, type)
     return self.kristal_ids[type][id]
+end
+
+function Mod:registerDebugOptions(d)
+    d:registerMenu("frozen_heart_main", "~ FROZEN HEART DEBUG ~")
+    d:registerMenu("frozen_heart_ending", "~ SETTING ENDING ~")
+    d:registerMenu("frozen_heart_battle", "~ BATTLE DEBUG ~")
+
+    d:registerOption("main", "Frozen Heart", "Frozen Heart stuff", function()
+        d:enterMenu("frozen_heart_main")
+    end, "ALL")
+    d:registerOption("frozen_heart_main", "Endings", "Set the ending", function()
+        d:enterMenu("frozen_heart_ending")
+    end, "OVERWORLD")
+    d:registerOption("frozen_heart_main", "Battle stuff", "Modified stuff related to battle", function()
+        d:enterMenu("frozen_heart_battle")
+    end, "BATTLE")
+
+    d:registerOption("frozen_heart_ending", "Spare Ending", "Get Noelle's Mercy to 100%", function()
+        Game:setFlag("plot", 3)
+        Game:setFlag("noelle_battle_status", "no_trance")
+        Game:addPartyMember("noelle")
+        Kristal.DebugSystem:closeMenu()
+        Kristal.quickReload("temp")
+    end, "OVERWORLD")
+    d:registerOption("frozen_heart_ending", "Thorned Ending", "Get Noelle's HP to 0 due to the Thorn Ring", function()
+        Game:setFlag("plot", 3)
+        Game:setFlag("noelle_battle_status", "thorn_kill")
+        Game.world:mapTransition("fountain_room")
+        Game.world:startCutscene("ending.killing_spamton")
+        Kristal.DebugSystem:closeMenu()
+    end, "OVERWORLD")
+    d:registerOption("frozen_heart_ending", "Soulless Spare Ending", "Spare Noelle after destroying her", function()
+        Game:setFlag("plot", 3)
+        Game:setFlag("noelle_battle_status", "killspare")
+        Kristal.DebugSystem:closeMenu()
+        Kristal.quickReload("temp")
+    end, "OVERWORLD")
+    d:registerOption("frozen_heart_ending", "Violent Ending", "Kill Noelle", function()
+        Game:setFlag("plot", 3)
+        Game:setFlag("noelle_battle_status", "killkill")
+        Game.world:mapTransition("fountain_room")
+        Game.world:startCutscene("ending.killing_spamton")
+        Kristal.DebugSystem:closeMenu()
+    end, "OVERWORLD")
+
+    d:registerOption("frozen_heart_main", "Change Mercy", "Set Noelle's Mercy to 99%", function()
+        Game.battle.enemies[1]:addMercy(99)
+    end, "BATTLE")
+    d:registerOption("frozen_heart_main", "Increases Noelle's TP", "Increases Noelle's TP by 5", function()
+        Game.battle.noelle_tension_bar:giveTension(5)
+    end, "BATTLE")
 end

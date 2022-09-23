@@ -92,7 +92,7 @@ return {
 
 		if noelle then
 			local hit_count=Game:getFlag("hangplug_hits", 0)
-			cutscene:wait(cutscene:walkTo(susie, susie.x+50, susie.y))
+			cutscene:wait(cutscene:walkToSpeed(susie, susie.x+50, susie.y, 8))
 			if hit_count==0 then
 				susie:setSprite("walk_back_arm")
 				cutscene:look(susie, "left")
@@ -164,7 +164,7 @@ return {
 			cutscene:text("* Can I ask you something?", nil, "noelle")
 			cutscene:text("* Of course,[wait:0.5] anything.", "neutral_side", "susie")
 			cutscene:text("* ...", nil, "noelle")
-			cutscene:text("* What would you do if a friend of yours turns out to not be what they seems?", nil, "noelle")
+			cutscene:text("* What would you do if a friend of yours suddenly started acting a different way?", nil, "noelle")
 			Game.world.music:play("noelle_normal", 1, 1)
 			cutscene:text("* Uh??", "surprise", "susie")
 			cutscene:text("* What are you talking about?", "nervous", "susie")
@@ -179,7 +179,7 @@ return {
 			cutscene:text("* I would give them a good slap in the face.", "smile", "susie")
 			cutscene:text("* Not because they deserve it for whatever they did..", "smirk", "susie")
 			cutscene:text("* But because for someone to change as suddenly as you make it sound..", "smirk", "susie")
-			cutscene:text("* And for them to make something that would hurt their own friends..", "nervous", "susie")
+			cutscene:text("* And for them to make something that would..[wait:0.5] hurt their own friends..", "nervous", "susie")
 			cutscene:text("* Then something must have happen to them first.", "neutral_side", "susie")
 			cutscene:text("* And if so,[wait:0.5] they probably need help.", "neutral", "susie")
 			noelle:setSprite("head_lowered_look_right")

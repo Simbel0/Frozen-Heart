@@ -27,7 +27,7 @@ function Noelle:init()
 
     self.killed_once = false
 
-    self.tired = true
+    self:setTired(true)
 
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
@@ -201,6 +201,7 @@ function Noelle:onAct(battler, name)
         print(self.wake_first)
         if self.confused then
             Game.battle:startActCutscene("forcePull", self.wake_first)
+            self.wake_first=false
         else
             Game.battle:startActCutscene(function(cutscene)
                 if self.wake_first then
@@ -221,7 +222,6 @@ function Noelle:onAct(battler, name)
                 end
             end)
         end
-        self.wake_first=false
         return
     else
         Game.battle:startActCutscene(function(cutscene)
@@ -350,7 +350,7 @@ function Noelle:onDefeat()
         self.health=1
         self.mercy=100
         self.tired=false
-        self.comment=""
+        self.comment="(Tired)"
         self.killed_once=true
         self.waves={}
         self.acts={}

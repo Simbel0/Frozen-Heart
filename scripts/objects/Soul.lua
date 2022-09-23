@@ -5,7 +5,7 @@ function Soul:init(x, y, color)
 
     self.sprite:remove()
 
-    if Game:getFlag("plot", 0)<3 then
+    if Game:getFlag("plot", 0)<4 then
         self.sprite = Sprite("player/heart_monster")
         self.color = {1, 1, 1}
     else
@@ -67,7 +67,9 @@ function Soul:update()
             if bullet.tp ~= 0 and bullet:collidesWith(self.graze_collider) then
                 if bullet.grazed then
                     Game:giveTension(bullet.tp * DT * self.graze_tp_factor)
-                    Game.battle.noelle_tension_bar:giveTension(bullet.tp * DT * self.graze_tp_factor)
+                    if Game.battle.noelle_tension_bar then
+                        Game.battle.noelle_tension_bar:giveTension(bullet.tp * DT * self.graze_tp_factor)
+                    end
                     if Game.battle.wave_timer < Game.battle.wave_length - (1/3) then
                         Game.battle.wave_timer = Game.battle.wave_timer + (bullet.time_bonus * (DT / 30) * self.graze_time_factor)
                     end
@@ -77,7 +79,9 @@ function Soul:update()
                 else
                     Assets.playSound("graze")
                     Game:giveTension(bullet.tp * self.graze_tp_factor)
-                    Game.battle.noelle_tension_bar:giveTension(bullet.tp * self.graze_tp_factor)
+                    if Game.battle.noelle_tension_bar then
+                        Game.battle.noelle_tension_bar:giveTension(bullet.tp * self.graze_tp_factor)
+                    end
                     if Game.battle.wave_timer < Game.battle.wave_length - (1/3) then
                         Game.battle.wave_timer = Game.battle.wave_timer + ((bullet.time_bonus / 30) * self.graze_time_factor)
                     end

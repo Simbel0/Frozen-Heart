@@ -1,3 +1,4 @@
+--I'm sure I could have use that stuff better but it works so who cares?
 local Battle, super = Class(Battle)
 
 function Battle:init()
@@ -253,11 +254,14 @@ function Battle:updateTransitionOut()
 end
 
 function Battle:spawnSoul(x, y)
+    print("HEAR ITS CRY")
     if Game:getFlag("plot", 0)>=2 then
+        print("o")
         local bx, by = self:getSoulLocation()
         local color = {Game:getSoulColor()}
         self:addChild(HeartBurst(bx, by, color))
         if not self.soul then
+            print("é")
             self.soul = self.encounter:createSoul(bx, by, color)
             self.soul:transitionTo(x or SCREEN_WIDTH/2, y or SCREEN_HEIGHT/2)
             self.soul.target_alpha = self.soul.alpha
@@ -265,7 +269,7 @@ function Battle:spawnSoul(x, y)
             self:addChild(self.soul)
         end
     else
-        if not self.soul then --Create an invisible soul to prevent problems with DEFENDINGBEGIN
+        if not self.soul then --Create an invisible soul just in case to prevent problems with DEFENDINGBEGIN
             self.soul = self.encounter:createSoul(bx, by, color)
             self.soul:transitionTo(x or SCREEN_WIDTH/2, y or SCREEN_HEIGHT/2)
             self.soul.target_alpha = 0

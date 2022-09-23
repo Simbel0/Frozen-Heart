@@ -4,6 +4,7 @@ function character:init()
     super:init(self)
 
     self.stats["health"]=166
+    self.stats["magic"]=22
 
     self.health=166
 
@@ -40,7 +41,7 @@ function character:drawPowerStat(index, x, y, menu)
         local icon = Assets.getTexture("ui/menu/icon/fire")
         love.graphics.draw(icon, x-26, y+6, 0, 2, 2)
         love.graphics.print("Guts:", x, y)
-        love.graphics.draw(icon, x+26, y+6, 0, 2, 2)
+        love.graphics.draw(icon, x+130, y+6, 0, 2, 2)
         return true
     end
 end

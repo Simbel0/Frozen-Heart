@@ -7,16 +7,29 @@ function Spamton_NEO:init()
     self.name = "Spamton NEO"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("spamtonneo")
+    self.sprite:setStringCount(4)
+
+    local wl = self.sprite:getPart("wing_l")
+    local wr = self.sprite:getPart("wing_r")
+
+    wl.sprite.frozen = true
+    wl.sprite.freeze_progress = 1
+    wl.swing_speed = 0
+    wr.sprite.frozen = true
+    wr.sprite.freeze_progress = 1
+    wr.swing_speed = 0
 
     -- Enemy health
     self.max_health = 4809*50
-    self.health = 256*50
+    self.health = 278*30
     -- Enemy attack (determines bullet damage)
-    self.attack = 4
+    self.attack = 13
     -- Enemy defense (usually 0)
-    self.defense = 0
+    self.defense = -27*2
     -- Enemy reward
     self.money = 0
+
+    self.dialogue_advance = 0
 
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
@@ -27,6 +40,10 @@ function Spamton_NEO:init()
 
     -- List of possible wave ids, randomly picked each turn
     self.waves = {
+        "bonus/test",
+        "bonus/phoneRing",
+        "bonus/protectedCrew",
+        "bonus/rainPipis"
     }
 
     -- Dialogue randomly displayed in the enemy's speech bubble
@@ -34,11 +51,13 @@ function Spamton_NEO:init()
         "ENL4RGE\nYOURSELF",
         "help",
         "GO [die]",
-        "BUY YOUR [Ice Scream] SOMEWHERE ELSE!!"
+        "BUY YOUR [Ice Scream]\nSOMEWHERE ELSE!!",
+        "CLOWN?? NO, THAT\nMAKES ME SICK!!",
+        "LET's MAKE\nA DEAL!!"
     }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
-    self.check = "TASTE THE [color:red]PAIN[color:reset] OF NEO!!!"
+    self.check = "13 ATK 98 DEF\n* His armor is falling apart with him."
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
@@ -52,33 +71,50 @@ function Spamton_NEO:init()
         "* The stage lights are frozen.",
         "* It pulls the strings and makes them ring.",
         "* Raise your hands and make them shut up.",
-        "* Spamton feels the cold breeze as he takes a ride around town.[wait:10]\nHe hates it.",
+        "* Spamton feels the cold breeze as he takes a ride around town.[wait:10]\n* He hates it.",
         "* Spamton believes in you.[wait:10]\n* Probably not.",
     }
 
     self:registerAct("X-Slash", "Physical\nDamage", nil, 15)
-    self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
-    self:registerAct("Dual Heal", "", {"noelle"}, 50)
+    --self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
+    --self:registerAct("DualHeal", "Heals\neveryone", {"noelle"}, 50)
+    self:registerAct("Snap", nil)
+    self:registerAct("SnapAll", nil, {"susie", "noelle"})
 end
 
 function Spamton_NEO:onAct(battler, name)
-    if name == "X-Slash" then
+    if name == "Check" then
+        return {
+            "* SPAMTON NEO - 14 ATK 32 DEF\n* His armor is falling apart with him.",
+            "* His \"[color:blue]bluelight specil[color:reset]\" has been damaged, lowering his defense and restoring his attack."
+        }
+    elseif name == "X-Slash" then
         Game.battle.timer:everyInstant(0.5, function()
             battler:setAnimation("battle/attack")
             Assets.playSound("scytheburst")
-            self:hurt(10, battler)
-            local afIm = AfterImage(battler.sprite, 0.4)
+            self:hurt(75, battler)
+            local afIm = AfterImage(battler.sprite, 1)
             afIm.physics = {
-                speed_x = 2,
+                speed_x = 3,
                 direction = 2*math.pi
             }
             battler:addChild(afIm)
         end, 1)
         return "* Kris uses X-Slash!"
-    elseif name == "Red Buster" then
-        Game.battle:powerAct("red_buster", battler, "susie", self)
-    elseif name == "Dual Heal" then
-        Game.battle:powerAct("dual_heal", battler, "noelle", self)
+    elseif name == "Snap" then
+        self.sprite:snapString()
+        Assets.playSound("damage")
+        self:hurt(love.math.random(55, 155), battler)
+        return "* "..battler.chara.name.." snapped a wire!"
+    elseif name == "SnapAll" then
+        self.sprite:snapStrings(love.math.random(2, 4))
+        Assets.playSound("damage")
+        self:hurt(love.math.random(55, 155)*6, battler)
+        return "* Everyone snapped wires!"
+    --elseif name == "Red Buster" then
+    --    Game.battle:powerAct("red_buster", battler, "susie", self)
+    --elseif name == "Dual Heal" then
+    --    Game.battle:powerAct("dual_heal", battler, "noelle", self)
     end
 
     -- If the act is none of the above, run the base onAct function
@@ -86,10 +122,101 @@ function Spamton_NEO:onAct(battler, name)
     return super:onAct(self, battler, name)
 end
 
-function Spamton_NEO:getAttackDamage(damage, battler)
-    if damage<=0 then
-        return 10
+function Spamton_NEO:getEnemyDialogue()
+    print(self.health)
+    self.dialogue_advance = self.dialogue_advance+1
+    local d    = self.dialogue_advance
+    local mode = self.encounter.mode
+
+    if mode=="no_trance" then
+        if d==1 then
+            return {
+                "WELL LOOK WHAT\nTHE [Element 6]\nDRAGGED IN!!",
+                "CONGRATULATIONS KRIS!!\nYOUR FRIENDS\nANSWERED THE [Phone]!",
+                "AND JUST LIKE THAT,\nYOU LET YOUR GOOD OLD\nFRIEND SPAMTON IN\nTHE [Dumpster]",
+                "[func:setAllPartsShaking, 1]YOU'RE SO [$!#@]!!\nYOU REALLY MAKE ME SICK!!!"
+            }
+        elseif d==2 then
+            return {
+                "WHY WOULD YOU DO\nTHAT TO ME KRIS??",
+                "WE COULD HAVE BEEN [Partnership]!\n[[Friend Request Accepted]]!!"
+            }
+        elseif d==3 then
+            return {
+                "WE COULD HAVE REIGN\nOVER MY NEW\n[World] TOGETHER",
+                "AFTER ALL YOU'RE\nTHE ONE WHO HELPED ME\nGETTING HERE!"
+            }
+        elseif d==4 then
+            return {
+                "SO WHY KRIS?",
+                "WHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?",
+                "...[wait:2]Why did you\nleave me behind\ntoo...?"
+            }
+        elseif d==5 then
+            return {
+                "ARE YOU [Afraid]?",
+                "PLEASE [Be Not Afraid]\nKRIS",
+                "DON\"t FORGET I'M A [HonestMan]",
+            }
+        elseif d==6 then
+            return {
+                "PERHAPS WE COULD\nFIND ANOTH3R [Deal]?",
+                "MAYBE WE CAN FIND\nYOUR FRIENDS A PLACE TO\nSTAY IN OUR NEW\n[World]!!"
+            }
+        elseif d==7 then
+            return {
+                "DOESn4T IT SOUND\n[Satisfied or\nSatisfied]??",
+                "YOU'LL STILL HAVE [Mean Girl],\n[Hoochi Mama] and [Frozen Chicken]\nALONGSIDE YOU!!",
+                "WELL MAYBE NOT\nTHE [3rd] ONE"
+            }
+        elseif d==8 then
+            return {
+                "MAYBE WE CAN MAKE THE\n[Miracle] HAPPEN AFTER ALL,\nKRIS!!",
+                "THE [Voices] OF [Heaven] WILL\nHEAR US AT LAST",
+                "AND TOGETHER, WE'LL\nBE [BIG SHOT!!!!]"
+            }
+        elseif d==9 then
+            return {
+                "SO THAT'S A [Please! Please get\nout of my room! I swear\nI'll-], I SUPPOSE?",
+                "YOU DON'T KNOW WHAT\nYOU'RE [Missing Out] KRIS!!",
+                "YOU DON'T KNOW..."
+            }
+        elseif d==10 then
+            return {
+                "ALL THE [Deals],\nTHE [Hyperlink Blocked]",
+                "ALL OFFER ON A SILVER\nPLATE WHILE WE TAKE\nA DIVE INTO [Do Not\nContain Liquid Acid]"
+            }
+        elseif d==11 then
+            return {
+                "KRIS WHY DO WANT TO SEAL THAT [Fountain] SO MUCH??!!!",
+                "IN THE [Buisiness], THERE'S NO SUCH THING AS [Lonely Wolf]"
+            }
+        elseif d==12 then
+            return {
+                "IF YOU [Pave Your Path] ALONE, KRIS",
+                "YOU WILL LOSE EVERYTHING..."
+            }
+        elseif d==13 then
+            return {
+                "[Friends] WILL GO DOWN THE [Drain] [Drain]",
+                "THE [World] WILL FORGET ABOUT YOU AND YOUR SWEET [Deals]",
+                "AND YOU'LL LIVE IN A [Garbage Can] FOR YOUR [One-Time Only] LIFE"
+            }
+        elseif d==14 then
+            return {
+                "KRIS, DO YOU REALLY...",
+                "DO YOU REALLY WANT TO BE A [Little Sponge]??"
+            }
+        end
     end
+    return super:getEnemyDialogue(self)
+end
+
+function Spamton_NEO:getAttackDamage(damage, battler)
+    if damage>0 then
+        return Utils.clamp(damage, 50, 75)
+    end
+    return 0
 end
 
 return Spamton_NEO
