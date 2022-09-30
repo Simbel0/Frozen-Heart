@@ -52,7 +52,7 @@ function itsRainingPipis:onStart()
         self.wait_for_end = true
         self.timer:everyInstant(1, function()
             print("pipis")
-            self:spawnBullet("neo/pipis", Utils.random(Game.battle.arena.right+20, SCREEN_WIDTH-20), -10, Utils.random(1, 3), math.rad(90), Game:getFlag("first_pipis", true), {y=Game.battle.arena.bottom-6})
+            self:spawnBullet("neo/pipis", Utils.random(Game.battle.arena.right+20, SCREEN_WIDTH-20), -10, Utils.random(1, 3), math.rad(90), Game:getFlag("first_pipis", true), {y=Game.battle.arena.bottom-6}, true)
             Game:setFlag("first_pipis", false)
         end, self.mode==1 and 10 or 15)
     end)
