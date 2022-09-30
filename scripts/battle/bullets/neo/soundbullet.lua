@@ -1,6 +1,6 @@
 local soundwave, super = Class(Bullet)
 
-function soundwave:init(x, y, speed, flip, aim_player)
+function soundwave:init(x, y, speed, flip, aim_player, rot_offset)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/neo/soundbullet")
 
@@ -16,9 +16,10 @@ function soundwave:init(x, y, speed, flip, aim_player)
     end]]
 
     print(math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+4)
+    rot_offset = rot_offset or 0
 
     self.physics.speed=speed
-    self.rotation=aim_player and math.rad(math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+4) or math.rad(Utils.random(150, 170))
+    self.rotation=aim_player and math.rad(math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+4) or math.rad(Utils.random(150, 170)+3*rot_offset)
     self.physics.match_rotation=true
 
     self.start=false

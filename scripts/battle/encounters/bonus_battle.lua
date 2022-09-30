@@ -45,7 +45,12 @@ function Bonus_Battle:onBattleStart()
     else
         Game.battle.music:play("SnowGrave NEO", 0.5, 1)
     end
-    --Game.world:getEvent(2).adjust=3
+    Game.world:getEvent(2).adjust=3
+    Game.battle.party[2].chara.stats["health"]=190
+    Game.battle.party[2].chara.health=190
+    Game.battle.party[2].chara.stats["attack"]=18
+    Game.battle.party[2].chara.stats["defense"]=2
+    Game.battle.party[2].chara.stats["magic"]=3
 end
 
 function Bonus_Battle:getDialogueCutscene()

@@ -2,6 +2,7 @@ local protectedCrew, super = Class(Wave)
 
 function protectedCrew:init()
     super:init(self)
+    self.mode = Game.battle.encounter.sneo.wave_loop
     self.time=-1
     self:setArenaOffset(-150, 0)
 end

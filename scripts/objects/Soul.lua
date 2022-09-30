@@ -1,4 +1,4 @@
-local Soul, super = Class(Soul)
+local Soul, super = Class("Soul", true)
 
 function Soul:init(x, y, color)
     super:init(self, x, y)
@@ -6,9 +6,11 @@ function Soul:init(x, y, color)
     self.sprite:remove()
 
     if Game:getFlag("plot", 0)<4 then
+        print("kljzlkjl")
         self.sprite = Sprite("player/heart_monster")
         self.color = {1, 1, 1}
     else
+        print("ooooo")
         self.sprite = Sprite("player/heart_dodge")
     end
     self.sprite:setOrigin(0.5, 0.5)

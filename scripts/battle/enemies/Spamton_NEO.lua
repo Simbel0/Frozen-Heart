@@ -7,7 +7,7 @@ function Spamton_NEO:init()
     self.name = "Spamton NEO"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("spamtonneo")
-    self.sprite:setStringCount(4)
+    self.sprite:setStringCount(6)
 
     local wl = self.sprite:getPart("wing_l")
     local wr = self.sprite:getPart("wing_r")
@@ -43,8 +43,12 @@ function Spamton_NEO:init()
         "bonus/test",
         "bonus/phoneRing",
         "bonus/protectedCrew",
-        "bonus/rainPipis"
+        "bonus/rainPipis",
+        "bonus/you've_got_mail",
+        "bonus/pistonTrap"
     }
+    self.current_id = 0
+    self.wave_loop = 1
 
     -- Dialogue randomly displayed in the enemy's speech bubble
     self.dialogue = {
@@ -82,6 +86,18 @@ function Spamton_NEO:init()
     self:registerAct("SnapAll", nil, {"susie", "noelle"})
 end
 
+function Spamton_NEO:selectWave()
+    if self.wave_loop<=1 then
+        self.current_id = self.current_id + 1
+        if self.current_id>#self.waves then
+            self.current_id = 1
+            self.wave_loop = self.wave_loop + 1
+        end
+        return self.waves[self.current_id]
+    end
+    return super:selectWave(self)
+end
+
 function Spamton_NEO:onAct(battler, name)
     if name == "Check" then
         return {
@@ -109,7 +125,7 @@ function Spamton_NEO:onAct(battler, name)
     elseif name == "SnapAll" then
         self.sprite:snapStrings(love.math.random(2, 4))
         Assets.playSound("damage")
-        self:hurt(love.math.random(55, 155)*6, battler)
+        self:hurt(Utils.round(love.math.random(55, 155)*3.5), battler)
         return "* Everyone snapped wires!"
     --elseif name == "Red Buster" then
     --    Game.battle:powerAct("red_buster", battler, "susie", self)
@@ -188,24 +204,24 @@ function Spamton_NEO:getEnemyDialogue()
             }
         elseif d==11 then
             return {
-                "KRIS WHY DO WANT TO SEAL THAT [Fountain] SO MUCH??!!!",
-                "IN THE [Buisiness], THERE'S NO SUCH THING AS [Lonely Wolf]"
+                "KRIS WHY DO WANT TO\nSEAL THAT [Fountain] SO\nMUCH??!!!",
+                "IN THE [Buisiness],\nTHERE'S NO SUCH THING\nAS [Lonely Wolf]"
             }
         elseif d==12 then
             return {
-                "IF YOU [Pave Your Path] ALONE, KRIS",
+                "IF YOU [Pave Your Path]\nALONE, KRIS",
                 "YOU WILL LOSE EVERYTHING..."
             }
         elseif d==13 then
             return {
-                "[Friends] WILL GO DOWN THE [Drain] [Drain]",
-                "THE [World] WILL FORGET ABOUT YOU AND YOUR SWEET [Deals]",
-                "AND YOU'LL LIVE IN A [Garbage Can] FOR YOUR [One-Time Only] LIFE"
+                "[Friends] WILL GO\nDOWN THE [Drain]\n[Drain]",
+                "THE [World] WILL FORGET\nABOUT YOU AND YOUR\nSWEET [Deals]",
+                "AND YOU'LL LIVE IN A\n[Garbage Can] FOR YOUR [One-Time\nOnly] LIFE"
             }
         elseif d==14 then
             return {
                 "KRIS, DO YOU REALLY...",
-                "DO YOU REALLY WANT TO BE A [Little Sponge]??"
+                "DO YOU REALLY WANT TO\nBE A [Little Sponge]??"
             }
         end
     end

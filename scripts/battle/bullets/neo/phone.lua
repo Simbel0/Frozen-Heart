@@ -21,6 +21,9 @@ function phone:init(x, y, speed)
 end
 
 function phone:onWaveSpawn()
+    if self.wave.mode>1 then
+        self.shot_health = 30
+    end
     self.wave.timer:tween(1, self, {y=(Game.battle.arena.bottom-Game.battle.arena.top/2)-40}, "in-bounce", function()
         self.start=true
     end)
@@ -32,12 +35,25 @@ function phone:update()
         if self.sprite.frame==3 then
             if not self.sound_fired then
                 Assets.playSound("phone")
-                self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 10, false, true)
-                self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 10, false, true)
+                if self.wave.mode==1 then
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 10, false, true)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 10, false, true)
 
-                self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 10, false, false)
-                self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 10, false, false)
-                self.sound_fired=true
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 10, false, false)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 10, false, false)
+                    self.sound_fired=true
+                else
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 14, false, true)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 12, false, true)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 14, false, true)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, true)
+
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 14, false, false)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 12, false, false)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 14, false, false)
+                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, false)
+                    self.sound_fired=true
+                end
             end
         else
             self.sound_fired=false
