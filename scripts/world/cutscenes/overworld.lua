@@ -164,7 +164,7 @@ return {
 			cutscene:text("* Can I ask you something?", nil, "noelle")
 			cutscene:text("* Of course,[wait:0.5] anything.", "neutral_side", "susie")
 			cutscene:text("* ...", nil, "noelle")
-			cutscene:text("* What would you do if a friend of yours suddenly started acting a different way?", nil, "noelle")
+			cutscene:text("* What would you do if a friend of yours suddenly start acting a hurtful way?", nil, "noelle")
 			Game.world.music:play("noelle_normal", 1, 1)
 			cutscene:text("* Uh??", "surprise", "susie")
 			cutscene:text("* What are you talking about?", "nervous", "susie")
@@ -266,7 +266,7 @@ return {
 
 		if noelle then
 			cutscene:text("* Susie![wait:1] You're back!", "blush_pleased", "ralsei")
-			cutscene:text("* And you brought Noelle with you!", "smile", "ralsei")
+			cutscene:text("* And you brought a friend with you!", "smile", "ralsei")
 			cutscene:text("* Nice to see you too,[wait:0.5] glasses nerd.", "smirk", "susie")
 			cutscene:text("* ...", "surprise_frown_b", "noelle")
 			cutscene:text("* Noelle Honey Sweety Darling", "smile", "queen")
@@ -289,8 +289,9 @@ return {
 			cutscene:text("* Simulation Finished\n* Taken Time: Very Fast", "analyze", "queen")
 			cutscene:text("* Noelle I Am Very Surprised", "neutral", "queen")
 			cutscene:text("* I Did Not Expect You To Feel That Way For-", "smile_side_l", "queen")
-			cutscene:text("* Queen please don't talk about that here!!", "shock", "noelle")
-			cutscene:text("* I'll die if that happen.", "surprise_smile", "noelle")
+			cutscene:walkToSpeed(noelle, noelle.x-10, noelle.y, 4)
+			cutscene:text("* Queen please don't!!", "shock", "noelle")
+			cutscene:text("* I'd die if you mention that here..", "surprise_smile", "noelle")
 			cutscene:text("* ...", "down_c", "queen")
 			cutscene:wait(cutscene:walkToSpeed(queen, noelle.x+100, noelle.y, 6, "left", true))
 			cutscene:wait(0.5)
@@ -482,7 +483,7 @@ return {
 			cutscene:text("* ...But...", "sad_b", "noelle")
 			cutscene:text("* Come on, Noelle! I won't give up to a little headache!", "sincere_smile", "susie")
 			local stopDuring=false
-			Game.world.timer:everyInstant(0.7, function()
+			Game.world.timer:everyInstant(1, function()
 				Game.world.timer:tween(0.3, susie, {y=susie.y-5})
 				if susie.y<=460 or stopDuring then
 					return false
@@ -520,11 +521,13 @@ return {
     		cutscene:text("* Ugh... I feel so weak now...", "bangs_neutral", "susie")
     		susie:setSprite("landed_1")
     		Assets.playSound("noise")
+    		cutscene:wait(cutscene:walkTo(noelle, susie.x, susie.y+25, 0.2, "up", true))
     		noelle.sprite:pause()
+    		cutscene:wait(0.25)
     		cutscene:text("* ...", "surprise_frown_b", "noelle")
     		cutscene:text("* Wa-Wait!", "surprise_frown", "noelle")
     		local wait, text = cutscene:text("* Susie, don't move!", "question", "noelle", {wait=false})
-    		cutscene:wait(cutscene:walkTo(noelle, noelle.x, susie.y+145, 0.5))
+    		cutscene:wait(cutscene:walkTo(noelle, noelle.x, susie.y+135, 0.5))
     		cutscene:wait(wait)
     		Assets.playSound("spellcast")
     		noelle:setAnimation({"battle/spell", 1/15, false, next="walk/up"})
@@ -534,29 +537,27 @@ return {
 		    local sprite_to_use = susie.sprite
 		    local offset = sprite_to_use:getOffset()
 		    local flash = FlashFade(sprite_to_use.texture, offset[1], offset[2])
-		    flash.layer = 100
-		    flash.color = {0, 1, 0}
+		    flash:setLayer(susie.layer+100)
+		    flash:setColor(0, 1, 0)
 		    susie:addChild(flash)
 		    Game.world.timer:every(1/30, function()
 		        for i = 1, 2 do
 		            local x = susie.x + ((love.math.random() * susie.width) - (susie.width / 2)) * 2
 		            local y = susie.y - (love.math.random() * susie.height) * 2
 		            local sparkle = HealSparkle(x, y)
-		            if r and g and b then
-		                sparkle:setColor(r, g, b)
-		            end
+		            sparkle:setColor(0, 1, 0)
 		            susie.parent:addChild(sparkle)
 		        end
 		    end, 4)
 
-		    cutscene:wait(0.5)
+		    cutscene:wait(0.75)
 
 		    cutscene:text("* H-How do you feel?", "blush_question", "noelle")
 		    cutscene:text("* I... feel...", "bangs_neutral", "susie")
 		    susie:setSprite("walk")
 		    cutscene:look("down")
     		Assets.playSound("noise")
-    		cutscene:wait(0.5)
+    		cutscene:wait(0.75)
     		cutscene:text("* I feel a lot better, actually.", "surprise", "susie")
     		cutscene:text("* So uh... Thanks, I guess.", "shy", "susie")
     		cutscene:text("* ...!", "blush_big_smile", "noelle")
@@ -630,7 +631,7 @@ return {
 		if not Game.inventory:hasItem("egg") then
 			cutscene:text("* (Well[wait:1], there is a man here.)")
 			cutscene:text("* (The man might be happy again.)")
-			cutscene:text("* (He wants to express his gratitude to you.)")
+			cutscene:text("* (He wants to express his gratitude towards you.)")
 			cutscene:choicer({"Yes", "No"})
 			if cutscene.choice==1 then
 				Assets.stopAndPlaySound("egg")

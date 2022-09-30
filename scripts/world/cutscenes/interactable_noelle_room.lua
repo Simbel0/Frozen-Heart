@@ -107,13 +107,13 @@ return function(cutscene, event)
 		if noelle then
 			if not interacted then
 				cutscene:text("* ...", "neutral_side", "susie")
-				cutscene:text("* So uh...[wait:1] Why the giant heart-themed ferris wheel?", "smirk", "susie")
+				cutscene:text("* So uh...[wait:1] Why THIS type of giant ferris wheel?", "smirk", "susie")
 				cutscene:text("* I-[wait:0.5]I don't know![wait:1] Queen is the one who made the room.", "blush_question", "noelle")
 				cutscene:text("* But maybe we could...", "blush_smile", "noelle")
 				cutscene:text("* Take it...[wait:1] together?[wait:1] It might bring us to Kris faster, no?", "blush_smile_closed", "noelle")
 				cutscene:text("* Eh,[wait:0.5] I prefer not.", "nervous_side", "susie")
 				cutscene:text("* Wh-[wait:0.5]Why?", "confused_surprise", "noelle")
-				cutscene:text("* What if it actually doesn't bring us to Kris but somewhere else??", "shy_b", "susie")
+				cutscene:text("* What if it actually doesn't bring us to Kris??", "shy_b", "susie")
 				cutscene:text("* We-[wait:0.5]Well...", "confused_surprise_b", "noelle")
 				cutscene:text("* I guess you're right...", "down", "noelle")
 			else
