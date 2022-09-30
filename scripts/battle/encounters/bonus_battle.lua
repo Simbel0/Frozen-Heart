@@ -49,7 +49,8 @@ function Bonus_Battle:onBattleStart()
 end
 
 function Bonus_Battle:getDialogueCutscene()
-    if self.sneo.health<=2400 and self.phase==2 then
+    if self.sneo.health<=2400 and self.phase==1 then
+        self.phase=2
         self.sneo.text={
             "* Spamton NEO smiles victoriously.",
             "* Spamton waits for you to take the deal.",
