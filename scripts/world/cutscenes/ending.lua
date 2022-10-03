@@ -115,6 +115,8 @@ return {
                 Game:addPartyMember("noelle")
             end
 
+            cutscene:wait(cutscene:loadMap("fountain_room"))
+            cutscene:detachFollowers()
 
             laugh:play()
             Game.world.timer:every(0.5, function()
@@ -133,8 +135,56 @@ return {
                 print(spamtonMusic:tell())
                 return spamtonMusic:tell()>=8
             end)
+            sneo=Game.world:spawnNPC("spamtonneo", 525, 340)
+            cutscene:getCharacter("kris"):setPosition(310, 300)
+            cutscene:getCharacter("susie"):setPosition(310, 370)
+            cutscene:getCharacter("noelle"):setPosition(310, 427)
+            cutscene:look("kris", "right")
+            cutscene:look("susie", "right")
+            cutscene:look("noelle", "right")
             cutscene:fadeIn(0)
-            cutscene:startEncounter("bonus_battle", false)
+            cutscene:startEncounter("bonus_battle", false, sneo)
+            if Game:getFlag("spamton_conclusion", "undefined") == "killed" then
+                local sneo = cutscene:getCharacter("spamtonneo")
+                for i,v in ipairs(sneo.sprite.parts) do
+                    if v.id~="head" then
+                        v.sprite.frozen = true
+                        v.sprite.freeze_progress = 1
+                    end
+                    v.swing_speed = 0
+                end
+                sneo.sprite:setHeadAnimating(false)
+                sneo.sprite:getPart("head"):setSprite("npcs/spamton/head_death")
+                cutscene:text("* ...", nil, sneo)
+                cutscene:text("* Ah! Look at you! You can't even move a limb!", "smirk", "susie")
+                cutscene:look("kris", "up")
+                cutscene:look("susie", "up")
+                cutscene:look("noelle", "up")
+                cutscene:text("* Come on, Kris. Let's seal the fountain!", "smile", "susie")
+                cutscene:look("kris", "right")
+                cutscene:look("susie", "right")
+                cutscene:look("noelle", "right")
+                cutscene:text("* KRIS... WAIT...", nil, sneo)
+                cutscene:text("* What do you want, weirdo?", "annoyed", "susie")
+                cutscene:wait(1)
+                Game.world.music:play("spamton_neo_after", 1, 1)
+                cutscene:text("* IT...[wait:1]\nIT SEems that even after all this...", nil, sneo)
+                cutscene:text("* Even after reaching the top, I always seem to be doomed to fall back down.", nil, sneo)
+                cutscene:text("* I can't be anything more than a simple puppet...", nil, sneo)
+                cutscene:text("* But you three, it may not look like it..", nil, sneo)
+                cutscene:text("* But you could actually be able to free yourself of your strings.", nil, sneo)
+                cutscene:text("* Kris...", nil, sneo)
+                cutscene:fadeOut(0)
+                Game.world.music:stop()
+                cutscene:wait(1)
+                cutscene:text("* Good luck. You'll need it.", nil, sneo)
+                cutscene:wait(0.5)
+                Assets.playSound("snd_icespell2")
+                cutscene:wait(2.5)
+                cutscene:text("* (You got the PuppetScarf.)")
+                cutscene:text("* (You got the ShadowCrystal.)")
+                cutscene:gotoCutscene("ending.closing_fountain")
+            end
         else
             cutscene:gotoCutscene("ending.closing_fountain")
         end
@@ -146,7 +196,7 @@ return {
 
         local soul = Sprite("player/heart", SCREEN_WIDTH/2, SCREEN_HEIGHT-100)
         soul.color={1, 0, 0}
-        soul.rotation=160
+        soul.rotation=math.rad(180)
         soul.layer=WORLD_LAYERS["top"]+10
         soul:setOrigin(0.5, 0.5)
         Game.world:addChild(soul)
@@ -782,7 +832,7 @@ return {
 
         cutscene:wait(0.5)
 
-        cutscene:text("* Holy shit, Kris! I didn't hear you arrive!", "", "susie")
+        cutscene:text("* Damn, Kris! I didn't hear you arrive!", "", "susie")
         cutscene:text("* Yo-You didn't hear anything just now, right?", "", "susie")
         cutscene:text("* Why?[wait:0.5] No reason!", "", "susie")
         cutscene:wait(0.5)

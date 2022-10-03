@@ -1,12 +1,11 @@
 return function(cutscene)
-    print("Spamton Fight: "..tostring(Game:getFlag("spamton_fight", false)))
+    print("Spamton Fight: "..tostring(Game:getFlag("spamton_boss", false)))
     print("Secret Fight: "..tostring(Game:getFlag("secret_unlocked", false)))
-    print("No heal Fight: "..tostring(Game:getFlag("no_heal", true)))
     cutscene:fadeOut(0)
     cutscene:wait(2)
 
     Kristal.hideBorder(1)
-    Spamton = false--Game:getFlag("no_heal", false)
+    Spamton = Game:getFlag("spamton_boss", false)
     Astrogirl = Utils.random(0, 100)<10
     local theme = Music(Astrogirl and "Beeg" or "ch2_credits")
     theme.source:setLooping(false)

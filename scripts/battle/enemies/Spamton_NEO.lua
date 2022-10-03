@@ -79,6 +79,8 @@ function Spamton_NEO:init()
         "* Spamton believes in you.[wait:10]\n* Probably not.",
     }
 
+    self.deal = 0
+
     self:registerAct("X-Slash", "Physical\nDamage", nil, 15)
     --self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
     --self:registerAct("DualHeal", "Heals\neveryone", {"noelle"}, 50)
@@ -87,6 +89,11 @@ function Spamton_NEO:init()
 end
 
 function Spamton_NEO:selectWave()
+    if self.encounter.phase == 2 and self.encounter.item_used then
+        self.encounter.item_used = false
+        return "bonus/take_down"
+    end
+
     if self.wave_loop<=1 then
         self.current_id = self.current_id + 1
         if self.current_id>#self.waves then
@@ -127,6 +134,68 @@ function Spamton_NEO:onAct(battler, name)
         Assets.playSound("damage")
         self:hurt(Utils.round(love.math.random(55, 155)*3.5), battler)
         return "* Everyone snapped wires!"
+    elseif name == "Deal" or name == "HealDeal" then
+        if name == "HealDeal" then
+            battler:heal(80)
+        end
+        self.deal = self.deal + 1
+        if self.deal == 1 then
+            self.dialogue_override = {
+                "[Interested In This\nAmazing] DEAL, KRIS??",
+                "THE [Terms And Conditions]\nARE VERY SIMPLE",
+                "YOU GIVE ME YOUR\n[HeartShapedObject]",
+                "AND I GIVE YOU\n[Hyperlink Blocked]\nIN RETURN",
+                "YOU HAVE NO REASON TO\n[Not Sign] KRIS!! THIS IS\nTHE [Honestest] DEAL EVER\nMADE!!!!"
+            }
+            return "* You ask Spamton about the details of the deal."
+        elseif self.deal == 2 then
+            self.dialogue_override = {
+                "I SEE NO [Loophole] IN\nTHIS [Contract], KRIS",
+                "NORMALLY, I WOULD BE MAD\nAT YOU FOR JUDGING MY\n[HonestMan] SKILLS",
+                "BUT SINCE IT's yoU KRIS,\nI WILL LISTEN TO YOUR\n[Complaint]!!",
+                "TELL ME... WHAT IS [@$!$]\nWITH MY [Sweet, Sweet] DEAL??"
+            }
+            return "* You tell Spamton that the deal cannot go as well as he makes it sound."
+        elseif self.deal == 3 then
+            self.dialogue_override = {
+                "[Priority: High]\nYOU SAY?",
+                "KRIS. I TOLD YOU\nTHERE WAS NO\n[Loophole]!",
+                "WE SHARE THE SAME.\nGOAL, DON't we?",
+                "TOGETHER, WE WANT TO\nREACH [Heaven] AND SNAP\nTHE [Silly Strings]!!",
+                "AND IF WE HAVE TO\n[2 in 1] TO DO SO,\nSO BE IT!!!",
+                "YOU ALWAYS MUST SACRIFICE\nFOR [Salvation]."
+            }
+            return "* You inform Spamton that SOULs are crucial for Lightners."
+        elseif self.deal == 4 then
+            self.dialogue_override = {
+                "I UNDERSTAND YOUR\n[Fear Meter] KRIS",
+                "AND KRIS... I CAN'T\nFORCE YOU.",
+                "BUT COMPARE THE [Good]\nAND THE [Bad] AND SEE",
+                "YOUR [Flesh And Bones]\nAGAINST ABSOLUTE\n[Hyperlink Blocked]",
+                "THE POWER TO BE\nA [Big Shot]!!!",
+                "ISN4T IT WORTH\nA [Shot]?!"
+            }
+            return "* You tell Spamton you don't want to be one with him."
+        elseif self.deal == 5 then
+            self.dialogue_override = {
+                "KRIS????",
+                "ARE YOU GETTING\n[Desperate]?",
+                "[You Are On The Fastest\nAvailable Route] TO [Heaven]\nKRIS!!",
+                "YOU DON'T HAVE TO RELY\nON YOUR [Friends] ANYMORE!!",
+                "THEY WILL BETRAY\nYOU ANYWAY..."
+            }
+            return {
+                "* You call for help.",
+                "* [speed:0.4]...",
+                "* But nobody came."
+            }
+        else
+            return {
+                "* You call for help.",
+                "* [speed:0.4]...",
+                "* But nobody came."
+            }
+        end
     --elseif name == "Red Buster" then
     --    Game.battle:powerAct("red_buster", battler, "susie", self)
     --elseif name == "Dual Heal" then
@@ -143,6 +212,13 @@ function Spamton_NEO:getEnemyDialogue()
     self.dialogue_advance = self.dialogue_advance+1
     local d    = self.dialogue_advance
     local mode = self.encounter.mode
+
+    if self.encounter.phase==2 and self.encounter.item_used then
+        return {
+            "DID YOU REALLY THINK I WOULDN'T NOTICE YOU USING YOUR [Inventorium]???",
+            "IT'S A DISCUSSION BETWEEN [HonestMan], NOT [Friends]!!"
+        }
+    end
 
     if mode=="no_trance" then
         if d==1 then
