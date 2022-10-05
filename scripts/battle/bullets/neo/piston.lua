@@ -60,6 +60,13 @@ function piston:init(x, y, dir, speed, shootable, flip)
     self.piston_top_tube:setOrigin(0, 0)
     self.piston_top_tube.scale_y = 999
     self.piston_top:addChild(self.piston_top_tube)
+
+    if self.sprite.flip_x then
+        self.collider = ColliderGroup(self, {
+            Hitbox(self, 5, 5, (self.sprite.width*self.sprite.scale_x)-10, (self.sprite.height*self.sprite.scale_y)-10),
+            Hitbox(self, 5, -320, self.piston_top_tube.width-10, 999)
+        })
+    end
 end
 
 function piston:onWaveSpawn()
@@ -117,6 +124,11 @@ function piston:onYellowShot(shot, damage)
         end)
     end
     return "c", false
+end
+
+function piston:onCollide(soul)
+    soul.x = soul.x + 30
+    super:onCollide(self, soul)
 end
 
 return piston
