@@ -109,12 +109,12 @@ return function(cutscene)
     if Game:getFlag("no_heal", true) then
         if Game:getFlag("secret_unlocked", false)==false then
             Game:setFlag("secret_unlocked", true)
-            yellow_text = "You have unlocked\na secret fight!"
+            yellow_text = "You have unlocked\nan alternative fight!"
         else
-            yellow_text = "A secret awaits you!"
+            yellow_text = "An alternative awaits you!"
         end
     else
-        yellow_text = "But can you win without healing?"
+        yellow_text = "But can you win by doing as few turns as possible??"
     end
     text:setText(yellow_text)
     Game.world.timer:tween(3, fx, {alpha=1})
