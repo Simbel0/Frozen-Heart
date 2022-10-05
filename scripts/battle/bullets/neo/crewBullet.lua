@@ -7,6 +7,8 @@ function crewBullet:init(x, y, dir, speed, destination, protected, shoot, shoota
     self.sprite:setScale(0.5, 0.5)
     self:setHitbox(5, 5, (self.sprite.width/2)-10, (self.sprite.height/2)-10)
 
+    self:setHitbox(5, 5, (self.sprite.width*self.sprite.scale_x)-10, (self.sprite.height*self.sprite.scale_y)-10)
+
     self.shootable = shootable~=nil and shootable or true
 
     if self.shootable then

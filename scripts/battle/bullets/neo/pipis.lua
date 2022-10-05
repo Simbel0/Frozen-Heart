@@ -45,7 +45,7 @@ function pipis:update()
         for i=1,5 do
             local bullet = self.wave:spawnBullet("neo/crewBullet", self.x, self.y, math.rad((math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+Utils.random(10, 20))-17), Utils.random(15, 20), nil, false, false, false)
             bullet:setScale(1)
-            bullet:setHitbox(5, 5, (self.sprite.width/4)-10, (self.sprite.height/4)-10)
+            bullet:setHitbox(5, 5, (bullet.sprite.width*bullet.sprite.scale_x)-10, (bullet.sprite.width*bullet.sprite.scale_y)-10)
         end
         self.shot_tp=0
         self:destroy()
@@ -56,7 +56,7 @@ function pipis:update()
             for i=1,5 do
                 local bullet = self.wave:spawnBullet("neo/crewBullet", self.x, self.y, math.rad((math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+Utils.random(10, 20))-17), Utils.random(15, 20), nil, false, false, false)
                 bullet:setScale(1)
-                bullet:setHitbox(5, 5, (self.sprite.width/4)-10, (self.sprite.height/4)-10)
+                bullet:setHitbox(5, 5, (bullet.sprite.width*bullet.sprite.scale_x)-10, (bullet.sprite.width*bullet.sprite.scale_y)-10)
             end
             self.shot_tp=0
             self:destroy()
