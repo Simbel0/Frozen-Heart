@@ -6,7 +6,7 @@ function character:init()
     self.stats["health"]=166
     self.stats["magic"]=22
 
-    self.health=166
+    self.health=55
 
     self:addSpell("snowgrave")
 
