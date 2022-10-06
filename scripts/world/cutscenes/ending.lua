@@ -135,7 +135,7 @@ return {
                 print(spamtonMusic:tell())
                 return spamtonMusic:tell()>=8
             end)
-            sneo=Game.world:spawnNPC("spamtonneo", 525, 340)
+            sneo=Game.world:spawnNPC("spamtonneo", 525, 330)
             cutscene:getCharacter("kris"):setPosition(310, 300)
             cutscene:getCharacter("susie"):setPosition(310, 370)
             cutscene:getCharacter("noelle"):setPosition(310, 427)
@@ -146,6 +146,7 @@ return {
             cutscene:startEncounter("bonus_battle", false, sneo)
             if Game:getFlag("spamton_conclusion", "undefined") == "killed" then
                 local sneo = cutscene:getCharacter("spamtonneo")
+                local kris = cutscene:getCharacter("kris")
                 for i,v in ipairs(sneo.sprite.parts) do
                     if v.id~="head" then
                         v.sprite.frozen = true
@@ -153,8 +154,15 @@ return {
                     end
                     v.swing_speed = 0
                 end
+                sneo.sprite:setStringCount(1)
+                sneo.sprite.bg_strings[1].alpha = 0
+                local fg_sx, fg_sy = sneo.sprite:getRelativePos(ox, oy, sneo)
+                sneo.sprite.fg_strings[1].x = (fg_sx+sneo.width/2)-8
+                sneo.sprite.fg_strings[1].swing_speed = 0
+                cutscene:setTextboxTop(true)
                 sneo.sprite:setHeadAnimating(false)
                 sneo.sprite:getPart("head"):setSprite("npcs/spamton/head_death")
+                cutscene:wait(0.7)
                 cutscene:text("* ...", nil, sneo)
                 cutscene:text("* Ah! Look at you! You can't even move a limb!", "smirk", "susie")
                 cutscene:look("kris", "up")
@@ -162,15 +170,20 @@ return {
                 cutscene:look("noelle", "up")
                 cutscene:text("* Come on, Kris. Let's seal the fountain!", "smile", "susie")
                 cutscene:look("kris", "right")
-                cutscene:look("susie", "right")
                 cutscene:look("noelle", "right")
                 cutscene:text("* KRIS... WAIT...", nil, sneo)
+                cutscene:text("* Kris, just ignore him.", "neutral_side", "susie")
+                cutscene:look("susie", "right")
+                cutscene:wait(cutscene:walkTo(kris, kris.x+80, kris.y, 1))
+                cutscene:wait(0.7)
+                cutscene:text("* Kris??", "sad_frown", "susie")
+                cutscene:text("* ..Well if you think it's worth listening...", "neutral", "susie")
                 cutscene:text("* What do you want, weirdo?", "annoyed", "susie")
                 cutscene:wait(1)
                 Game.world.music:play("spamton_neo_after", 1, 1)
-                cutscene:text("* IT...[wait:1]\nIT SEems that even after all this...", nil, sneo)
+                cutscene:text("* IT...[wait:1]\nIt seems that even after all this...", nil, sneo)
                 cutscene:text("* Even after reaching the top, I always seem to be doomed to fall back down.", nil, sneo)
-                cutscene:text("* I can't be anything more than a simple puppet...", nil, sneo)
+                cutscene:text("* Even then, I can't be anything more than a simple puppet...", nil, sneo)
                 cutscene:text("* But you three, it may not look like it..", nil, sneo)
                 cutscene:text("* But you could actually be able to free yourself of your strings.", nil, sneo)
                 cutscene:text("* Kris...", nil, sneo)
@@ -181,8 +194,8 @@ return {
                 cutscene:wait(0.5)
                 Assets.playSound("snd_icespell2")
                 cutscene:wait(2.5)
-                cutscene:text("* (You got the PuppetScarf.)")
-                cutscene:text("* (You got the ShadowCrystal.)")
+                --cutscene:text("* (You got the PuppetScarf.)")
+                --cutscene:text("* (You got the ShadowCrystal.)")
                 cutscene:gotoCutscene("ending.closing_fountain")
             end
         else
@@ -196,7 +209,7 @@ return {
 
         local soul = Sprite("player/heart", SCREEN_WIDTH/2, SCREEN_HEIGHT-100)
         soul.color={1, 0, 0}
-        soul.rotation=math.rad(180)
+        --soul.rotation=math.rad(180)
         soul.layer=WORLD_LAYERS["top"]+10
         soul:setOrigin(0.5, 0.5)
         Game.world:addChild(soul)
