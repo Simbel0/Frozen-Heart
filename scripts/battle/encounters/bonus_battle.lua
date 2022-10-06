@@ -77,21 +77,23 @@ function Bonus_Battle:onTurnEnd()
         end
         local susie = Game.battle.party[2]
         local noelle = Game.battle.party[3]
-        if not susie.is_down or not noelle.is_down then
+        if (not susie.is_down) or (not noelle.is_down) then
             if self.item_used then
                 return false
             end
             if noelle.is_down then
-                noelle:heal(math.ceil(noelle.chara:getStat("health") / 8))
-                while noelle.chara.health<=0 do
-                    noelle.chara.health = noelle.chara.health + 1
+                local heal = 0
+                while noelle.chara.health+heal<=0 do
+                    heal = heal + 1
                 end
+                noelle:heal(heal)
             end
             if susie.is_down then
-                susie:heal(math.ceil(susie.chara:getStat("health") / 8))
-                while susie.chara.health<=0 do
-                    susie.chara.health = susie.chara.health + 1
+                local heal = 0
+                while noelle.chara.health+heal<=0 do
+                    heal = heal + 1
                 end
+                susie:heal(heal)
             end
             Game.battle:startCutscene(function(cutscene)
 
@@ -179,17 +181,24 @@ function Bonus_Battle:onTurnEnd()
                 cutscene:wait(0.1)
                 castIceShock(Game.battle.party[2], Game.battle.enemies[1], {30, 30})
                 cutscene:wait(0.3)
+                self.sneo.sprite:snapStrings(6, true)
+                Assets.playSound("petrify")
                 for i,v in ipairs(self.sneo.sprite.parts) do
                     if v.id~="head" then
                         v.sprite.frozen = true
-                        if v.sprite.freeze_progress>1 then
+                        print(v.id, v, v.sprite, v.sprite.frozen, v.sprite.freeze_progress)
+                        -- For some reason, the left arm lose its freeze_progress value. I suspect that the complete reset may cause that but I'm just going to do that instead
+                        if not v.sprite.freeze_progress then
+                            v.sprite.freeze_progress = 0
+                        end
+                        if v.sprite.freeze_progress and v.sprite.freeze_progress<1 then
                             v.sprite.freeze_progress = 0
                             Game.battle.timer:tween(20/30, v.sprite, {freeze_progress=1})
                         end
                     end
                     v.swing_speed = 0
                 end
-                cutscene:wait(1.5)
+                cutscene:wait(2.5)
                 Game:setFlag("spamton_conclusion", "killed")
                 Game.battle:setState("VICTORY")
                 Game.battle:returnToWorld()
@@ -266,10 +275,10 @@ function Bonus_Battle:getDialogueCutscene()
             pipis:setScale(2)
             pipis:setRotationOrigin(0.5, 0.5)
             pipis.graphics.spin = 4
-            Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[2].x, y=Game.battle.party[2].y-10}, "linear", function()
+            Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[2].x, y=Game.battle.party[2].y-Game.battle.party[2].height/2}, "linear", function()
                 pipis:explode()
                 Game.battle.party[2]:hurt(999)
-                Game.battle.party[2].chara.health = -162
+                Game.battle.party[2].chara.health = -242
             end)
             Game.battle:addChild(pipis)
 
@@ -285,10 +294,10 @@ function Bonus_Battle:getDialogueCutscene()
             pipis:setScale(2)
             pipis:setRotationOrigin(0.5, 0.5)
             pipis.graphics.spin = 4
-            Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[3].x, y=Game.battle.party[3].y-10}, "linear", function()
+            Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[3].x, y=Game.battle.party[3].y-Game.battle.party[3].height/2}, "linear", function()
                 pipis:explode()
                 Game.battle.party[3]:hurt(999)
-                Game.battle.party[3].chara.health = -159
+                Game.battle.party[3].chara.health = -229
             end)
             Game.battle:addChild(pipis)
 

@@ -50,6 +50,19 @@ function Spamton_NEO:init()
     self.current_id = 0
     self.wave_loop = 1
 
+    -- Dialogues Spamton might say depending on the selected wave
+    self.waves_dialogues = {
+        {"LOOK AT THOSE [Flying Heads] COMING TO [!$#!] YOU!!!", "SAY [Hello] TO MY [Beautiful] FACE!!"},
+        {{
+            "YOU DON'T NEED TO [Feeling Unsafe] KRIS!!",
+            "JUST PICK UP THE [Phone]!!!"
+        }, "CAN YOU HEAR IT [Ring, Ring]??!"},
+        {{"DO NOT WORRY ABOUT THIS [Deal] KRIS!!", "IT IS NOW PROTECTED WITH [Certified Protection Ⓒ 1997]"}, "[Enjoy Full Time Protection With] FLYING HEADS!!"},
+        {"[Hoochi Mama]!! I HAVE A [Gift] FOR YOU!!!", "CAN YOU FEEL [Wipe My Save]??"},
+        {"KRIS, LOOK AT THOSE [E-Mail Guy] REVIEW JUST FOR YOU!!", "I HAVE A [$!$#] LETTER FOR YOU!!"},
+        {{"KRIS, DO YOU FEEL [Trap]?","THEN PLEASE SHOOT FOR THE [Deal]"}, "WE CAN FREE OURSELVES FROM THOSE [Vulnerable Walls]!!"},
+    }
+
     -- Dialogue randomly displayed in the enemy's speech bubble
     self.dialogue = {
         "ENL4RGE\nYOURSELF",
@@ -70,11 +83,11 @@ function Spamton_NEO:init()
         "* It's cold.",
         "* Spamton's armor is freezing.",
         "* Spamton is freezing.",
-        "* Proceed.",
+        --"* Proceed.",
         "* The air crackles with freedom.",
-        "* The stage lights are frozen.",
+        --"* The stage lights are frozen.",
         "* It pulls the strings and makes them ring.",
-        "* Raise your hands and make them shut up.",
+        --"* Raise your hands and make them shut up.",
         "* Spamton feels the cold breeze as he takes a ride around town.[wait:10]\n* He hates it.",
         "* Spamton believes in you.[wait:10]\n* Probably not.",
     }
@@ -92,6 +105,12 @@ function Spamton_NEO:selectWave()
     if self.encounter.phase == 2 and self.encounter.item_used then
         self.encounter.item_used = false
         return "bonus/take_down"
+    end
+
+    if self.selected_wave then
+        local i = self.selected_wave
+        self.selected_wave = nil
+        return self.waves[i]
     end
 
     if self.wave_loop<=1 then
@@ -165,15 +184,15 @@ function Spamton_NEO:onAct(battler, name)
                 "AND IF WE HAVE TO\n[2 in 1] TO DO SO,\nSO BE IT!!!",
                 "YOU ALWAYS MUST SACRIFICE\nFOR [Salvation]."
             }
-            return "* You inform Spamton that SOULs are crucial for Lightners."
+            return "* You inform Spamton that what he seeks are crucial for Lightners."
         elseif self.deal == 4 then
             self.dialogue_override = {
                 "I UNDERSTAND YOUR\n[Fear Meter] KRIS",
                 "AND KRIS... I CAN'T\nFORCE YOU.",
                 "BUT COMPARE THE [Good]\nAND THE [Bad] AND SEE",
                 "YOUR [Flesh And Bones]\nAGAINST ABSOLUTE\n[Hyperlink Blocked]",
-                "THE POWER TO BE\nA [Big Shot]!!!",
-                "ISN4T IT WORTH\nA [Shot]?!"
+                "THE POWER TO BE\nA [Big Shot]...",
+                "WELL ISN4T IT\nWORTH A [Shot]??"
             }
             return "* You tell Spamton you don't want to be one with him."
         elseif self.deal == 5 then
@@ -186,14 +205,14 @@ function Spamton_NEO:onAct(battler, name)
             }
             return {
                 "* You call for help.",
-                "* [speed:0.4]...",
-                "* But nobody came."
+                "* .[wait:10].[wait:10].",
+                "* ..But nobody came."
             }
         else
             return {
                 "* You call for help.",
-                "* [speed:0.4]...",
-                "* But nobody came."
+                "* .[wait:10].[wait:10].",
+                "* ..But nobody came."
             }
         end
     --elseif name == "Red Buster" then
@@ -300,6 +319,11 @@ function Spamton_NEO:getEnemyDialogue()
                 "DO YOU REALLY WANT TO\nBE A [Little Sponge]??"
             }
         end
+    end
+
+    if self.encounter.phase==1 and Utils.random()<0.5 then
+        self.selected_wave = love.math.random(1, #self.waves)
+        return self.waves_dialogues[self.selected_wave][love.math.random(1, 2)]
     end
     return super:getEnemyDialogue(self)
 end
