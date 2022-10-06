@@ -31,7 +31,7 @@ function Take_Down:onStart()
         Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[2].x, y=Game.battle.party[2].y-10}, "linear", function()
             pipis:explode()
             Game.battle.party[2]:hurt(999)
-            Game.battle.party[2].chara.health = -162
+            Game.battle.party[2].chara.health = -242
         end)
         Game.battle:addChild(pipis)
 
@@ -50,7 +50,7 @@ function Take_Down:onStart()
         Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[3].x, y=Game.battle.party[3].y-10}, "linear", function()
             pipis:explode()
             Game.battle.party[3]:hurt(999)
-            Game.battle.party[3].chara.health = -159
+            Game.battle.party[3].chara.health = -229
         end)
         Game.battle:addChild(pipis)
 
