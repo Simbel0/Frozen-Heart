@@ -33,14 +33,35 @@ end
 function Bonus_Battle:update()
     if self.funnycheat and self.funnycheat>=5 and not self.cheater then
         self.cheater = true
-        Game.battle.timer:tween(0.2, self.sneo.sprite:getPart("head").sprite, {color={1, 0, 0}})
+        self.sneo.wave_loop = 2
+        local head = self.sneo.sprite:getPart("head")
+        self.sneo.smoke_emitter = ParticleEmitter(head.sprite.width/2, head.sprite.height/2, 0, 0, {
+            layer = -101,
+            every = 0.1,
+            amount = 4,
+            texture = "cakesmoke",
+            scale = 4,
+
+            fade = 0.4,
+            fade_after = 0.3,
+            remove_after = 1,
+
+            physics = {
+                speed = 10
+            },
+            angle = {math.rad(285), math.rad(350)}
+        })
+        head:addChild(self.sneo.smoke_emitter)
+        Game.battle.timer:tween(0.2, head.sprite, {color={1, 0, 0}})
         Assets.playSound("snd_carhonk")
         Game.battle.timer:everyInstant(0.6, function()
-            Game.battle.timer:tween(0.25, self.sneo.sprite:getPart("head").sprite, {scale_x=2, scale_y=2}, "linear", function()
-                Game.battle.timer:tween(0.25, self.sneo.sprite:getPart("head").sprite, {scale_x=1, scale_y=1})
+            Game.battle.timer:tween(0.25, head.sprite, {scale_x=2, scale_y=2}, "linear", function()
+                Game.battle.timer:tween(0.25, head.sprite, {scale_x=1, scale_y=1})
             end)
         end, 1)
     end
+
+    self.sneo.attack = Utils.clamp(13 + 0.25*self.funnycheat, 13, 26)
 end
 
 function Bonus_Battle:onBattleStart()

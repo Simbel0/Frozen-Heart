@@ -11,7 +11,7 @@ function piston:init(x, y, dir, speed, shootable, flip)
 
     self.shootable = shootable~=nil and shootable or true
     self.siner = 0
-    self.timer = Kristal.getTime()
+    self.timer = 0
 
     self.sprite.flip_x = flip
     self.stopped = true
@@ -118,7 +118,7 @@ function piston:onYellowShot(shot, damage)
         self.sprite:pause()
         self.sprite:setFrame(4)
         Assets.playSound("bell")
-        self.wave.timer:after(damage>1 and 0.5 or 0.2, function()
+        self.wave.timer:after(Game.battle.encounter.cheater and (damage>1 and 0.25 or 0.05) or (damage>1 and 0.5 or 0.2), function()
             self.stopped = false
             self.sprite:resume()
         end)

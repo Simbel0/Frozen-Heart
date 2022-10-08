@@ -17,12 +17,12 @@ function phone:init(x, y, speed)
     self.start=false
     self.sound_fired=false
 
-    self.shot_health = 20
+    self.shot_health = Game.battle.encounter.cheater and 20 or 30
 end
 
 function phone:onWaveSpawn()
     if self.wave.mode>1 then
-        self.shot_health = 30
+        self.shot_health = Game.battle.encounter.cheater and 30 or 40
     end
     self.wave.timer:tween(1, self, {y=(Game.battle.arena.bottom-Game.battle.arena.top/2)-40}, "in-bounce", function()
         self.start=true
