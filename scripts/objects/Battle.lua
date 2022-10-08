@@ -220,6 +220,11 @@ function Battle:updateTransitionOut()
     self.transition_timer = self.transition_timer - DTMULT
 
     if self.transition_timer <= 0 then--or not self.transitioned then
+        local enemies = {}
+        for k,v in pairs(self.enemy_world_characters) do
+            table.insert(enemies, v)
+        end
+        self.encounter:onReturnToWorld(enemies)
         self:returnToWorld()
         return
     end
