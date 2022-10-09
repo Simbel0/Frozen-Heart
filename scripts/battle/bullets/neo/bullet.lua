@@ -1,6 +1,6 @@
-local crewBullet, super = Class(Bullet)
+local bullet, super = Class(Bullet)
 
-function crewBullet:init(x, y, dir, speed)
+function bullet:init(x, y, dir, speed)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/neo/crew_bullet")
 
@@ -15,10 +15,10 @@ function crewBullet:init(x, y, dir, speed)
     self:setRotationOrigin(0, 0)
 end
 
-function crewBullet:update()
+function bullet:update()
     super:update(self)
 
     self.rotation = math.rad(math.deg(self.rotation)+5*DTMULT)
 end
 
-return crewBullet
+return bullet
