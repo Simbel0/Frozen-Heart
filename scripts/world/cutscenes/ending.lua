@@ -1,5 +1,6 @@
 return {
-    killing_spamton=function(cutscene)
+    killing_spamton=function(cutscene, quick_start)
+        print(quick_start)
 
         local function statusMessage(color, hit_count, crit)
 
@@ -42,15 +43,17 @@ return {
         end)
         cutscene:wait(0.5)
 
-        local i=0
-        Game.world.timer:everyInstant(1/22, function()
-            Assets.playSound("voice/sneo")
-            i=i+1
-        end, 20)
-        cutscene:wait(function()
-            return i>=19
-        end)
-        cutscene:wait(0.75)
+        if not quick_start then
+            local i=0
+            Game.world.timer:everyInstant(1/22, function()
+                Assets.playSound("voice/sneo")
+                i=i+1
+            end, 20)
+            cutscene:wait(function()
+                return i>=19
+            end)
+            cutscene:wait(0.75)
+        end
 
         if ending == "no_trance" then
             Assets.playSound("icespell")
@@ -115,6 +118,36 @@ return {
                 Game:addPartyMember("noelle")
             end
 
+            print("Previous inventory: "..Utils.dump(Game.inventory:getStorage("items")))
+            local temp_inv = {
+                "cd_bagel",
+                "cd_bagel",
+                "cd_bagel"
+            }
+            print("Temp Inventory first: "..Utils.dump(temp_inv))
+
+            local items = Game.inventory:getStorage("items")
+            local yeah = {}
+            for i=#items, 1, -1 do
+                local item = items[i]
+                table.insert(yeah, item.id)
+                Game.inventory:removeItem(item)
+            end
+            for k,v in pairs(Utils.reverse(yeah)) do
+                table.insert(temp_inv, v)
+            end
+            print("Temp Inventory after transfer: "..Utils.dump(temp_inv))
+
+            while #temp_inv>12 do
+                table.remove(temp_inv, 1)
+            end
+            print("Temp Inventory after full check: "..Utils.dump(temp_inv))
+
+            for k,v in pairs(temp_inv) do
+                Game.inventory:addItem(v)
+            end
+            print("New inventory: "..Utils.dump(Game.inventory:getStorage("items")))
+
             cutscene:wait(cutscene:loadMap("fountain_room"))
             cutscene:detachFollowers()
 
@@ -127,14 +160,16 @@ return {
             cutscene:wait(function()
                 return not laugh:isPlaying()
             end)
-            cutscene:wait(0.5)
-            spamtonMusic=Music("SnowGrave NEO")
-            Game:setBorder("simple")
-            Kristal.showBorder(1)
-            cutscene:wait(function()
-                print(spamtonMusic:tell())
-                return spamtonMusic:tell()>=8
-            end)
+            if not quick_start then
+                cutscene:wait(0.5)
+                spamtonMusic=Music("SnowGrave NEO")
+                Game:setBorder("simple")
+                Kristal.showBorder(1)
+                cutscene:wait(function()
+                    print(spamtonMusic:tell())
+                    return spamtonMusic:tell()>=8
+                end)
+            end
             sneo=Game.world:spawnNPC("spamtonneo", 525, 330)
             cutscene:getCharacter("kris"):setPosition(310, 300)
             cutscene:getCharacter("susie"):setPosition(310, 370)
