@@ -22,7 +22,6 @@ function Soul:update()
     if self.transitioning then
         if self.timer >= 7 then
             Input.clear("cancel")
-            self.transitioning = false
             self.timer = 0
             if self.transition_destroy then
                 if Game:getFlag("plot", 0)>=2 then
@@ -30,6 +29,7 @@ function Soul:update()
                 end
                 self:remove()
             else
+                self.transitioning = false
                 self:setExactPosition(self.target_x, self.target_y)
             end
         else
@@ -60,10 +60,8 @@ function Soul:update()
         if bullet:collidesWith(self.collider) then
             -- Store collided bullets to a table before calling onCollide
             -- to avoid issues with cacheing inside onCollide
+            print("collided_bullets")
             table.insert(collided_bullets, bullet)
-            if Game:getFlag("plot")<=2 then
-                Game:setFlag("no_hit", false)
-            end
         end
         if self.inv_timer == 0 then
             if bullet.tp ~= 0 and bullet:collidesWith(self.graze_collider) then
@@ -95,6 +93,7 @@ function Soul:update()
     end
     Object.endCache()
     for _,bullet in ipairs(collided_bullets) do
+        print("Collide")
         self:onCollide(bullet)
     end
 
@@ -110,8 +109,6 @@ function Soul:update()
         self.inv_flash_timer = 0
         self.sprite:setColor(1, 1, 1)
     end
-
-    super:update(self)
 end
 
 return Soul
