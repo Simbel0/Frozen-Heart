@@ -42,7 +42,7 @@ return function(cutscene, event)
 			if noelle then
 				cutscene:text("* ...", "neutral_side", "susie")
 				cutscene:text("* I wonder how this one tastes.[react:1]", "smirk", "susie", {reactions={
-					{"noelle", "confused_surprise", "right", "bottommid", "Susie???"}
+					{"Susie???", "right", "bottommid", "confused_surprise", "noelle" }
 				}})
 			else
 				cutscene:text("* (Susie took a bite out of one of the catalogues.)")

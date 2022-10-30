@@ -180,7 +180,7 @@ function Noelle:onAct(battler, name)
                     cutscene:text("* Noelle was CONFUSED by Susie talking to herself!")
                     cutscene:text("* ...", "surprise", "susie")
                     cutscene:text("* Heh.[wait:1] A piece of cake.[react:1]", "closed_grin", "susie", {reactions={
-                        {"susie", "nervous_side", "right", "bottom", "Man, I'm hungry now."}
+                        {"Man, I'm hungry now.", "right", "bottom", "nervous_side", "susie"}
                     }})
                     self.pirou_first=false
                 else

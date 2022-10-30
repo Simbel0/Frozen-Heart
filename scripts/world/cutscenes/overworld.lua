@@ -417,7 +417,7 @@ return {
 		cutscene:text("* I Hope You Are Ready To Have Me As Your Wacky Roommate", "big_smile", "queen")
 		if cutscene:getCharacter("noelle") then
 			cutscene:text("* (I never said anything about that.)[react:1]", "surprise_confused", "ralsei", {reactions={
-				{"noelle", "confused_surprise", "right", "bottommid", "(Susie has a\ncastle?)"}
+				{"(Susie has a\ncastle?)", "right", "bottommid", "confused_surprise", "noelle"}
 			}})
 		else
 			cutscene:text("* (I never said anything about that.)", "surprise_confused", "ralsei")
