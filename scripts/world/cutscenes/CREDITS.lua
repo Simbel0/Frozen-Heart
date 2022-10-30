@@ -81,7 +81,7 @@ return function(cutscene)
 
     local lib_credits = "Queen actor, Hangplugs - Nyako\n"
     if Spamton then
-        lib_credits = lib_credits.."Yellow Soul, Spamton NEO actor - vitellary"
+        lib_credits = lib_credits.."Yellow Soul, Spamton NEO actor, Particle System - vitellary"
     end
 
     text:setText("[color:555555]Librairies[color:reset]\n\n"..lib_credits)
