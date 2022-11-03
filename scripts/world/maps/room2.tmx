@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="6" nextobjectid="12">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="20" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="8" nextobjectid="13">
  <editorsettings>
   <export target="room2.lua" format="lua"/>
  </editorsettings>
@@ -9,9 +9,9 @@
  <tileset firstgid="1" source="../tilesets/castle.tsx"/>
  <layer id="1" name="tiles" width="20" height="12">
   <data encoding="csv">
-0,0,0,0,22,23,23,23,23,23,23,23,23,23,23,23,23,23,24,0,
-0,0,0,0,22,23,23,23,23,23,23,23,23,23,23,23,23,23,24,0,
-0,0,0,0,26,27,27,27,27,27,27,27,27,27,27,27,27,27,28,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,6,7,7,7,7,7,7,7,7,7,7,7,7,7,8,0,
 0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,
 0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,
@@ -19,6 +19,38 @@
 0,0,0,0,10,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,
 7,7,7,7,11,11,11,11,11,11,11,11,11,11,11,11,11,11,12,0,
 15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,15,16,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="7" name="barriers_new" width="20" height="12">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,37,41,41,41,41,41,41,41,41,41,41,41,41,41,42,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+</data>
+ </layer>
+ <layer id="6" name="barriers" width="20" height="12">
+  <data encoding="csv">
+0,0,0,0,22,23,23,23,23,23,23,23,23,23,23,23,23,23,24,0,
+0,0,0,0,22,23,23,23,23,23,23,23,23,23,23,23,23,23,24,0,
+0,0,0,0,26,27,27,27,27,27,27,27,27,27,27,27,27,27,28,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
@@ -39,7 +71,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup color="#0000ff" id="3" name="collision" opacity="0.5">
+ <objectgroup color="#0000ff" id="3" name="collision" visible="0" opacity="0.5">
   <object id="1" x="120" y="120" width="40" height="200"/>
   <object id="2" x="0" y="400" width="760" height="40"/>
   <object id="3" x="760" y="120" width="40" height="280"/>
@@ -55,16 +87,21 @@
   </object>
  </objectgroup>
  <objectgroup color="#ff00ff" id="5" name="objects">
-  <object id="6" name="enemy" x="530" y="220" width="40" height="40">
+  <object id="6" name="NPC" x="437.784" y="158.185" width="40" height="40">
    <properties>
     <property name="actor" value="dummy"/>
-    <property name="encounter" value="dummy"/>
    </properties>
   </object>
   <object id="9" name="transition" x="-40" y="320" width="40" height="80">
    <properties>
     <property name="map" value="room1"/>
     <property name="marker" value="entry"/>
+   </properties>
+  </object>
+  <object id="12" name="script" x="160" y="320" width="40" height="80">
+   <properties>
+    <property name="cutscene" value="oob.intro"/>
+    <property name="once" type="bool" value="false"/>
    </properties>
   </object>
  </objectgroup>
