@@ -1,6 +1,8 @@
 function Mod:init()
     print("Loaded "..self.info.name.."!")
 
+    self.secretFight = Kristal.mod_difficulty=="secret"
+
     self.kristal_ids = {
         item={
             "dark_candy",
@@ -131,7 +133,11 @@ function Mod:postInit(newfile)
 
         Game.inventory:removeItem("cell_phone")
 
-        Game.world:startCutscene("TEST_DOGUNCHECK")
+        if self.mod_difficulty == "secret" then
+            Game.world:startCutscene("secret.intro")
+        else
+            Game.world:startCutscene("TEST_DOGUNCHECK")
+        end
     end
 end
 
