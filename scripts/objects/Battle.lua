@@ -356,6 +356,39 @@ function Battle:commitSingleAction(action)
     self.character_actions[action.character_id] = action
 end
 
+function Battle:nextParty()
+    table.insert(self.selected_character_stack, self.current_selecting)
+    table.insert(self.selected_action_stack, Utils.copy(self.character_actions))
+
+    local all_done = true
+    local last_selected = self.current_selecting
+    self.current_selecting = (self.current_selecting % #self.party) + 1
+    while self.current_selecting ~= last_selected do
+        if not self:hasAction(self.current_selecting) and self.party[self.current_selecting]:isActive() then
+            all_done = false
+            break
+        end
+        self.current_selecting = (self.current_selecting % #self.party) + 1
+    end
+
+    local party = self.party[self.current_selecting]
+    if all_done then
+        self.selected_character_stack = {}
+        self.selected_action_stack = {}
+        self.current_action_processing = 1
+        self.current_selecting = 0
+        self:startProcessing()
+    else
+        if self:getState() ~= "ACTIONSELECT" then
+            self:setState("ACTIONSELECT")
+            self.battle_ui.encounter_text:setText("[instant]" .. self.battle_ui.current_encounter_text)
+        else
+            party.chara:onActionSelect(party, false)
+        end
+    end
+    self.encounter:onCharacterTurn(party, false)
+end
+
 function Battle:onKeyPressed(key)
     if OVERLAY_OPEN then return end
 
