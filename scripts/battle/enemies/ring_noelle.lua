@@ -99,9 +99,9 @@ function ring_noelle:onAct(battler, name)
                 cutscene:text("* Kris calls Noelle's name.")
                 cutscene:text("* Kris...?", "crazy-scared", "noelle")
                 cutscene:text("* This isn't..[wait:5] Your voice.", "crazy-scared", "noelle")
-                cutscene:text("* Why are you doing this..?", "crazy-neutral")
+                cutscene:text("* Why are you doing this..?", "crazy-neutral", "noelle")
                 cutscene:text("* Why can't we continue what we started together??", "crazy-insane", "noelle")
-                cutscene:text("* Kris's will is changing...\n[color:yellow]CALL OUT[color:reset] became [color:yellow]COURAGE[color:reset].")
+                cutscene:text("* Kris's will is changing...[wait:5]\n* [color:yellow]CALL OUT[color:reset] became [color:yellow]COURAGE[color:reset].")
             end)
             return
         end
