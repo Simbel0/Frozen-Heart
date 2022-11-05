@@ -1,9 +1,11 @@
 local snowflakeBullet, super = Class(Bullet)
 
-function snowflakeBullet:init(x, y, dir, speed, rotate, scale, dirRot)
+function snowflakeBullet:init(x, y, dir, speed, rotate, scale, dirRot, afterimg)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/snowflakeBullet")
     self.dir=dirRot or "left"
+
+    self.afterimg = afterimg or false
 
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir
@@ -11,7 +13,15 @@ function snowflakeBullet:init(x, y, dir, speed, rotate, scale, dirRot)
     self.physics.speed = speed
 
     self.rotate=rotate
-    self:setScale(scale)
+    self:setScale(scale or 1)
+end
+
+function snowflakeBullet:onWaveSpawn(wave)
+    if self.afterimg then
+        wave.timer:everyInstant(1/16, function()
+            Game.battle:addChild(AfterImage(self.sprite, 0.5))
+        end)
+    end
 end
 
 function snowflakeBullet:update()
