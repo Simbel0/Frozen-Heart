@@ -39,6 +39,7 @@ function ring_noelle:init()
     self:registerAct("Call out", "Calls\nNoelle")
     self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
     self:registerAct("DualHeal", "Heals\neveryone", {"ralsei"}, 50)
+    self:registerAct("Dual Heal", "Heals\neveryone", {"ralsei"}, 50)
 
     Game.battle.timer:every(0.1, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
@@ -62,16 +63,27 @@ function ring_noelle:onAct(battler, name)
         end
     elseif name == "Call out" then
         if self.name == "???" then
-            return {"* Kris calls out Noelle's name.","...[wait:5]But nobody came."}
+            return {"* Kris calls out Noelle's name.","* [wait:1].[wait:1].[wait:1].[wait:5]But nobody came."}
         else
-            self.acts["Call out"]=nil
-            self:registerAct("Courage", "Boost\nParty DEF", {"kris"}, 30)
+            table.remove(self.acts, 2)
+            local act = {
+                ["character"] = nil,
+                ["name"] = "Courage",
+                ["description"] = "Boost\nParty DEF",
+                ["party"] = {"kris"},
+                ["tp"] = 30,
+                ["highlight"] = nil,
+                ["short"] = false,
+                ["icons"] = nil
+            }
+            table.insert(self.acts, 2, act)
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Kris calls Noelle's name.")
-                cutscene:text("* Kris...?", nil, "noelle")
-                cutscene:text("* This isn't..[wait:5] Your voice.", nil, "noelle")
-                cutscene:text("* Why are you doing this..?")
-                cutscene:text("* Kris's will is changing... [color:yellow]CALL OUT[color:reset] became [color:yellow]COURAGE[color:reset].")
+                cutscene:text("* Kris...?", "crazy-scared", "noelle")
+                cutscene:text("* This isn't..[wait:5] Your voice.", "crazy-scared", "noelle")
+                cutscene:text("* Why are you doing this..?", "crazy-neutral")
+                cutscene:text("* Why can't we continue what we started together??", "crazy-insane", "noelle")
+                cutscene:text("* Kris's will is changing...\n[color:yellow]CALL OUT[color:reset] became [color:yellow]COURAGE[color:reset].")
             end)
             return
         end
