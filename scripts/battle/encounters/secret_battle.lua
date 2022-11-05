@@ -43,14 +43,14 @@ function secret_battle:update()
                 "* She lost herself.",
                 "* The Dark World is losing its shape.",
                 "* Light and Dark has succombed.",
-                "* The Prohecy is failing.",
+                "* The Prophecy is failing.",
                 "* The ANGEL'S HEAVEN is taking form.",
                 "* You are in danger.",
                 "* The air crackles with freedom.",
                 "* Frozen statues everywhere."
             }
             Game.battle.battle_ui.current_encounter_text = "* It's the end."
-            if Game.battle.stage == "ACTIONSELECT" then
+            if Game.battle.state == "ACTIONSELECT" then
                 Game.battle.battle_ui.encounter_text:setText(Game.battle.battle_ui.current_encounter_text)
             end
             self.intro = false
@@ -164,6 +164,20 @@ function secret_battle:getPartyPosition(index)
     end
 
     return x, y
+end
+
+function secret_battle:getDialogueCutscene()
+    if not self.intro and not self.dialogue_cutscene then
+        self.dialogue_cutscene = true
+        return function(cutscene)
+            cutscene:text("* T-[wait:1]The fountain!", "concern", "ralsei")
+            cutscene:text("* Damn, she really transformed it into an ice pillar.", "nervous", "susie")
+            cutscene:text("* What will that do?", "nervous_side", "susie")
+            cutscene:text("* With the fountain like that, I suspect it's like it doesn't exist anymore.", "small_smile_side", "ralsei")
+            cutscene:text("* So this world will lose its shape and every Darkner will turn to stone...", "frown", "ralsei")
+            cutscene:text("* Alright,[wait:3] that gives us more reason to save Noelle then..", "nervous_side", "susie")
+        end
+    end
 end
 
 return secret_battle
