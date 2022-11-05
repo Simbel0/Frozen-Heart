@@ -16,6 +16,8 @@ function ring_noelle:init()
     -- Enemy defense (usually 0)
     self.defense = 2
 
+    self.disable_mercy = true
+
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
 
@@ -37,10 +39,15 @@ function ring_noelle:init()
     self:registerAct("Call out", "Calls\nNoelle")
     self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
     self:registerAct("DualHeal", "Heals\neveryone", {"ralsei"}, 50)
+
+    Game.battle.timer:every(0.1, function()
+        Game.battle:addChild(AfterImage(self.sprite, 1))
+    end)
 end
 
 function ring_noelle:update()
-    self.y = 180 + math.sin(Kristal.getTime()*3)*10
+    self.x = 505 + math.cos(Kristal.getTime()*2)*6
+    self.y = 200 + math.sin(Kristal.getTime()*3)*20
 end
 
 function ring_noelle:onAct(battler, name)
