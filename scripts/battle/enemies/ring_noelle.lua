@@ -38,7 +38,6 @@ function ring_noelle:init()
 
     self:registerAct("Call out", "Calls\nNoelle")
     self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
-    self:registerAct("DualHeal", "Heals\neveryone", {"ralsei"}, 50)
     self:registerAct("Dual Heal", "Heals\neveryone", {"ralsei"}, 50)
 
     Game.battle.timer:every(0.1, function()
