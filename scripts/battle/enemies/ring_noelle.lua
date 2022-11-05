@@ -9,10 +9,11 @@ function ring_noelle:init()
     self:setActor("noelle")
 
     -- Enemy health
-    self.max_health = 332
-    self.health = 332
+    self.max_health = 332*1997
+    self.health = 332*1997
+    print(self.health)
     -- Enemy attack (determines bullet damage)
-    self.attack = 16
+    self.attack = 8
     -- Enemy defense (usually 0)
     self.defense = 2
 
