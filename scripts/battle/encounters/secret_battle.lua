@@ -69,6 +69,14 @@ function secret_battle:update()
             end
 
             self.noelle.sprite.alpha = 1
+            self.noelle.waves = {
+                "secret/aim_snow",
+                "secret/icefall",
+                "secret/iceshocks",
+                "secret/kinda_touhou_ngl",
+                "secret/snowReject"
+            }
+            self.noelle:addChild(self.noelle.snow_effect)
 
             if self.queen then
                 self.queen.alpha = 1
