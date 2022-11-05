@@ -43,6 +43,24 @@ function ring_noelle:init()
     Game.battle.timer:every(0.1, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
     end)
+
+    self.snow_effect = ParticleEmitter(self.sprite.width/2, self.sprite.height/2, 0, 0, {
+        layer = self.layer-1,
+        every = 0.1,
+        amount = 4,
+        texture = "lonelysnow",
+        scale = 1,
+
+        fade = 0.2,
+        fade_after = 0.3,
+        remove_after = 3,
+
+        physics = {
+            speed = 4
+        },
+        angle = {math.rad(0), math.rad(380)}
+    })
+    print(self.snow_effect)
 end
 
 function ring_noelle:update()
