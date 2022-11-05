@@ -48,21 +48,7 @@ function Battle:postInit(state, encounter)
 
     self.battler_targets = {}
     for index, battler in ipairs(self.party) do
-        local target_x, target_y
-        if #self.party == 1 then
-            target_x = 80
-            target_y = 140
-        elseif #self.party == 2 then
-            target_x = 80
-            target_y = 100 + (80 * (index - 1))
-        elseif #self.party == 3 then
-            target_x = 80
-            target_y = 50 + (80 * (index - 1))
-        end
-
-        local ox, oy = battler.chara:getBattleOffset()
-        target_x = target_x + (battler.actor:getWidth()/2 + ox) * 2
-        target_y = target_y + (battler.actor:getHeight()  + oy) * 2
+        local target_x, target_y = self.encounter:getPartyPosition(index)
         table.insert(self.battler_targets, {target_x, target_y})
 
         if state ~= "TRANSITION" then
@@ -78,6 +64,7 @@ function Battle:postInit(state, encounter)
             if not isClass(from) then
                 local enemy = self:parseEnemyIdentifier(from[1])
                 from[2].visible = false
+                from[2].battler = enemy
                 self.enemy_beginning_positions[enemy] = {from[2]:getScreenPos()}
                 self.enemy_world_characters[enemy] = from[2]
                 if state == "TRANSITION" then
@@ -96,6 +83,12 @@ function Battle:postInit(state, encounter)
                     end
                 end
             end
+        end
+    end
+
+    if self.encounter_context and self.encounter_context:includes(ChaserEnemy) then
+        for _,enemy in ipairs(self.encounter_context:getGroupedEnemies(true)) do
+            enemy:onEncounterStart(enemy == self.encounter_context, self.encounter)
         end
     end
 
