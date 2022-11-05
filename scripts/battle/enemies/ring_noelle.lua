@@ -67,6 +67,7 @@ end
 function ring_noelle:update()
     self.x = 505 + math.cos(Kristal.getTime()*2)*6
     self.y = 200 + math.sin(Kristal.getTime()*3)*20
+    super:update(self)
 end
 
 function ring_noelle:onAct(battler, name)
@@ -108,14 +109,14 @@ function ring_noelle:onAct(battler, name)
     elseif name == "Red Buster" then
         Game.battle:powerAct("red_buster", battler, "susie", self)
     elseif name == "Dual Heal" then
-        Game.battle:powerAct("dual_heal", battler, "ralsei", self)
+        Game.battle:powerAct("dual_heal", battler, "ralsei", "party")
     end
 
     return super:onAct(self, battler, name)
 end
 
 function ring_noelle:getAttackDamage(damage, battler)
-    return self.name == "???" and 0 or love.math.random(0,1)-- + (battler.chara.name=="Susie" and 3 or 0) --Her affection for Susie is no more
+    return self.name == "???" and 0 or math.random(0,1)-- + (battler.chara.name=="Susie" and 3 or 0) --Her affection for Susie is no more
 end
 
 return ring_noelle
