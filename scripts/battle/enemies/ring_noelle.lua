@@ -77,7 +77,7 @@ function ring_noelle:onAct(battler, name)
         if self.name == "???" then
             return "* You can't see anyone to check."
         else
-            return {"* NOELLE HOLIDAY - 16 ATK 8 DEF\n* A damaged mind within a moving corpse.", "* She can't even feel pain anymore."}
+            return {"* NOELLE HOLIDAY - 16 ATK 8 DEF\n* A broken mind within a moving corpse.", "* She can't even feel pain anymore."}
         end
     elseif name == "Call out" then
         if self.name == "???" then
