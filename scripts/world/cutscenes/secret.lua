@@ -388,8 +388,10 @@ return {
 
         local wait_buster = true
         Game.world:addChild(RudeBusterBeam(false, susie.x, susie.y, SCREEN_WIDTH, noelle.y-20, function() wait_buster = false end))
+        cutscene:look(noelle, "left")
         cutscene:wait(0.4)
-        cutscene:slideTo(noelle, SCREEN_WIDTH/2, 240, 0.5)
+        Assets.playSound("wing")
+        cutscene:slideTo(noelle, noelle.x, -50, 0.5)
         cutscene:wait(function()
             return not wait_buster
         end)
