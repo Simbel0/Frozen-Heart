@@ -133,7 +133,8 @@ function TensionBar_n:draw()
 	        	love.graphics.print(tostring(math.floor(self:getPercentageFor250(self.apparent) * 100)):sub(1, 1), 5, 60)
 	        	love.graphics.print(tostring(math.floor(self:getPercentageFor250(self.apparent) * 100)):sub(-1, -1), 5, 80)
 	        else
-	        	love.graphics.print(tostring(math.floor(self:getPercentageFor250(self.apparent) * 100)), 4, 80)
+                love.graphics.print("0", 5, 60)
+	        	love.graphics.print(tostring(math.floor(self:getPercentageFor250(self.apparent) * 100)), 5, 80)
 	        end
 	        love.graphics.print("%", 5, 110)
 	    end
