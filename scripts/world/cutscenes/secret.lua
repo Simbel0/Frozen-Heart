@@ -21,6 +21,8 @@ return {
 
         local susie=cutscene:getCharacter("susie")
         local noelle=cutscene:getCharacter("noelle")
+        noelle.actor.path = "party/noelle/dark_c"
+        noelle:setSprite("walk")
 
         cutscene:look(noelle, "up")
 
@@ -54,6 +56,7 @@ return {
         cutsceneMusic:stop()
         cutscene:wait(0.3)
         cutscene:text("* I never felt better actually!", "crazy-neutral", "noelle")
+        Game.world.music:play("d")
         cutscene:text("* ???", "surprise_frown", "susie")
         cutscene:text("* (What the hell is that face...)", "surprise", "susie")
         cutscene:text("* Uh... Are you sure?", "nervous", "susie")
@@ -61,20 +64,23 @@ return {
         cutscene:text("* Don't worry about me, Susie.", "crazy-side", "noelle")
         cutscene:text("* I became stronger.", "crazy-closed_eyes", "noelle")
         cutscene:text("* I can do so many things I couldn't do before.", "crazy-closed_eyes", "noelle")
-        cutscene:text("* I solved things by myself.[wait:5]\n* I took things for myself.[wait:5]\n* I froze enemies by myself.", "crazy-neutral", "noelle")
+        cutscene:text("* I solved things by myself.", "crazy-neutral", "noelle")
+        cutscene:text("* I took things for myself.", "crazy-neutral", "noelle")
+        cutscene:text("* I froze enemies by myself.", "crazy-neutral", "noelle")
         cutscene:text("* Isn't it great?", "crazy-insane", "noelle")
         cutscene:text("* ...", "sad", "susie")
         cutscene:text("* ...", "bangs_neutral", "susie")
         cutscene:text("* What's with the silence treatement?", "crazy-scared", "noelle")
         cutscene:text("* Don't you believe me?", "crazy-scared", "noelle")
-        cutscene:text("* Well I-", "sad_frown", "susie")
+        cutscene:text("* Noelle-", "sad_frown", "susie")
         cutscene:text("* That's[wait:5] just[wait:5] fine.", "crazy-neutral", "noelle")
-        cutscene:text("* I can show you what I'm capable of right here, right now.", "crazy-snow", "noelle")
+        cutscene:text("* I can show you what I'm capable of[wait:3] right here,[wait:5] right now.", "crazy-snow", "noelle")
         cutscene:text("* Noelle, whatever you're about to do, don-", "surprise_frown", "susie")
+        noelle:setSprite("closed-in")
         cutscene:slideTo(noelle, noelle.x+40, noelle.y, 0.5, "out-quad")
         cutscene:wait(0.7)
-        noelle:setAnimation(noelle.actor.animations["spell"])
-        local ice_emitter = ParticleEmitter(noelle.x+noelle.width/2, noelle.y-80, 0, 0, {
+        noelle:setSprite("spell")
+        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-70, 0, 0, {
             layer = WORLD_LAYERS["below_ui"],
             every = 0.0001,
             amount = 4,
@@ -98,10 +104,10 @@ return {
         local wind=Assets.playSound("snowwind")
         wind:setLooping(false)
         cutscene:wait(0.2)
-        Game.world.music:play("GALLERY")
+        --Game.world.music:play("GALLERY")
         local gradient = Sprite("effects/icespell/gradient")
         gradient:setWrap(true, false)
-        gradient.layer = WORLD_LAYERS["below_textbox"]
+        gradient.layer = WORLD_LAYERS["below_ui"]
         gradient:setScale(2)
         gradient.alpha = 0
         Game.world.timer:tween(3, gradient, {alpha=0.5})
@@ -161,17 +167,19 @@ return {
         cutscene:wait(cutscene:walkTo(queen, queen.x, 400))
 
         cutscene:text("* Susie, what's happening??", "shock", "ralsei")
-        cutscene:text("* I don't know.[wait:2] What do you THINK is happening?!?", "nervous_b", "susie")
+        cutscene:text("* I don't know.[wait:2] What do you THINK is happening?!?", "annoyed", "susie")
         cutscene:wait(cutscene:walkTo(queen, queen.x, 310, 0.3))
         cutscene:look(queen, 'left')
         cutscene:text("* The Theme Of This Room Seems A Little Too Much Respected", "true", "queen")
         cutscene:look(queen, 'right')
         cutscene:text("* Noelle Honey Sweety Darling What Are You-", "smile_side_l", "queen")
         cutscene:text("* Holy Circuits What Happened Susie", "@@", "queen")
-        cutscene:text("* I don't know, she just went nuts out of nowhere!")
+        cutscene:text("* I don't know, she just went nuts out of nowhere!", "angry_b", "susie")
         cutscene:look(queen, 'down')
+        queen:setSprite("walk_unhappy")
         cutscene:text("* ...", "down_c", "queen")
         cutscene:text("* I Thought Sleeping Would Suppr This Power Of Her Deep Inside", "pout", "queen")
+        queen:setSprite("walk")
         cutscene:text("* But It Seems I Miscaculated", "sorry", "queen")
         cutscene:text("* What does that even mean?!?", "teeth", "susie")
 
@@ -205,10 +213,11 @@ return {
         susie:setSprite("walk")
         cutscene:look(susie, "up")
         cutscene:look(ralsei, "up")
+        queen:setSprite("walk_unhappy")
         cutscene:look(queen, "right")
         cutscene:text("* Well To Tell The Truth", "pout", "queen")
         cutscene:text("* I Do Not Know Much Either", "sorry", "queen")
-        cutscene:text("* When I Noticed Bergluey Stopped Manifesting Around Me", "pout", "queen")
+        cutscene:text("* When I Noticed That Bergluey Stopped Manifesting Around Me", "pout", "queen")
         cutscene:text("* I Got Worried So I Started Looking For Him", "true", "queen")
         cutscene:text("* But I Never Managed To Detect Him Anywhere", "down_b", "queen")
         cutscene:text("* And When I Went Back To The Mansion Not Only Did Someone Took Over It", "pout", "queen")
@@ -216,6 +225,7 @@ return {
         cutscene:text("* So I Used My Super Cool Flying Chair To Take Us Directly To Her Room", "nice", "queen")
         cutscene:text("* So She Could Finally Rest", "smile_side_r", "queen")
         cutscene:text("* While I Would Generate Another Plan To Expand The Dark World", "smile_side_r", "queen")
+        queen:setSprite("walk")
         cutscene:look(queen, "down")
         cutscene:text("* But At The End Of The Day I Guess I Failed Either Way", "sorry", "queen")
         cutscene:text("* So...", "neutral", "susie")
@@ -252,8 +262,6 @@ return {
         Game.party[1]:removeSpell("tension_absorb") --that too
 
         local function castIceShock(user, target)
-            user:setAnimation("battle/spell")
-            --user.actor.animations["battle/idle"]=user.actor.animations["battle/idleTrance"]
             local function createParticle(x, y)
                 local sprite = Sprite("effects/icespell/snowflake", x, y)
                 sprite:setOrigin(0.5, 0.5)
@@ -316,6 +324,8 @@ return {
         local queen = cutscene:spawnNPC("queen", -450, 300)
         queen:setSprite("walk_unhappy")
         local noelle = cutscene:spawnNPC("noelle", -50, 280)
+        noelle.actor.path = "party/noelle/dark_c"
+        noelle:setSprite("walk")
 
         cutscene:wait(cutscene:fadeIn(2))
         Game.world.music:play("Deal Gone Wrong", 0, 1)
@@ -334,28 +344,50 @@ return {
         cutscene:wait(1)
 
         local laugh = Assets.playSound("snd_sneo_laugh_long")
+        sneo.sprite:setAllPartsShaking(2)
         cutscene:wait(function()
             return not laugh:isPlaying()
         end)
         cutscene:wait(2)
 
         Game.world.music:stop()
+        sneo.sprite:setAllPartsShaking(0)
         castIceShock(noelle, sneo)
         cutscene:wait(0.3)
         cutscene:slideTo(kris, kris.x-190/2, kris.y, 1, "out-quad")
         kris:setSprite("kneel")
+        sneo.sprite:getPart("body").sprite.frozen = true
+        sneo.sprite:getPart("body").sprite.freeze_progress = 1
+        Assets.playSound("petrify")
         cutscene:wait(cutscene:slideTo(sneo, sneo.x+190, sneo.y, 1, "out-quad"))
         cutscene:wait(0.5)
         castIceShock(noelle, sneo)
         cutscene:wait(0.3)
+        sneo.sprite:getPart("wing_l").sprite.frozen = true
+        sneo.sprite:getPart("wing_l").sprite.freeze_progress = 1
+        sneo.sprite:getPart("arm_r").sprite.frozen = true
+        sneo.sprite:getPart("arm_r").sprite.freeze_progress = 1
+        sneo.sprite:getPart("leg_l").sprite.frozen = true
+        sneo.sprite:getPart("leg_l").sprite.freeze_progress = 1
+        Assets.playSound("petrify")
         cutscene:wait(cutscene:slideTo(sneo, sneo.x+100, sneo.y, 0.7, "out-quad"))
         cutscene:wait(0.2)
         castIceShock(noelle, sneo)
         cutscene:wait(0.3)
+        sneo.sprite:getPart("wing_r").sprite.frozen = true
+        sneo.sprite:getPart("wing_r").sprite.freeze_progress = 1
+        sneo.sprite:getPart("arm_l").sprite.frozen = true
+        sneo.sprite:getPart("arm_l").sprite.freeze_progress = 1
+        sneo.sprite:getPart("leg_r").sprite.frozen = true
+        sneo.sprite:getPart("leg_r").sprite.freeze_progress = 1
+        Assets.playSound("petrify")
         cutscene:wait(cutscene:slideTo(sneo, sneo.x+100, sneo.y, 0.3, "out-quad"))
         cutscene:wait(0.1)
         castIceShock(noelle, sneo)
         cutscene:wait(0.3)
+        sneo.sprite:getPart("head").sprite.frozen = true
+        sneo.sprite:getPart("head").sprite.freeze_progress = 1
+        Assets.playSound("petrify")
         cutscene:wait(cutscene:slideTo(sneo, SCREEN_WIDTH+100, sneo.y, 0.2, "out-quad"))
 
         cutscene:wait(0.5)
@@ -379,6 +411,8 @@ return {
         cutscene:slideTo(noelle, noelle.x-60, noelle.y, 0.5, "out-quad")
         cutscene:wait(1)
 
+        Game.world.music:play("GALLERY")
+
         cutscene:text("* Kris?", "crazy-scared", "noelle")
         cutscene:text("* Why are you drawing your weapon on me?", "crazy-scared", "noelle")
         cutscene:text("* Why are you shaking and looking at me like that?", "crazy-neutral", "noelle")
@@ -387,16 +421,18 @@ return {
         cutscene:wait(0.3)
 
         local wait_buster = true
-        Game.world:addChild(RudeBusterBeam(false, susie.x, susie.y, SCREEN_WIDTH, noelle.y-20, function() wait_buster = false end))
+        Assets.playSound("rudebuster_swing")
+        Game.world:addChild(RudeBusterBeam(false, susie.x, susie.y, SCREEN_WIDTH, noelle.y-40, function() wait_buster = false end))
         cutscene:look(noelle, "left")
-        cutscene:wait(0.4)
+        cutscene:wait(0.2)
         Assets.playSound("wing")
         cutscene:slideTo(noelle, noelle.x, -50, 0.5)
+        Game.world.timer:tween(0.5, Game.world.music, {volume=0}, "linear", function() Game.world.music:pause() end)
         cutscene:wait(function()
             return not wait_buster
         end)
         kris:setSprite("walk")
-        cutscene:look(kris, "left")
+        cutscene:look(kris, "up")
         cutscene:wait(0.3)
         cutscene:walkTo(susie, kris.x-60, kris.y)
         cutscene:walkTo(ralsei, kris.x, ralsei.y)
@@ -405,7 +441,6 @@ return {
         cutscene:look(ralsei, "up")
 
         cutscene:text("* Kris! Are you okay??", "sad_frown", "susie")
-        cutscene:look(kris, "up")
         cutscene:text("* Kris, you're shaking...", "sad", "susie")
         cutscene:text("* Do you... want a hug maybe?", "blush", "ralsei")
         queen:setSprite("walk")
@@ -418,8 +453,14 @@ return {
         cutscene:text("* Kris... Why?", nil, "noelle")
         cutscene:look(ralsei, "right")
         queen:setSprite("walk_unhappy")
+        noelle:setPosition(SCREEN_WIDTH/2, (SCREEN_HEIGHT/2)-20)
+        cutscene:during(function()
+            noelle.y = ((SCREEN_HEIGHT/2)-20) + math.sin(Kristal.getTime()*3)*20
+        end)
         cutscene:wait(cutscene:panTo(320/2, 240))
         cutscene:wait(0.2)
+        Game.world.music:resume()
+        Game.world.timer:tween(0.5, Game.world.music, {volume=1})
         cutscene:text("* Why did you join the enemies?", "crazy-scared", "noelle")
         cutscene:text("* Wait... WE are the enemies??", "surprise_confused", "ralsei")
         cutscene:text("* Kris, you're shaking even more...", "sad", "susie")
@@ -461,12 +502,13 @@ return {
         cutscene:text("* But You Have Awaken Too Much", "down_b", "queen")
         cutscene:text("* So I Guess We Will Have To Put You To Sleep Ourselves", "pout", "queen")
 
+        noelle:setSprite("closed-in")
         cutscene:slideTo(noelle, noelle.x+40, noelle.y, 0.5, "out-quad")
         cutscene:wait(0.7)
         cutscene:setTextboxTop(true)
         cutscene:text("* Here we go.", "angry_c", "susie")
-        noelle:setAnimation(noelle.actor.animations["spell"])
-        local ice_emitter = ParticleEmitter(noelle.x+noelle.width/2, noelle.y-80, 0, 0, {
+        noelle:setSprite("spell")
+        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-80, 0, 0, {
             layer = WORLD_LAYERS["below_ui"],
             every = 0.0001,
             amount = 4,
@@ -517,7 +559,8 @@ return {
         --gradient:remove()
         Game.world.camera:stopShake()
         cutscene:panTo(320, 240, 0)
-        cutscene:startEncounter("secret_battle", false, {ring_noelle=noelle}, {on_start=function()
+        noelle.sprite.alpha = 0
+        cutscene:startEncounter("secret_battle", false, nil, {on_start=function()
             print(Game.battle, Game.battle.encounter)
 
             queen.alpha = 0
