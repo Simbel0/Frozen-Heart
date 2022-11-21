@@ -3,6 +3,8 @@
     "name": "Frozen Heart",
     "subtitle": "",
 
+    "nameInput": false,
+
     "version": "v0.1.1",
     "engineVer": "v0.8.0-dev",
 
