@@ -7,7 +7,7 @@ function secret_battle:init()
     self.text = "* Snow fills your vision."
 
     -- Battle music ("battle" is rude buster)
-    self.music = "full_circle"
+    self.music = "dark_star"
     -- Enables the purple grid battle background
     self.background = false
 
@@ -26,10 +26,10 @@ function secret_battle:update()
     if self.intro and Game.battle.music.source then
         local progress = Game.battle.music:tell()
         print(progress, Utils.round(progress))
-        if Utils.round(progress)==39 and not self.fade_out_intro then
+        if Utils.round(progress)==8 and not self.fade_out_intro then
             Game.fader:fadeOut(nil, {color={1, 1, 1}, speed=1})
             self.fade_out_intro = true
-        elseif Utils.round(progress)==41 then
+        elseif Utils.round(progress)==10 then
             self.fog:remove()
             self.default_xactions = true
             self.noelle.name = "Noelle"
