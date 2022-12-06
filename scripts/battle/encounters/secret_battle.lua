@@ -75,7 +75,10 @@ function secret_battle:update()
                 "secret/icefall",
                 "secret/iceshocks",
                 "secret/kinda_touhou_ngl",
-                "secret/snowReject"
+                "secret/snowReject",
+                "secret/stallattack",
+                "secret/fight",
+                "secret/shadowSnowBullet"
             }
             self.noelle:addChild(self.noelle.snow_effect)
 
