@@ -422,7 +422,9 @@ return {
 
         local wait_buster = true
         Assets.playSound("rudebuster_swing")
-        Game.world:addChild(RudeBusterBeam(false, susie.x, susie.y, SCREEN_WIDTH, noelle.y-40, function() wait_buster = false end))
+        local beam = RudeBusterBeam(false, susie.x, susie.y, SCREEN_WIDTH, noelle.y-40, function() wait_buster = false end)
+        beam:setLayer(WORLD_LAYERS["above_bullets"])
+        Game.world:addChild(beam)
         cutscene:look(noelle, "left")
         cutscene:wait(0.2)
         Assets.playSound("wing")
@@ -442,7 +444,7 @@ return {
 
         cutscene:text("* Kris! Are you okay??", "sad_frown", "susie")
         cutscene:text("* Kris, you're shaking...", "sad", "susie")
-        cutscene:text("* Do you... want a hug maybe?", "blush", "ralsei")
+        cutscene:text("* Do you... need a hug maybe?", "blush", "ralsei")
         queen:setSprite("walk")
         --cutscene:text("* Why Are You Gae", "bro", "queen")
         cutscene:text("* Why Are You Guys Obsessed With Hugs", "what", "queen")

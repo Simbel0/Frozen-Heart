@@ -3,6 +3,9 @@ local ring_noelle, super = Class(EnemyBattler)
 function ring_noelle:init()
     super:init(self)
 
+    self.intend_x = 505
+    self.intend_y = 200
+
     -- Enemy name
     self.name = "???"
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
@@ -67,8 +70,8 @@ function ring_noelle:init()
 end
 
 function ring_noelle:update()
-    self.x = 505 + math.cos(Kristal.getTime()*2)*6
-    self.y = 200 + math.sin(Kristal.getTime()*3)*20
+    self.x = self.intend_x + math.cos(Kristal.getTime()*2)*6
+    self.y = self.intend_y + math.sin(Kristal.getTime()*3)*20
     super:update(self)
 end
 
@@ -80,7 +83,7 @@ function ring_noelle:onAct(battler, name)
         if self.name == "???" then
             return "* You can't see anyone to check."
         else
-            return {"* NOELLE HOLIDAY - 16 ATK 8 DEF\n* A broken mind within a moving corpse.", "* She can't even feel pain anymore."}
+            return {"* NOELLE HOLIDAY - 32 ATK 16 DEF\n* A broken mind within a moving corpse.", "* She can't even feel pain anymore."}
         end
     elseif name == "Call out" then
         if self.name == "???" then

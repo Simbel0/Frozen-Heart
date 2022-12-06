@@ -146,7 +146,7 @@ function secret_battle:onTurnEnd()
     if not self.intro then
         self.turns = self.turns + 1
     end
-    if self.turns==5 then
+    if self.turns==3 then
         Game.battle:startCutscene(function(cutscene)
             cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
             cutscene:wait(1/4)
@@ -157,7 +157,7 @@ function secret_battle:onTurnEnd()
             cutscene:text("* What The Heck (Hell)", "bro", "queen")
         end)
         return true
-    elseif self.turns==10 then
+    elseif self.turns==7 then
         Game.battle:startCutscene(function(cutscene)
             cutscene:after(function()
                 Game.battle:setState("ACTIONSELECT")
@@ -200,16 +200,17 @@ function secret_battle:onTurnEnd()
             local ice = Sprite("berdly_ice")
             ice:setPosition(SCREEN_WIDTH+100, 35)
             ice:setScale(2)
+            ice:setLayer(BATTLE_LAYERS["below_battlers"])
             Game.battle:addChild(ice)
 
             Game.battle.party[2]:setSprite("shock")
-            Game.battle.party[2].chara:shake()
+            Game.battle.party[2].sprite.shake_x=5
 
             Game.battle.party[3]:setSprite("battle/hurt")
-            Game.battle.party[3].chara:shake()
+            Game.battle.party[3].sprite.shake_x=5
 
-            Game.battle.timer:tween(2, ice, {x=self.noelle.x-50, y=self.noelle.y-80, rotation=math.rad(45)}, "out-back")
-            cutscene:wait(2)
+            Game.battle.timer:tween(3, ice, {x=self.noelle.x-50, y=self.noelle.y-180, rotation=math.rad(45)}, "out-back")
+            cutscene:wait(3)
 
             cutscene:text("* Let's go back a little back then, won't we?", "crazy-snow", "noelle")
 
@@ -217,7 +218,7 @@ function secret_battle:onTurnEnd()
             cutscene:wait(0.4)
 
             cutscene:wait(cutscene:fadeOut(0, {color={1, 1, 1}}))
-            cutscene:fadeIn(2)
+            cutscene:fadeIn(4)
             self.berdly = self:addEnemy("lost_soul_b", 475, 230)
             table.remove(Game.battle.enemies, 1)
             self.noelle.visible = false
@@ -226,6 +227,8 @@ function secret_battle:onTurnEnd()
                 v:remove()
             end
             ice:remove()
+            Game.battle.party[2]:resetSprite()
+            Game.battle.party[3]:resetSprite()
         end)
         return true
     end
@@ -277,26 +280,59 @@ function secret_battle:getDialogueCutscene()
         end
     elseif self.berdly and not self.berdly_awoken and self.berdly.mercy>=50 then
         self.berdly_awoken = true
+        self.berdly.dialogue = {}
+        self.berdly.check = "AT 1 DEF 1\n* You're finally breaking the ice!"
+        self.berdly.text = {
+            "* Smells like frozen chicken.",
+            "* Berdly tries to break the ice by gyrating his hips!",
+            "* Berdly tells the chimical composition of ice.",
+            "* Berdly tries to t-bag his way out of the ice.",
+            "* Noelle looks fustrated."
+        }
+        self.berdly.health = Game.battle.party[3].chara:getStat("magic") * 5.5
+        self.berdly.name = "Berdly"
         return function(cutscene)
-            self.berdly.sprite.shake_x = 4
-            cutscene:wait(1/8)
-            cutscene:text("* m...")
-            cutscene:text("* Did he.. tried to talk?")
-            cutscene:text("* Life Force Detected")
-            cutscene:text("* Does One Of You Have Something That Helps With Life Support?")
-            cutscene:text("* Uh?? Wait..")
-            cutscene:text("* I mean, I have healing magic, but..")
-            cutscene:text("* That's okay, Susie, I'll do it.")
-            ralsei:setAnimation("battle/spell")
-            cutscene:wait(cutscene:fadeOut(1, {1, 1, 1}))
             cutscene:wait(1)
+            self.berdly.sprite.shake_x = 4
+            cutscene:wait(0.5)
+            cutscene:text("* m-...", nil, "berdly")
+            cutscene:text("* Did he..[wait:3] tried to talk?", "nervous_side", "susie")
+            cutscene:text("* Life Force Detected", "surprise", "queen")
+            cutscene:text("* Does One Of You Have Something That Helps With Life Support", "analyze", "queen")
+            cutscene:text("* Uh??[wait:3] Wait..", "shy_b", "susie")
+            cutscene:text("* I mean,[wait:2] I have healing magic, but..", "shy", "susie")
+            cutscene:text("* That's okay, Susie, I'll do it.", "wink", "ralsei")
+            local ralsei = cutscene:getCharacter("ralsei")
+            ralsei:setAnimation("battle/spell")
+            cutscene:wait(cutscene:fadeOut(0.35, {color={1, 1, 1}}))
+            cutscene:wait(0.5)
             self.berdly.actor.path = "enemies/berdly/awoken"
             self.berdly:setSprite("idle_surprised")
             cutscene:wait(cutscene:fadeIn(1))
             cutscene:wait(0.5)
-            cutscene:text("* ...")
-            cutscene:text("* What... What the...")
-            cutscene:text("* Wow he's actually alive.")
+            cutscene:text("* ...", "retribution_2", "berdly")
+            cutscene:text("* What... What the...", "shock", "berdly")
+            cutscene:text("* Wow...[wait:3] he's actually...[wait:3] alive.", "nervous_side", "susie")
+            cutscene:text("* Su-Susan?![wait:3] Kris?!", "shock", "berdly")
+            cutscene:text("* Wh-What is going on?[wait:2] Is it one of your idiotic prank?", "sweat", "berdly")
+            cutscene:text("* Uhh...[wait:3] We're fighting you.", "neutral", "susie")
+            cutscene:text("* Because Noelle brought you here.", "neutral_side", "susie")
+            cutscene:text("* Noelle! Where is she?", "shock", "berdly")
+            cutscene:text("* Kris![wait:2] What have you done to her??", "angry_2", "berdly")
+            cutscene:text("* Back off, bucko.[wait:5] Kris is probably as shocked as you.", "annoyed", "susie")
+            cutscene:text("* What is the meaning of your claims..?", "shock", "berdly")
+            cutscene:text("* Look, Noelle got something on her finger that may be what makes her all weird.", "neutral", "susie")
+            cutscene:text("* So we break it and everyone's happy,[wait:2] got it?", "neutral_side", "susie")
+            cutscene:text("* ...[wait:5]And why should I believe you out of all people?", "hmm", "berdly")
+            cutscene:text("* Because I'm on the good guys team?", "nervous_side", "susie")
+            cutscene:text("* Yes Burghley Join The Good Side", "neutral", "queen")
+            cutscene:text("* It Is Way Hotter Here Thanks To: My Floating Chair", "true", "queen")
+            cutscene:text("* M-My queen, I-..", "surprised", "berdly")
+            cutscene:text("* Well..[wait:3] If even Queen is by your side, Kris..", "sweat", "berdly")
+            cutscene:text("* Maybe..[wait:2] I judged you too fast.", "retribution_2", "berdly")
+            cutscene:text("* So uh..[wait:3] Free me and I'll put my genius to a common cause, alright?", "surprised_smile", "berdly")
+            cutscene:text("* Kris, you know what to do.", "smile", "susie")
+            self.berdly:setAnimation("idle")
         end
     end
 end
