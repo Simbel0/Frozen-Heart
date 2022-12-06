@@ -9,8 +9,6 @@ function character:init()
     self.stats["attack"]=18
     self.stats["magic"]=3
 
-    self.soul_color = {1, 0, 0}
-
     self.health=190
 
     self.max_stats = {}
@@ -53,7 +51,7 @@ function character:getTitle()
 end
 
 function character:getSoulColor()
-    if Game:getFlag("plot", 0)==3 then
+    if Game:getFlag("plot", 0)==2 and Game:getFlag("plot", 0)==3 then
         return 1, 1, 1, 1
     end
     return super:getSoulColor(self)
