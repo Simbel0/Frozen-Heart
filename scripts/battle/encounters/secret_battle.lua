@@ -231,6 +231,55 @@ function secret_battle:onTurnEnd()
             Game.battle.party[3]:resetSprite()
         end)
         return true
+    elseif self.turns == 11 then
+        table.insert(Game.battle.enemies, 1, self.noelle)
+        self.noelle.visible = true
+        self.noelle.intend_x = 500
+        self.noelle.intend_y = 140
+        self.noelle.sprite.alpha = 1
+        self.berdly:setAnimation("idle_surprised")
+        if self.berdly_awoken then
+            Game.battle:startCutscene(function(cutscene)
+                cutscene:after(function()
+                    Game.battle:setState("ACTIONSELECT")
+                end)
+                cutscene:wait(cutscene:fadeOut(0, {color={1, 1, 1}}))
+                cutscene:fadeIn(0.5)
+                cutscene:wait(0.4)
+                cutscene:text("* So Kris, what do you think?", "crazy-side", "noelle")
+                cutscene:text("* ...", "crazy-scared", "noelle")
+                cutscene:text("* No-Noelle!", "shock", "berdly")
+                cutscene:text("* Come on! It's me, Berdly!", "slight_smile", "berdly")
+                cutscene:text("* You've... Freed him..?", "crazy-scared", "noelle")
+                cutscene:text("* No no nO NO!!", "crazy-insane", "noelle")
+                cutscene:text("* WHY?? WHY did you CHANGE?!", "crazy-insane", "noelle")
+                cutscene:text("* Why do you want to SAVE him NOW???", "crazy-insane", "noelle")
+                cutscene:text("* No-Noelle...", "sad", "berdly")
+                cutscene:text("* Don't listen to her, she lost it.", "nervous_side", "susie")
+                cutscene:text("* Like.. really...", "shy_down", "susie")
+                cutscene:text("* Fine Kris. I understand.", "crazy-neutral", "noelle")
+                cutscene:text("* Maybe it wasn't FAR enough to remind you of what we did.", "crazy-side", "noelle")
+                cutscene:text("* Then watch me use HIM as my puppet.", "crazy-snow", "noelle")
+                cutscene:text("* I-..[wait:3] I didn't sign up for this..![react:1]", "sweat", "berdly", {reactions={
+                    {"You think any of\nus did??", "right", "bottommid", "teeth_b", "susie"}
+                }})
+            end)
+        else
+            Game.battle:startCutscene(function(cutscene)
+                cutscene:wait(cutscene:fadeOut(0, {color={1, 1, 1}}))
+                cutscene:fadeIn(1)
+                cutscene:wait(1)
+                cutscene:text("* So Kris, what do you think?", "crazy-side", "noelle")
+                cutscene:text("* ...", "crazy-side", "noelle")
+                cutscene:text("* So you continue to ignore me.", "crazy-side", "noelle")
+                cutscene:text("* But that's fine.", "crazy-neutral", "noelle")
+                cutscene:text("* Soon, we will continue what we started.", "crazy-neutral", "noelle")
+                cutscene:text("* Together! Again!", "crazy-snow", "noelle")
+                cutscene:text("* Don't listen to her, she lost it.", "nervous_side", "susie")
+                cutscene:text("* Like.. really...", "shy_down", "susie")
+            end)
+        end
+        return true
     end
 end
 
