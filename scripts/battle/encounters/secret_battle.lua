@@ -78,7 +78,8 @@ function secret_battle:update()
                 "secret/snowReject",
                 "secret/stallattack",
                 "secret/fight",
-                "secret/shadowSnowBullet"
+                "secret/shadowSnowBullet",
+                "secret/dark_star_attack"
             }
             self.noelle:addChild(self.noelle.snow_effect)
 
