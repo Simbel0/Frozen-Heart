@@ -1,7 +1,7 @@
 function Mod:init()
     print("Loaded "..self.info.name.."!")
 
-    self.secretFight = Kristal.mod_difficulty=="secret"
+    self.secretFight = Kristal.secretFight
 
     self.kristal_ids = {
         item={
@@ -91,6 +91,13 @@ function Mod:init()
 end
 
 function Mod:postInit(newfile)
+
+    if self.secretFight and not Kristal.Config["canAccessSecret"] then
+        Game:setFlag("plot", -1)
+        Game.world:loadMap("dog")
+        return
+    end
+
     if newfile then
         if not Game:getFlag("plot", nil) then
             Game:setFlag("plot", 0)
@@ -133,7 +140,7 @@ function Mod:postInit(newfile)
 
         Game.inventory:removeItem("cell_phone")
 
-        if self.mod_difficulty == "secret" then
+        if self.secretFight then
             Game.world:startCutscene("secret.intro")
         else
             Game.world:startCutscene("TEST_DOGUNCHECK")
