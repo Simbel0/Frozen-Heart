@@ -106,15 +106,18 @@ return function(cutscene)
     text:addFX(fx)
     text.y=(SCREEN_HEIGHT/2)-50
     local yellow_text = "Can someone hear me?"
-    if Game:getFlag("no_heal", true) then
-        if Game:getFlag("secret_unlocked", false)==false then
-            Game:setFlag("secret_unlocked", true)
+    if Spamton then
+        if not Kristal.Config["canAccessSecret"] then
+            Kristal.Config["canAccessSecret"] = true
+            Kristal.saveConfig()
+            Mod.registerSecret = true
+            Game:save()
             yellow_text = "You have unlocked\nan alternative fight!"
         else
             yellow_text = "An alternative awaits you!"
         end
     else
-        yellow_text = "But can you win by doing as few turns as possible??"
+        yellow_text = "But can you win by doing\nas few turns as possible??"
     end
     text:setText(yellow_text)
     Game.world.timer:tween(3, fx, {alpha=1})

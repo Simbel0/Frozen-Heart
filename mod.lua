@@ -148,9 +148,18 @@ function Mod:postInit(newfile)
     end
 end
 
+function Mod:save(data)
+    if self.registerSecret then
+        data = self.old_data
+        data["is_secret_file"] = true
+    end
+    return data
+end
+
 function Mod:load(data, newfile, index)
     print("Loading")
     print(Game:getFlag("plot", 0)==2, Game:getFlag("noelle_battle_status", nil)==nil)
+    self.old_data = data
     if Game:getFlag("plot", 0)==2 and Game:getFlag("noelle_battle_status", nil)==nil then
         print("Start the quick intro")
         if not Game.battle then
