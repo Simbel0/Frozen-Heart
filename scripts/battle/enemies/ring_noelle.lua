@@ -46,6 +46,8 @@ function ring_noelle:init()
     self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
     self:registerAct("Dual Heal", "Heals\neveryone", {"ralsei"}, 50)
 
+    self.first_shield = true
+
     Game.battle.timer:every(0.1, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
     end)
@@ -115,6 +117,9 @@ function ring_noelle:onAct(battler, name)
         Game.battle:powerAct("red_buster", battler, "susie", self)
     elseif name == "Dual Heal" then
         Game.battle:powerAct("dual_heal", battler, "ralsei", "party")
+    elseif name == "Shield" then
+        Game.battle:startActCutscene("sheild_act")
+        return
     end
 
     return super:onAct(self, battler, name)
