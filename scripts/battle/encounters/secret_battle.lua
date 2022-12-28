@@ -39,15 +39,15 @@ function secret_battle:update()
                 "* Everything becomes fantasy.",
                 "* Noelle doesn't feel any pain.",
                 "* It's cold.",
-                "* The flame of Queen's chair warns the party.",
+                "* The flame of Queen's chair warms the party.",
                 "* She lost herself.",
                 "* The Dark World is losing its shape.",
-                "* Light and Dark has succombed.",
+                "* Feels like dark and light.",
                 "* The Prophecy is failing.",
-                "* The ANGEL'S HEAVEN is taking form.",
-                "* You are in danger.",
+                "* Close to the Angel.",
                 "* The air crackles with freedom.",
-                "* Frozen statues everywhere."
+                "* Frozen statues everywhere.",
+                "* Noelle whispers something intelligible."
             }
             Game.battle.battle_ui.current_encounter_text = "* It's the end."
             if Game.battle.state == "ACTIONSELECT" then
@@ -195,7 +195,7 @@ function secret_battle:onTurnEnd()
             cutscene:text("* Kris...[wait:5] Why??", "crazy-scared", "noelle")
             cutscene:text("* Have you forgotten everything we did together??", "crazy-scared", "noelle")
             cutscene:text("* Shut up.", "bangs_neutral", "susie")
-            cutscene:text("* I don't know what possesed you[wait:1] but I'll kick that thing right out of you!", "angry_c", "susie")
+            cutscene:text("* I don't know what possesed you[wait:1] but I'll kick it out right now!", "angry_c", "susie")
             cutscene:text("* Oh Susie... You don't need to do so..", "crazy-side", "noelle")
             cutscene:text("* Perhaps Kris needs a reminder of my full power?", "crazy-side", "noelle")
             cutscene:text("* ..?", "bangs_neutral", "susie")
@@ -260,7 +260,7 @@ function secret_battle:onTurnEnd()
                 cutscene:text("* Why do you want to SAVE him NOW???", "crazy-insane", "noelle")
                 cutscene:text("* No-Noelle...", "sad", "berdly")
                 cutscene:text("* Don't listen to her, she lost it.", "nervous_side", "susie")
-                cutscene:text("* Like.. really...", "shy_down", "susie")
+                cutscene:text("* Like..[wait:3] really...", "shy_down", "susie")
                 cutscene:text("* Fine Kris. I understand.", "crazy-neutral", "noelle")
                 cutscene:text("* Maybe it wasn't FAR enough to remind you of what we did.", "crazy-side", "noelle")
                 cutscene:text("* Then watch me use HIM as my puppet.", "crazy-snow", "noelle")
@@ -279,8 +279,8 @@ function secret_battle:onTurnEnd()
                 cutscene:text("* But that's fine.", "crazy-neutral", "noelle")
                 cutscene:text("* Soon, we will continue what we started.", "crazy-neutral", "noelle")
                 cutscene:text("* Together! Again!", "crazy-snow", "noelle")
-                cutscene:text("* Don't listen to her, she lost it.", "nervous_side", "susie")
-                cutscene:text("* Like.. really...", "shy_down", "susie")
+                cutscene:text("* Don't listen to her Kris,[wait:5] she lost it.", "nervous_side", "susie")
+                cutscene:text("* Like..[wait:3] really...", "shy_down", "susie")
             end)
         end
         return true
@@ -340,6 +340,7 @@ function secret_battle:getDialogueCutscene()
             "* Berdly tries to break the ice by gyrating his hips!",
             "* Berdly tells the chimical composition of ice.",
             "* Berdly tries to t-bag his way out of the ice.",
+            "* Berdly tries to convince Queen to use her chair's fire.\n* Queen wasn't listening.",
             "* Noelle looks fustrated."
         }
         self.berdly.health = Game.battle.party[3].chara:getStat("magic") * 5.5
