@@ -43,7 +43,7 @@ return {
         end)
         cutscene:wait(0.5)
 
-        if not quick_start then
+        if not quick_start or ending~="killkill" then
             local i=0
             Game.world.timer:everyInstant(1/22, function()
                 Assets.playSound("voice/sneo")
