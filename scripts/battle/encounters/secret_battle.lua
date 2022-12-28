@@ -86,7 +86,14 @@ function secret_battle:update()
             if self.queen then
                 self.queen.alpha = 1
                 self.queen:setPosition(40, 145)
+            else
+                local queen = Game.world:spawnNPC("queen", 40, 145)
+                queen:setAnimation({"chair", 1/8, true})
+                self.queen = queen
+                Game.world:removeChild(queen)
+                Game.battle:addChild(self.queen)
             end
+            self.queen.air_mouv = true
 
             Game.battle.tension_bar:setShortVersion(true)
 
@@ -94,7 +101,7 @@ function secret_battle:update()
         end
     end
 
-    if self.queen then
+    if self.queen and self.queen.air_mouv then
         self.queen.y = 145 + math.sin(Kristal.getTime()*4)*10
     end
 end
