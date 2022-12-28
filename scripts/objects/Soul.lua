@@ -19,7 +19,7 @@ function Soul:init(x, y, color)
 end
 
 function Soul:update()
-    if self.transitioning then
+    --[[if self.transitioning then
         if self.timer >= 7 then
             Input.clear("cancel")
             self.timer = 0
@@ -108,6 +108,22 @@ function Soul:update()
     else
         self.inv_flash_timer = 0
         self.sprite:setColor(1, 1, 1)
+    end]]
+    super:update(self)
+    for _,bullet in ipairs(Game.stage:getObjects(Bullet)) do
+        if self.inv_timer == 0 then
+            if bullet.tp ~= 0 and bullet:collidesWith(self.graze_collider) then
+                if bullet.grazed then
+                    if Game.battle.noelle_tension_bar then
+                        Game.battle.noelle_tension_bar:giveTension(bullet.tp * DT * self.graze_tp_factor)
+                    end
+                else
+                    if Game.battle.noelle_tension_bar then
+                        Game.battle.noelle_tension_bar:giveTension(bullet.tp * self.graze_tp_factor)
+                    end
+                end
+            end
+        end
     end
 end
 
