@@ -215,10 +215,10 @@ function secret_battle:onTurnEnd()
             Game.battle:addChild(ice)
 
             Game.battle.party[2]:setSprite("shock")
-            Game.battle.party[2].sprite.shake_x=5
+            Game.battle.party[2]:shake(5)
 
             Game.battle.party[3]:setSprite("battle/hurt")
-            Game.battle.party[3].sprite.shake_x=5
+            Game.battle.party[3]:shake(5)
 
             Game.battle.timer:tween(3, ice, {x=self.noelle.x-50, y=self.noelle.y-180, rotation=math.rad(45)}, "out-back")
             cutscene:wait(3)
