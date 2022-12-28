@@ -28,11 +28,10 @@ function Lost_Soul_B:init()
     self.tired_percentage = -1
 
     -- List of possible wave ids, randomly picked each turn
-    --self.waves = {
-    --    "basic",
-    --    "aiming",
-    --    "movingarena"
-    --}
+    self.waves = {
+        "secret/berd_fallingTornado",
+        "secret/berd_ly"
+    }
 
     -- Dialogue randomly displayed in the enemy's speech bubble
     self.dialogue = {
