@@ -1,9 +1,11 @@
 local SnowGraveSpell, super = Class(Object)
 
-function SnowGraveSpell:init(user)
+function SnowGraveSpell:init(user, target, shall_damage)
     super:init(self, 0, 0)
 
     self.caster = user
+    self.target = target
+    self.hurting = shall_damage or true
 
     Game.battle.encounter.spell_cast="Snowgrave"
 
@@ -39,14 +41,25 @@ function SnowGraveSpell:update()
     self.timer = self.timer + DTMULT
     self.since_last_snowflake = self.since_last_snowflake + DTMULT 
 
-    if self.hurt_enemies then
-        self.hurt_enemies=false
-        for i, battler in ipairs(Game.battle.party) do
-            if battler then
-                battler.hit_count = 0
-                battler:hurt(self.damage + Utils.round(math.random(100)), self.caster)
-                if battler.chara.health > 0 then
-                    battler:flash()
+    if self.hurting then
+        print("A")
+        if self.hurt_enemies then
+            self.hurt_enemies=false
+            if isClass(self.target) then
+                self.target.hit_count = 0
+                self.target:hurt(self.damage + Utils.round(math.random(100)), self.caster)
+                if (self.target.chara and self.target.chara.health > 0) or self.target.health > 0 then
+                    self.target:flash()
+                end
+            else
+                for i, battler in ipairs(self.target) do
+                    if battler then
+                        battler.hit_count = 0
+                        battler:hurt(self.damage + Utils.round(math.random(100)), self.caster)
+                        if battler.chara.health > 0 then
+                            battler:flash()
+                        end
+                    end
                 end
             end
         end
@@ -109,9 +122,15 @@ function SnowGraveSpell:draw()
         end
 
         if self.since_last_snowflake > 1 then
-            self:createSnowflake(165, 560) --455
-            self:createSnowflake(120, 600) --500
-            self:createSnowflake(75, 520) --545
+            if Game.battle.encounter.id == "secret_battle" then
+                self:createSnowflake(455, 560)
+                self:createSnowflake(500, 600)
+                self:createSnowflake(545, 520)
+            else
+                self:createSnowflake(165, 560) --455
+                self:createSnowflake(120, 600) --500
+                self:createSnowflake(75, 520) --545
+            end
             self.since_last_snowflake = self.since_last_snowflake - 1
         end
 

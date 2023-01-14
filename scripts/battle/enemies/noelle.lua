@@ -398,9 +398,9 @@ function Noelle:spare(pacify)
     return super:spare(self, pacify)
 end
 
-function Noelle:castSnowGrave(user)
+function Noelle:castSnowGrave()
     self:setAnimation("battle/spell")
-    local object = SnowGraveSpell(user, target)
+    local object = SnowGraveSpell(self, Game.battle.party)
     object.damage = math.ceil(((13 * 40) + 600))
     object.layer = BATTLE_LAYERS["above_ui"]
     Game.battle:addChild(object)
