@@ -48,6 +48,8 @@ function ring_noelle:init()
 
     self.first_shield = true
 
+    self.fly_anim = true
+
     Game.battle.timer:every(0.1, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
     end)
@@ -72,8 +74,10 @@ function ring_noelle:init()
 end
 
 function ring_noelle:update()
-    self.x = self.intend_x + math.cos(Kristal.getTime()*2)*6
-    self.y = self.intend_y + math.sin(Kristal.getTime()*3)*20
+    if self.fly_anim then
+        self.x = self.intend_x + math.cos(Kristal.getTime()*2)*6
+        self.y = self.intend_y + math.sin(Kristal.getTime()*3)*20
+    end
     super:update(self)
 end
 
@@ -97,7 +101,7 @@ function ring_noelle:onAct(battler, name)
                 ["name"] = "Courage",
                 ["description"] = "Boost\nParty DEF",
                 ["party"] = {"kris"},
-                ["tp"] = 30,
+                ["tp"] = 45,
                 ["highlight"] = nil,
                 ["short"] = false,
                 ["icons"] = nil
@@ -113,6 +117,12 @@ function ring_noelle:onAct(battler, name)
             end)
             return
         end
+    elseif name == "Courage" then
+        self.encounter.def_boost = true
+        return {
+            "* Kris motivates the party to not give up!",
+            "* Everyone's DEFENSE increases as a result!"
+        }
     elseif name == "Red Buster" then
         Game.battle:powerAct("red_buster", battler, "susie", self)
     elseif name == "Dual Heal" then
@@ -120,6 +130,12 @@ function ring_noelle:onAct(battler, name)
     elseif name == "Shield" then
         Game.battle:startActCutscene("sheild_act")
         return
+    elseif name == "Standard" then
+        if battler.chara.id == "susie" then
+            return "* Susie tries to talk Noelle out of this.\n* Noelle do not listen."
+        elseif battler.chara.id == "ralsei" then
+            return "* Ralsei tries to calm Noelle down.\n* Noelle do not listen."
+        end
     end
 
     return super:onAct(self, battler, name)

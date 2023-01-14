@@ -13,10 +13,10 @@ function Lost_Soul_B:init()
     -- Berdly's health is at 0 since he's already dead
     self.health = 0
     -- But we'll use a fake health variable to keep track if the player decides to free Berdly by attacking them
-    self.fake_health = 900*2
+    self.fake_health = self.max_health
 
     -- Enemy attack (determines bullet damage)
-    self.attack = 0
+    self.attack = 7
     -- Enemy defense (usually 0)
     self.defense = 0
     -- Enemy reward
@@ -39,7 +39,7 @@ function Lost_Soul_B:init()
     }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
-    self.check = "AT 0 DF 0\n* Controlled by ice, this lost soul reminds you of someone..."
+    self.check = "Controlled by ice, this lost soul reminds you of someone..."
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
@@ -63,6 +63,7 @@ function Lost_Soul_B:onAct(battler, name)
         -- Act text (since it's a list, multiple textboxes)
         return {
             "* You glared at the lost soul!",
+            "* The Lost Soul tries to keep its cool."
         }
 
     elseif name == "Play Smart" then
@@ -72,14 +73,14 @@ function Lost_Soul_B:onAct(battler, name)
             "* The Lost Soul is lost in a deep reflection!"
         }
     elseif name == "Play Dumb" then
-        self:addMercy(4)
+        self:addMercy(6)
         return {
             "* You and Susie somehow managed to say the same dumb thing!",
             "* The Lost Soul would laugh at you if it could."
         }
     elseif name == "Standard" then --X-Action
         if battler.chara.id == "ralsei" then
-            self:addMercy(5)
+            self:addMercy(4)
             return "* Ralsei tried to talk to the Lost Soul!"
         elseif battler.chara.id == "susie" then
             self:addMercy(7)
@@ -97,7 +98,9 @@ end
 
 function Lost_Soul_B:hurt(amount, battler, on_defeat, color)
     self.fake_health = self.fake_health - amount
-    self:statusMessage("damage", amount, color or (battler and {battler.chara:getDamageColor()}))
+    if battler.chara then
+        self:statusMessage("damage", amount, color or (battler and {battler.chara:getDamageColor()}))
+    end
 
     self.hurt_timer = 1
     self:onHurt(amount, battler)
