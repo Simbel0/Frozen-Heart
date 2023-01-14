@@ -143,7 +143,7 @@ function Spamton_NEO:onAct(battler, name)
                 direction = 2*math.pi
             }
             battler:addChild(afIm)
-        end, 1)
+        end, 2)
         return "* Kris uses X-Slash!"
     elseif name == "Snap" then
         self.sprite:snapString()
