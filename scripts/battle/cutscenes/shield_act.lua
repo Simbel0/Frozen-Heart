@@ -49,10 +49,8 @@ return function(cutscene, user, target)
 			glass.x = glass.x+speed
 		end
 		glass.x=Utils.clamp(glass.x, 216, 423)
-		glass.collider:drawFor(self, 1, 0, 0)
 
 		for i,v in ipairs(bullets) do
-			v.collider:drawFor(self, 0, 1, 0)
 			v.y = v.y+v.speed
 
 			if v:collidesWith(glass) then
@@ -82,6 +80,7 @@ return function(cutscene, user, target)
 	glass:setLayer(queen.layer-1)
 	Game.battle.timer:tween(0.55, Game.battle, {background_fade_alpha=0})
 	local level = count/3
+	local shield_size
 	print("final count = "..level)
 	if level>=6 then
 		shield_size = 12
@@ -97,7 +96,7 @@ return function(cutscene, user, target)
 	if shield_size==0 then
 		--TODO
 	else
-		local shield = AcidShield(shield_size)
+		local shield = AcidShield(shield_size, queen)
 		queen:addChild(shield)
 		queen.air_mouv = true
 		cutscene:wait(function()
