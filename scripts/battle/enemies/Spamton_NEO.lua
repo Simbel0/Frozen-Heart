@@ -104,12 +104,13 @@ end
 function Spamton_NEO:selectWave()
     if self.encounter.phase == 2 and self.encounter.item_used then
         self.encounter.item_used = false
+        self.selected_wave = "bonus/take_down"
         return "bonus/take_down"
     end
 
     if self.selected_wave then
         local i = self.selected_wave
-        self.selected_wave = nil
+        self.selected_wave = self.waves[i]
         return self.waves[i]
     end
 
@@ -119,6 +120,7 @@ function Spamton_NEO:selectWave()
             self.current_id = 1
             self.wave_loop = self.wave_loop + 1
         end
+        self.selected_wave = self.waves[self.current_id]
         return self.waves[self.current_id]
     end
     return super:selectWave(self)
