@@ -3,7 +3,13 @@ local her_room, super = Class(Map)
 function her_room:onEnter()
 	super:onEnter(self)
 	Game:setBorder("mansion")
-
+	if Game:getFlag("plot", 0)==2 and Game:getFlag("noelle_battle_status", nil)==nil then
+        print("Start the quick intro")
+        print(Game.battle)
+        if not Game.battle then
+            Game.world:startCutscene("intro.quickintro")
+        end
+    end
 	if Game:getFlag("plot", 0)>=3 then
 		Game.world:getEvent(26):remove()
 		if Game:getFlag("noelle_battle_status", "no_trance")=="killspare" then
