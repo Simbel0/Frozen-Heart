@@ -52,15 +52,15 @@ function Spamton_NEO:init()
 
     -- Dialogues Spamton might say depending on the selected wave
     self.waves_dialogues = {
-        {"LOOK AT THOSE [Flying Heads] COMING TO [!$#!] YOU!!!", "SAY [Hello] TO MY [Beautiful] FACE!!"},
+        {"LOOK AT THOSE [Flying Heads]\nCOMING TO [!$#!] YOU!!!", "SAY [Hello] TO\nMY [Beautiful] FACE!!"},
         {{
-            "YOU DON'T NEED TO [Feeling Unsafe] KRIS!!",
-            "JUST PICK UP THE [Phone]!!!"
-        }, "CAN YOU HEAR IT [Ring, Ring]??!"},
-        {{"DO NOT WORRY ABOUT THIS [Deal] KRIS!!", "IT IS NOW PROTECTED WITH [Certified Protection Ⓒ 1997]"}, "[Enjoy Full Time Protection With] FLYING HEADS!!"},
-        {"[Hoochi Mama]!! I HAVE A [Gift] FOR YOU!!!", "CAN YOU FEEL [Wipe My Save]??"},
-        {"KRIS, LOOK AT THOSE [E-Mail Guy] REVIEW JUST FOR YOU!!", "I HAVE A [$!$#] LETTER FOR YOU!!"},
-        {{"KRIS, DO YOU FEEL [Trap]?","THEN PLEASE SHOOT FOR THE [Deal]"}, "WE CAN FREE OURSELVES FROM THOSE [Vulnerable Walls]!!"},
+            "YOU DON'T NEED TO\n[Feeling Unsafe] KRIS!!",
+            "JUST PICK UP\nTHE [Phone]!!!"
+        }, "CAN YOU HEAR IT\n[Ring, Ring]??!"},
+        {{"DO NOT WORRY ABOUT\nTHIS [Deal] KRIS!!", "IT IS NOW PROTECTED WITH\n[Certified Protection Ⓒ 1997]"}, "[Enjoy Full Time Protection\nWith] FLYING HEADS!!"},
+        {"[Hoochi Mama]!! I HAVE\nA [Gift] FOR YOU!!!", "CAN YOU FEEL\n[Wipe My Save]??"},
+        {"KRIS, LOOK AT THOSE [E-Mail Guy]\nREVIEW JUST FOR YOU!!", "I HAVE A [$!$#]\nLETTER FOR YOU!!"},
+        {{"KRIS, DO YOU\nFEEL [Trap]?","THEN PLEASE\nSHOOT FOR THE [Deal]"}, "WE CAN FREE OURSELVES\nFROM THOSE [Vulnerable Walls]!!"},
     }
 
     -- Dialogue randomly displayed in the enemy's speech bubble
@@ -164,7 +164,7 @@ function Spamton_NEO:onAct(battler, name)
                 "THE [Terms And Conditions]\nARE VERY SIMPLE",
                 "YOU GIVE ME YOUR\n[HeartShapedObject]",
                 "AND I GIVE YOU\n[Hyperlink Blocked]\nIN RETURN",
-                "YOU HAVE NO REASON TO\n[Not Sign] KRIS!! THIS IS\nTHE [Honestest] DEAL EVER\nMADE!!!!"
+                "YOU HAVE NO REASON TO\n[Unsign Copy] KRIS!! THIS IS\nTHE [Honestest] DEAL EVER\nMADE!!!!"
             }
             return "* You ask Spamton about the details of the deal."
         elseif self.deal == 2 then
@@ -234,8 +234,8 @@ function Spamton_NEO:getEnemyDialogue()
 
     if self.encounter.phase==2 and self.encounter.item_used then
         return {
-            "DID YOU REALLY THINK I WOULDN'T NOTICE YOU USING YOUR [Inventorium]???",
-            "IT'S A DISCUSSION BETWEEN [HonestMan], NOT [Friends]!!"
+            "DID YOU REALLY THINK\nI WOULDN'T NOTICE YOU\nUSING YOUR [Inventorium]???",
+            "IT'S A DISCUSSION\nBETWEEN [HonestMan], NOT\n[Friends]!!"
         }
     end
 
