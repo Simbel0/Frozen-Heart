@@ -59,6 +59,7 @@ function pipis:update()
                 bullet:setHitbox(5, 5, (bullet.sprite.width*bullet.sprite.scale_x)-10, (bullet.sprite.width*bullet.sprite.scale_y)-10)
             end
             self.shot_tp=0
+            Assets.playSound("snd_explosion_8bit")
             self:destroy()
         end
     end

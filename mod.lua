@@ -160,12 +160,6 @@ function Mod:load(data, newfile, index)
     print("Loading")
     print(Game:getFlag("plot", 0)==2, Game:getFlag("noelle_battle_status", nil)==nil)
     self.old_data = data
-    if Game:getFlag("plot", 0)==2 and Game:getFlag("noelle_battle_status", nil)==nil then
-        print("Start the quick intro")
-        if not Game.battle then
-            Game.world:startCutscene("intro.quickintro")
-        end
-    end
 end
 
 function Mod:getKristalID(id, type)

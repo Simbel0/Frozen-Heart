@@ -406,7 +406,7 @@ return {
             return false
         end
 
-        cutscene:fadeOut(0)
+        cutscene:fadeOut(0.1)
         cutscene:detachCamera()
         local susie=cutscene:getCharacter("susie")
         local noelle=cutscene:getCharacter("noelle")
