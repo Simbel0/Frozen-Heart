@@ -52,7 +52,7 @@ function Lost_Soul_S:init()
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
 
-    self.tired_percentage = 0
+    self.tired_percentage = -1
 
     -- List of possible wave ids, randomly picked each turn
     --self.waves = {
@@ -64,7 +64,7 @@ function Lost_Soul_S:init()
     }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
-    self.check = "Controlled by ice, this lost soul reminds you of someone..."
+    self.check = {"Controlled by ice, this lost soul reminds you of someone...", "Without their strings, only ice prevents them to fall."}
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
@@ -78,6 +78,7 @@ function Lost_Soul_S:init()
     }
 
     self.deal = 0
+    self.charge = 0
 
     self:registerAct("X-Slash", "Physical\nDamage", nil, 15)
 end
@@ -127,20 +128,20 @@ function Lost_Soul_S:onAct(battler, name)
             "secret/sneo_end"
         }
         if self.charge<5 then
-            self.timer:after(7/30, function()
+            Game.battle.timer:after(7/30, function()
                 Assets.playSound("boost")
                 battler:flash()
-                local bx, by = self:getSoulLocation()
+                local bx, by = Game.battle:getSoulLocation()
                 local soul = Sprite("effects/soulshine", bx, by)
                 soul:play(1/15, false, function()
                     soul:remove()
                     for i,friend in ipairs(Game.battle.party) do
-                        friend:heal(friend.chara.max_health/4)
+                        friend:heal(friend.chara:getStat("max_health")/4)
                     end
                 end)
                 soul:setOrigin(0.25, 0.25)
                 soul:setScale(2, 2)
-                self:addChild(soul)
+                Game.battle:addChild(soul)
 
                 --[[local box = self.battle_ui.action_boxes[user_index]
                 box:setHeadIcon("spell")]]
@@ -168,7 +169,7 @@ function Lost_Soul_S:onAct(battler, name)
                 cutscene:choicer({"Yes", "No"})
                 kris:setLayer(og_layer)
                 cutscene:wait(1.5)
-                cutscene:text("* It is done.")
+                cutscene:text("* ..[wait:4]Thank you.")
                 Assets.playSound("break2")
                 hider:setColor(1, 1, 1)
                 Game.battle.timer:tween(0.5, hider, {alpha=0})
@@ -181,7 +182,7 @@ function Lost_Soul_S:onAct(battler, name)
                     soul:play(1/15, false, function()
                         soul:remove()
                         for i,friend in ipairs(Game.battle.party) do
-                            friend:heal(friend.chara.max_health)
+                            friend:heal(friend.chara:getStat("max_health"))
                         end
                     end)
                     soul:setOrigin(0.25, 0.25)
