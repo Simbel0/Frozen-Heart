@@ -69,12 +69,14 @@ function Lost_Soul_S:init()
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
         "* The lost soul has no audience.",
+        "* The lost soul lost everything.",
+        "* The air crackles with coldness.",
         "* It's cold.",
         "* It's freezing.",
         "* Noelle laughs from afar.",
         "* Noelle notices your despair.",
         "* It's the end.",
-        "* You look at the ice.\n* It looks too solid for your weapons."
+        "* The ice is as fresh as it is solid."
     }
 
     self.deal = 0
