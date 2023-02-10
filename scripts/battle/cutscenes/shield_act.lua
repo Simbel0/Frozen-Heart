@@ -1,7 +1,7 @@
 return function(cutscene, user, target)
 	if target.first_shield then
 		target.first_shield = false
-		cutscene:text("* Make A shield?", "surprise", "queen")
+		cutscene:text("* Make A Shield?", "surprise", "queen")
 		cutscene:text("* Kris I Like Your Way Of Thinking.", "smirk", "queen")
 	else
 		cutscene:wait(0.5)
@@ -10,16 +10,17 @@ return function(cutscene, user, target)
 	queen:setAnimation({"act", 1/8, true})
 	queen.air_mouv = false
 	local glass = Sprite("wine_glass")
-	glass:setScale(0.25)
+	glass:setScale(0.2, 0.3)
 	glass:setOrigin(0.5, 0.5)
-	glass.layer = queen.layer-1
+	glass.layer = queen.layer+1
 	glass:setHitbox(0, 30, glass.width, 1)
-	glass:setPosition(queen.x+78, queen.y-((queen.height*2)-20))
-	Game.battle:addChild(glass)
+	glass:setPosition(47, 6)
+	queen.glass = glass
+	queen:addChild(glass)
 
 	cutscene:wait(0.5)
 
-	Game.battle.timer:tween(0.5, glass, {x=320, y=300, scale_x=0.45, scale_y=0.45, color={1,0,0}})
+	Game.battle.timer:tween(0.5, glass, {x=148, y=137, scale_x=0.45/2, scale_y=0.45/2, color={1,0,0}})
 	cutscene:wait(0.5)
 	glass:setLayer(BATTLE_LAYERS["above_bullets"])
 	Game.battle.timer:tween(0.55, Game.battle, {background_fade_alpha=0.75})
@@ -48,7 +49,7 @@ return function(cutscene, user, target)
 		elseif Input.down("right") then
 			glass.x = glass.x+speed
 		end
-		glass.x=Utils.clamp(glass.x, 216, 423)
+		glass.x=Utils.clamp(glass.x, 96, 200)
 
 		for i,v in ipairs(bullets) do
 			v.y = v.y+v.speed
@@ -59,8 +60,10 @@ return function(cutscene, user, target)
 				count = count+1
 			end
 
-			if v.y>SCREEN_HEIGHT+20 then
+			local x, y = v:getScreenPos()
+			if y>SCREEN_HEIGHT+20 then
 				v:remove()
+				Assets.stopAndPlaySound("swallow")
 				table.remove(bullets, i)
 			end
 		end
@@ -75,7 +78,7 @@ return function(cutscene, user, target)
 	end
 	bullets = nil
 
-	Game.battle.timer:tween(0.5, glass, {x=queen.x+78, y=queen.y-((queen.height*2)-20), scale_x=0.25, scale_y=0.25, color={1,1,1}})
+	Game.battle.timer:tween(0.5, glass, {x=47, y=10, scale_x=0.2, scale_y=0.3, color={1,1,1}})
 	cutscene:wait(0.5)
 	glass:setLayer(queen.layer-1)
 	Game.battle.timer:tween(0.55, Game.battle, {background_fade_alpha=0})
@@ -91,16 +94,18 @@ return function(cutscene, user, target)
 	else
 		shield_size = 0
 	end
-	print("shield level = "..level)
+	print("shield level = "..shield_size)
 
 	if shield_size==0 then
 		--TODO
 	else
-		local shield = AcidShield(shield_size, queen)
+		local shield = AcidShield(7, queen)
 		queen:addChild(shield)
+		shield.appearcon = 1
 		queen.air_mouv = true
+		queen.shield = shield
 		cutscene:wait(function()
-			return shield:isInTransition()
+			return not shield:isInTransition()
 		end)
 		cutscene:endCutscene()
 	end

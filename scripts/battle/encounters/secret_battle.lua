@@ -23,6 +23,26 @@ function secret_battle:init()
     -- Add the dummy enemy to the encounter
     self.noelle = self:addEnemy("ring_noelle", 505, 227)
     --self.sneo = self:addEnemy("lost_soul_s", 525, 240)
+
+    self.shield_cutscene = function(cutscene)
+        cutscene:wait(1)
+        self.queen.shield:remove()
+        cutscene:wait(function()
+            return not self.queen.shield_broken
+        end)
+        cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
+    end)
+
+    Utils.hook(Bullet, "onDamage", function(orig, og_self, soul)
+        local damage = og_self:getDamage()
+        if self.queen.shield then
+            if damage>0 then
+                self.queen.shield:hurt(damage)
+            end
+        else
+            orig(og_self, soul)
+        end
+    end)
 end
 
 function secret_battle:update()
@@ -107,6 +127,15 @@ function secret_battle:update()
     if self.queen and self.queen.air_mouv then
         self.queen.y = 145 + math.sin(Kristal.getTime()*4)*10
     end
+    if self.queen and self.queen.shield_broken then
+        print(self.queen.x)
+        if self.queen.x>40 then
+            self.queen:resetPhysics()
+            self.queen:setAnimation({"chair", 1/8, true})
+            self.queen.x = 40
+            self.queen.shield_broken = false
+        end
+    end
 end
 
 function secret_battle:onStateChange(old, new)
@@ -119,16 +148,29 @@ function secret_battle:onStateChange(old, new)
                 battler.chara:increaseStat("defense", 5)
             end
         end
-    elseif new=="ACTIONSELECT" and old=="DEFENDINGEND" then
+        if self.queen and self.queen.shield then
+            if not self.queen.shield.ignore_state then
+                self.queen.shield.appearcon = 1
+            else
+                self.queen.shield.ignore_state = false
+            end
+        end
+    elseif new=="ACTIONSELECT" then
         if self.berdly then
             self.berdly:setAnimation("idle")
         end
-    elseif new=="DEFENDINGEND" then
         if self.def_boost then
             for i,battler in ipairs(Game.battle.party) do
                 battler.chara:increaseStat("defense", -5)
             end
             self.def_boost = false
+        end
+        if self.queen and self.queen.shield then
+            if not self.queen.shield.ignore_state then
+                self.queen.shield.appearcon = 2
+            else
+                self.queen.shield.ignore_state = false
+            end
         end
     end
 end
@@ -183,6 +225,12 @@ end
 function secret_battle:onTurnEnd()
     if not self.intro then
         self.turns = self.turns + 1
+    end
+    if (self.queen and self.queen.shield) and self.queen.shield.health<0 then
+        print("B")
+        --TODO: Finish making a way to have the shield breaking cutscene and the other cutscenes execute one after the other
+        self.break_shield_cutscene = true
+        return true
     end
     if self.turns==3 then
         Game.battle:startCutscene(function(cutscene)

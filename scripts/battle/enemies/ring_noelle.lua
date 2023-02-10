@@ -128,7 +128,7 @@ function ring_noelle:onAct(battler, name)
     elseif name == "Dual Heal" then
         Game.battle:powerAct("dual_heal", battler, "ralsei", "party")
     elseif name == "Shield" then
-        Game.battle:startActCutscene("sheild_act")
+        Game.battle:startActCutscene("shield_act")
         return
     elseif name == "Standard" then
         if battler.chara.id == "susie" then
