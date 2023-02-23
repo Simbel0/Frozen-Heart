@@ -24,15 +24,6 @@ function secret_battle:init()
     self.noelle = self:addEnemy("ring_noelle", 505, 227)
     --self.sneo = self:addEnemy("lost_soul_s", 525, 240)
 
-    self.shield_cutscene = function(cutscene)
-        cutscene:wait(1)
-        self.queen.shield:remove()
-        cutscene:wait(function()
-            return not self.queen.shield_broken
-        end)
-        cutscene:after(function() Game.battle:setState("ACTIONSELECT") end, true)
-    end)
-
     Utils.hook(Bullet, "onDamage", function(orig, og_self, soul)
         local damage = og_self:getDamage()
         if self.queen.shield then
@@ -226,14 +217,13 @@ function secret_battle:onTurnEnd()
     if not self.intro then
         self.turns = self.turns + 1
     end
-    if (self.queen and self.queen.shield) and self.queen.shield.health<0 then
-        print("B")
-        --TODO: Finish making a way to have the shield breaking cutscene and the other cutscenes execute one after the other
+    
+    if (self.queen and self.queen.shield) and self.queen.shield.health<=0 then
         self.break_shield_cutscene = true
-        return true
     end
+    local FH_cutscene
     if self.turns==3 then
-        Game.battle:startCutscene(function(cutscene)
+        FH_cutscene = function(cutscene)
             cutscene:after(function() Game.battle:setState("ACTIONSELECT") end)
             cutscene:wait(1/4)
             cutscene:text("* Kris, why do you persist?", "crazy-scared", "noelle")
@@ -241,10 +231,9 @@ function secret_battle:onTurnEnd()
             cutscene:text("* ...", "nervous", "susie")
             cutscene:text("* ...", "surprise_confused", "ralsei")
             cutscene:text("* What The Heck (Hell)", "bro", "queen")
-        end)
-        return true
+        end
     elseif self.turns==7 then
-        Game.battle:startCutscene(function(cutscene)
+        FH_cutscene = function(cutscene)
             cutscene:after(function()
                 Game.battle:setState("ACTIONSELECT")
                 Game.battle.battle_ui.current_encounter_text = "* The lost soul barges in!"
@@ -315,20 +304,19 @@ function secret_battle:onTurnEnd()
             ice:remove()
             Game.battle.party[2]:resetSprite()
             Game.battle.party[3]:resetSprite()
-        end)
-        return true
+        end
     elseif self.turns == 11 then
-        table.insert(Game.battle.enemies, 1, self.noelle)
-        self.noelle.visible = true
-        self.noelle.intend_x = 500
-        self.noelle.intend_y = 140
-        self.noelle.sprite.alpha = 1
-        self.berdly:setAnimation("idle_surprised")
         if self.berdly_awoken then
-            Game.battle:startCutscene(function(cutscene)
+            FH_cutscene = function(cutscene)
                 cutscene:after(function()
                     Game.battle:setState("ACTIONSELECT")
                 end)
+                table.insert(Game.battle.enemies, 1, self.noelle)
+                self.noelle.visible = true
+                self.noelle.intend_x = 500
+                self.noelle.intend_y = 140
+                self.noelle.sprite.alpha = 1
+                self.berdly:setAnimation("idle_surprised")
                 cutscene:wait(cutscene:fadeOut(0, {color={1, 1, 1}}))
                 cutscene:fadeIn(0.5)
                 cutscene:wait(0.4)
@@ -353,12 +341,18 @@ function secret_battle:onTurnEnd()
                 cutscene:text("* I-..[wait:3] I didn't sign up for this..![react:1]", "sweat", "berdly", {reactions={
                     {"You think any of\nus did??", "right", "bottommid", "teeth_b", "susie"}
                 }})
-            end)
+            end
         else
-            Game.battle:startCutscene(function(cutscene)
+            FH_cutscene = function(cutscene)
                 cutscene:after(function()
                     Game.battle:setState("ACTIONSELECT")
                 end)
+                table.insert(Game.battle.enemies, 1, self.noelle)
+                self.noelle.visible = true
+                self.noelle.intend_x = 500
+                self.noelle.intend_y = 140
+                self.noelle.sprite.alpha = 1
+                self.berdly:setAnimation("idle_surprised")
                 cutscene:wait(cutscene:fadeOut(0, {color={1, 1, 1}}))
                 cutscene:fadeIn(1)
                 cutscene:wait(1)
@@ -370,8 +364,29 @@ function secret_battle:onTurnEnd()
                 cutscene:text("* Together! Again!", "crazy-snow", "noelle")
                 cutscene:text("* Don't listen to her Kris,[wait:5] she lost it.", "nervous_side", "susie")
                 cutscene:text("* Like..[wait:3] really...", "shy_down", "susie")
-            end)
+            end
         end
+    end
+
+    if self.break_shield_cutscene then
+        Game.battle:startCutscene(function(cutscene)
+            cutscene:wait(1)
+            self.queen.shield:remove()
+            cutscene:wait(function()
+                return not self.queen.shield_broken
+            end)
+            if FH_cutscene then
+                cutscene:gotoCutscene(FH_cutscene)
+            else
+                cutscene:after(function()
+                    Game.battle:setState("ACTIONSELECT")
+                end, true)
+            end
+        end)
+        self.break_shield_cutscene = false
+        return true
+    elseif FH_cutscene then
+        Game.battle:startCutscene(FH_cutscene)
         return true
     end
 
