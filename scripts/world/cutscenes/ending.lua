@@ -869,7 +869,7 @@ return {
         cutscene:text("* ...", "", "susie")
         cutscene:text("* Now that I think about it,[wait:0.5] Kris looked so weird when we reunited.", "", "susie")
         cutscene:text("* Like something terrible just happened.", "", "susie")
-        cutscene:text("* Does it have something to do Noelle?", "", "susie")
+        cutscene:text("* Does it have something to do with Noelle?", "", "susie")
         cutscene:text("* ...", "", "susie")
         cutscene:text("* Eh, whatever.", "", "susie")
         cutscene:text("* I believe in Kris. Whatever's going on..", "", "susie")
