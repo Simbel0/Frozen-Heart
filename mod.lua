@@ -128,6 +128,7 @@ function Mod:postInit(newfile)
             local tea_flavor=Utils.pick(tea_flavors)
             Game.inventory:addItem(tea_flavor.."_tea")
         end
+        Game:setFlag("susie_reaction_save", false)
 
         Game.inventory:removeItem("cell_phone")
 
