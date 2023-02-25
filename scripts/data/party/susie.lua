@@ -59,4 +59,11 @@ function character:getSoulColor()
     return super:getSoulColor(self)
 end
 
+function character:getReaction(item, user)
+    if item and item.id == "thornring" then
+        return "(What the HELL?! No!)"
+    end
+    return super:getReaction(self, item, user)
+end
+
 return character
