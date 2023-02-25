@@ -47,7 +47,7 @@ return function(cutscene)
     GIVEUP.alpha=0
     GIVEUP:setLayer(100010)
     local heart=Sprite("player/heart_blur")
-    heart:setColor(Game:getSoulColor())
+    heart:setColor(1, 0, 0, 1)
     heart.alpha=0
     heart:setScale(2)
     heart:setLayer(100005)
