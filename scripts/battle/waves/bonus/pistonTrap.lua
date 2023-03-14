@@ -3,8 +3,9 @@ local pistonTrap, super = Class(Wave)
 function pistonTrap:init()
     super:init(self)
     self.mode = Game.battle.encounter.sneo.wave_loop
-    self.time=14
+    self.time = -1
     self:setArenaSize(280, 142)
+    self.end_pos = self.mode == 1 and 250 or 300
 end
 
 function pistonTrap:onStart()
@@ -19,6 +20,10 @@ end
 
 function pistonTrap:update()
     -- Code here gets called every frame
+
+    if self.pistons[1].x >= self.end_pos then
+        self.finished = true
+    end
 
     super:update(self)
 end

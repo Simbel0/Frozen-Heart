@@ -50,6 +50,9 @@ function character:getReaction(item, user)
     if item and item.id == "thornring" then
         return "Su-Susie..?"
     end
+    if user.id == "susie" then
+        return "(What is she doing?)"
+    end
     return super:getReaction(self, item, user)
 end
 

@@ -189,6 +189,8 @@ return {
                     end
                     v.swing_speed = 0
                 end
+                cutscene:getCharacter("noelle"):setSprite("walk")
+                Game.world:getEvent(2).adjust=0
                 sneo.sprite:setStringCount(1)
                 sneo.sprite.bg_strings[1].alpha = 0
                 local fg_sx, fg_sy = sneo.sprite:getRelativePos(ox, oy, sneo)
@@ -198,6 +200,8 @@ return {
                 sneo.sprite:setHeadAnimating(false)
                 sneo.sprite:getPart("head"):setSprite("npcs/spamton/head_death")
                 cutscene:wait(0.7)
+                Game.fader:fadeIn(nil, {speed=2})
+                cutscene:wait(2.5)
                 cutscene:text("* ...", nil, sneo)
                 cutscene:text("* Ah! Look at you! You can't even move a limb!", "smirk", "susie")
                 cutscene:look("kris", "up")
@@ -220,7 +224,8 @@ return {
                 cutscene:text("* Even after reaching the top, I always seem to be doomed to fall back down.", nil, sneo)
                 cutscene:text("* Even then, I can't be anything more than a simple puppet...", nil, sneo)
                 cutscene:text("* But you three, it may not look like it..", nil, sneo)
-                cutscene:text("* But you could actually be able to free yourself of your strings.", nil, sneo)
+                cutscene:text("* But you may be able to free yourself of your strings.", nil, sneo)
+                cutscene:wait(1)
                 cutscene:text("* Kris...", nil, sneo)
                 cutscene:fadeOut(0)
                 Game.world.music:stop()
@@ -844,8 +849,8 @@ return {
         cutscene:text("* Like, do you know who was that dude who attacked you?", "neutral_side", "susie")
         cutscene:text("* You would have been dead without me and Noelle.", "sus_nervous", "susie")
         cutscene:text("* ...", "sus_nervous", "susie")
-        cutscene:text("* Well if you don't wanna say anything..", "nervous", "susie")
-        cutscene:text("* I'll respect your choice.", "smirk", "susie")
+        cutscene:text("* Well if you don't wanna talk about it..", "nervous", "susie")
+        cutscene:text("* That's fine too,[wait:2] I guess.", "smirk", "susie")
         cutscene:text("* Just be more careful next time or something.", "nervous", "susie")
         cutscene:text("* In any case, let's get out of here.", "nervous", "susie")
         cutscene:wait(cutscene:walkToSpeed(susie, 320, susie.y, 8))
@@ -864,7 +869,7 @@ return {
         CutMusic.pitch = 0.3
 
         cutscene:text("* Man, that was confusing.", "","susie")
-        cutscene:text("* This voice, Noelle, this giant puppet...", "", "susie")
+        cutscene:text("* This voice,[wait:2] Noelle,[wait:2] this giant puppet...", "", "susie")
         cutscene:text("* What kind of shady stuff is going on with Kris?", "", "susie")
         cutscene:text("* ...", "", "susie")
         cutscene:text("* Now that I think about it,[wait:0.5] Kris looked so weird when we reunited.", "", "susie")
@@ -872,7 +877,7 @@ return {
         cutscene:text("* Does it have something to do with Noelle?", "", "susie")
         cutscene:text("* ...", "", "susie")
         cutscene:text("* Eh, whatever.", "", "susie")
-        cutscene:text("* I believe in Kris. Whatever's going on..", "", "susie")
+        cutscene:text("* I believe in Kris.[wait:2] Whatever's going on..", "", "susie")
         cutscene:text("* I'm sure they'll find a way arou-", "", "susie")
         CutMusic:stop()
 

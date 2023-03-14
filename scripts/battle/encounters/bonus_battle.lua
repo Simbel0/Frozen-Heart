@@ -58,7 +58,7 @@ function Bonus_Battle:update()
             Game.battle.timer:tween(0.25, head.sprite, {scale_x=2, scale_y=2}, "linear", function()
                 Game.battle.timer:tween(0.25, head.sprite, {scale_x=1, scale_y=1})
             end)
-        end, 1)
+        end, 2)
     end
 
     self.sneo.attack = Utils.clamp(13 + 0.25*self.funnycheat, 13, 26)
@@ -202,23 +202,9 @@ function Bonus_Battle:onTurnEnd()
                 cutscene:wait(0.1)
                 castIceShock(Game.battle.party[2], Game.battle.enemies[1], {30, 30})
                 cutscene:wait(0.3)
+                Game.fader:fadeOut(nil, {speed = 0})
                 self.sneo.sprite:snapStrings(6, true)
                 Assets.playSound("petrify")
-                for i,v in ipairs(self.sneo.sprite.parts) do
-                    if v.id~="head" then
-                        v.sprite.frozen = true
-                        print(v.id, v, v.sprite, v.sprite.frozen, v.sprite.freeze_progress)
-                        -- For some reason, the left arm lose its freeze_progress value. I suspect that the complete reset may cause that but I'm just going to do that instead
-                        if not v.sprite.freeze_progress then
-                            v.sprite.freeze_progress = 0
-                        end
-                        if v.sprite.freeze_progress and v.sprite.freeze_progress<1 then
-                            v.sprite.freeze_progress = 0
-                            Game.battle.timer:tween(20/30, v.sprite, {freeze_progress=1})
-                        end
-                    end
-                    v.swing_speed = 0
-                end
                 cutscene:wait(2.5)
                 Game:setFlag("spamton_conclusion", "killed")
                 Game.battle:setState("VICTORY")
