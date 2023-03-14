@@ -129,8 +129,10 @@ function Spamton_NEO:selectWave()
         return self.waves[self.current_id]
     end
     local wave = super:selectWave(self)
-    while wave==self.no_no_wave do
-        wave = super:selectWave(self)
+    if self.encounter.phase==2 then
+        while wave==self.no_no_wave do
+            wave = super:selectWave(self)
+        end
     end
     self.no_no_wave = wave
     print("Selected wave: "..wave)
