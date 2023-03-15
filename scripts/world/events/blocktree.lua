@@ -28,20 +28,23 @@ function blocktree:update()
 	    self.blocktimer = self.blocktimer + DTMULT
 	end
 	if (Utils.round(self.blocktimer) == 20) then
-	    local xv = (((self.width / 4)) + love.math.random((self.width / 2)))
-	    local yv = (((self.height / 4)) + love.math.random((self.height / 4)))
-	    self.block = Sprite("world/events/blocktree/block", xv, yv)
-	    self.block.alpha = 0
-	    self.block.physics = {
-	        speed_y = (0.4 + love.math.random(1)),
-	        speed_x = (0.7 + love.math.random(1.5)),
-	        gravity_direction = 0,
-	        gravity = 0.1,
-	        friction = -0.1
-	    }
-	    self.block.layer = (self.layer - 1)
-	    self.block:setColor((Utils.mergeColor(COLORS["white"], COLORS["black"], oo)))
-	    self:addChild(self.block)
+	    if not self.spawned_block then
+		    local xv = (((self.width / 4)) + love.math.random((self.width / 2)))
+		    local yv = (((self.height / 4)) + love.math.random((self.height / 4)))
+		    self.block = Sprite("world/events/blocktree/block", xv, yv)
+		    self.block.alpha = 0
+		    self.block.physics = {
+		        speed_y = (0.4 + love.math.random(1)),
+		        speed_x = (0.7 + love.math.random(1.5)),
+		        gravity_direction = 0,
+		        gravity = 0.1,
+		        friction = -0.1
+		    }
+		    self.block.layer = (self.layer - 1)
+		    self:addChild(self.block)
+		    self.spawned_block = true
+		end
+		self.block:setColor((Utils.mergeColor(COLORS["white"], COLORS["black"], oo)))
 	    if (oo >= 0.8) then
 	        self.block:remove()
 	    end
@@ -56,6 +59,7 @@ function blocktree:update()
 	end
 	if (self.blocktimer >= 48) then
 	    self.blocktimer = 0
+	    self.spawned_block = false
 	    self.block:remove()
 	end
 

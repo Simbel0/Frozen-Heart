@@ -88,7 +88,7 @@ function piston:update()
     end
 
     if self.sprite.flip_x then
-        self.x=self.x+0.5
+        self.x=self.x+0.5*DTMULT
     else
         if not self.stopped then
             self.x = (self.x_orig-25) + math.cos(self.timer*4)*60

@@ -39,7 +39,7 @@ function you_ve_got_mail:update()
 
     self.siner=self.siner+DTMULT
 
-    sneo.y = sneo.y+math.sin(self.siner*0.3)*10
+    sneo.y = self.org_y+math.sin(self.siner*0.3)*40
 
     if self.timer_n==0 then
         self.circle=Sprite("bullets/neo/bigcircle", arm.sprite.width, 9)
@@ -51,7 +51,7 @@ function you_ve_got_mail:update()
         arm.sprite:addChild(self.circle)
         self.charge_sound:setPitch(1)
         self.charge_sound:play()
-        shot_played = false
+        self.shot_played = false
     elseif self.timer_n<=30 then
         arm.swing_rotation = Utils.angle(arm, Game.battle.soul)
         self.charge_sound:setPitch(1+(self.timer_n)/10)
@@ -61,17 +61,24 @@ function you_ve_got_mail:update()
             self.circle:remove()
             self.circle=nil
         end
-        local x, y = arm:getScreenPos()
-        local mail_x, mail_y = x-(arm.sprite.width+20)+math.cos(arm.sprite.rotation), y+75*math.sin(arm.sprite.rotation)
-        self:spawnBullet("neo/mail", mail_x, mail_y, arm.swing_rotation+math.rad(Utils.random(-3.5, 3.5)), Utils.random(20, 30))
+        if not self.timer_set then
+            self.bullet_handler = self.timer:every(1/30, function()
+                local x, y = arm:getScreenPos()
+                local mail_x, mail_y = x-(arm.sprite.width+20)+math.cos(arm.sprite.rotation), y+75*math.sin(arm.sprite.rotation)
+                self:spawnBullet("neo/mail", mail_x, mail_y, arm.swing_rotation+math.rad(Utils.random(-3.5, 3.5)), Utils.random(20, 30))
+            end, math.huge)
+            self.timer_set = true
+        end
         sneo.sprite:tweenPartRotation("head", math.rad(Utils.random(90, 110)), 0.2, "out-cubic")
         self.charge_sound:stop()
-        if not shot_played then
+        if not self.shot_played then
             self.shot_sound:play()
-            shot_played = true
+            self.shot_played = true
         end
     elseif self.timer_n>60 then
         sneo.sprite:tweenPartRotation("head", math.rad(0), 0.3, "out-cubic")
+        self.timer:cancel(self.bullet_handler)
+        self.timer_set = false
         self.timer_n=-99
     end
 
