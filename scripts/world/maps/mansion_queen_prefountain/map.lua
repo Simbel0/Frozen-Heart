@@ -13,4 +13,9 @@ function prefountain:load()
     end)
 end
 
+function prefountain:onExit()
+    Game.world.timer:cancel(self.sound_handler)
+    super:onExit(self)
+end
+
 return prefountain
