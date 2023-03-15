@@ -89,6 +89,20 @@ function Mod:init()
 end
 
 function Mod:postInit(newfile)
+
+    -- The last resort
+    --[[
+    if FRAMERATE==0 or FRAMERATE>30 then
+        FRAMERATE = 30
+    end
+    Utils.hook(Kristal, "returnToMenu", function(orig, self)
+        if FRAMERATE~=Kristal.Config["fps"] then
+            FRAMERATE = Kristal.Config["fps"]
+        end
+        orig(self)
+    end)
+    ]]
+
     if newfile then
         if not Game:getFlag("plot", nil) then
             Game:setFlag("plot", 0)
