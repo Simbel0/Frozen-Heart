@@ -158,7 +158,9 @@ function secret_battle:onStateChange(old, new)
         end
         if self.queen and self.queen.shield then
             if not self.queen.shield.ignore_state then
-                self.queen.shield.appearcon = 2
+                if old == "CUTSCENE" or old == "DEFENDINGEND" then
+                    self.queen.shield.appearcon = 2
+                end
             else
                 self.queen.shield.ignore_state = false
             end
