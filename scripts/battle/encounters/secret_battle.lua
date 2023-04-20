@@ -54,7 +54,7 @@ function secret_battle:update()
                 "* Noelle doesn't feel any pain.",
                 "* It's cold.",
                 "* The flame of Queen's chair warms the party.",
-                "* She lost herself.",
+                "* Noelle lost herself.",
                 "* The Dark World is losing its shape.",
                 "* Feels like dark and light.",
                 "* The Prophecy is failing.",
