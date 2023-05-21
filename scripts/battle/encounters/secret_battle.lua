@@ -26,7 +26,7 @@ function secret_battle:init()
 
     Utils.hook(Bullet, "onDamage", function(orig, og_self, soul)
         local damage = og_self:getDamage()
-        if self.queen.shield then
+        if self.queen and self.queen.shield then
             if damage>0 then
                 self.queen.shield:hurt(damage)
             end
