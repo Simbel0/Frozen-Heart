@@ -35,7 +35,7 @@ function IceShocks:onStart()
             wait(0.35)
             self.timer:everyInstant(1/30, function()
                 for i=1,3 do
-                    self:spawnBullet("lonelySnow", x+(300)*math.cos(lines[i].rotation+(math.pi)), y+(300)*math.sin(lines[i].rotation+(math.pi)), lines[i].rotation, 20)
+                    self:spawnBullet("lonelySnow", x+((380)*math.cos(lines[i].rotation+math.pi+math.rad(90))), y+((380)*math.sin(lines[i].rotation+math.pi+math.rad(90))), lines[i].rotation+math.rad(90), 20)
                 end
             end, 60)
             wait((1/30)*60)
