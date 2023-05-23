@@ -215,6 +215,62 @@ function secret_battle:onBattleStart()
     Game.battle.battle_ui.action_boxes[1].x = 213
 end
 
+function secret_battle:getNextWaves()
+    if self.force_waves then
+        local waves = {}
+
+        for enemy,wave in pairs(self.force_waves) do
+            for i,active_enemy in ipairs(Game.battle:getActiveEnemies()) do
+                print(active_enemy, enemy)
+                if Utils.contains(active_enemy.id, enemy) then
+                    active_enemy.selected_wave = wave
+                    break
+                end
+            end
+            table.insert(waves, "secret/"..wave)
+        end
+        self.force_waves = nil
+
+        return waves
+    end
+    if not self.berdly then
+        return super:getNextWaves(self)
+    end
+
+    local duo = Utils.random()>0.3
+    local waves = {}
+    if not duo then
+        local enemy = Utils.pick(Game.battle:getActiveEnemies())
+        local wave = enemy:selectWave()
+        if wave then
+            table.insert(waves, wave)
+        end
+    else
+        local no_no_waves = {
+            "dark_star_attack",
+            "shadowSnowBullet",
+            "snowReject"
+        }
+
+        for _,enemy in ipairs(Game.battle:getActiveEnemies()) do
+            local wave = enemy:selectWave()
+            while Utils.containsValue(no_no_waves, wave:sub(8)) do
+                wave = enemy:selectWave()
+            end
+            if wave then
+                table.insert(waves, wave)
+            end
+        end
+    end
+    return waves
+end
+
+--Debug function
+function secret_battle:forceDoubleWaves(waves)
+    self.force_waves = waves
+    Game.battle:setState("DEFENDINGBEGIN")
+end
+
 function secret_battle:onTurnEnd()
     if not self.intro then
         self.turns = self.turns + 1

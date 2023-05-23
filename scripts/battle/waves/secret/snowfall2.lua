@@ -9,8 +9,8 @@ function Snowfall2:init()
 end
 
 function Snowfall2:onStart()
-    -- Every 0.33 seconds...
-    self.timer:every(0.35, function()
+    self.double = #Game.battle.waves==2
+    self.timer:every(self.double and 1 or 0.35, function()
         local x, y = Utils.random(Game.battle.arena.left, Game.battle.arena.right), -20
         if self.prev_x then
             local ok
@@ -39,7 +39,7 @@ function Snowfall2:onStart()
         self.timer:tween(0.25, rect, {scale_x=20}, nil, function()
             self.timer:tween(0.35, rect, {scale_x=0}, "in-cubic", function()
                 self.timer:after(0.1, function()
-                    self:spawnBullet("snowflakeBullet", x, y, math.rad(90), 25)
+                    self:spawnBullet("snowflakeBullet", x, y, math.rad(90), self.double and 15 or 25)
                 end)
             end)
         end)

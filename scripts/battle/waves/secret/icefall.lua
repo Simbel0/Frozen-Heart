@@ -6,8 +6,8 @@ function IceFall:init()
 end
 
 function IceFall:onStart()
-    -- Every 0.33 seconds...
-    self.timer:every(0.75, function()
+    self.double = #Game.battle.waves==2
+    self.timer:every(self.double and 1.75 or 0.75, function()
         local start = Utils.random()<0.5 and "left" or "right"
         local x, y, angle
 

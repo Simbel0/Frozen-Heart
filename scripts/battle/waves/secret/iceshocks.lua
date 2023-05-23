@@ -6,8 +6,8 @@ function IceShocks:init()
 end
 
 function IceShocks:onStart()
-    -- Every 0.33 seconds...
-    self.timer:every(0.75, function()
+    self.double = #Game.battle.waves==2
+    self.timer:every(self.double and 1.75 or 0.75, function()
         local x, y
         repeat
             x = Utils.random(30, SCREEN_WIDTH-30)

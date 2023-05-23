@@ -6,8 +6,8 @@ function falling_tornado:init()
 end
 
 function falling_tornado:onStart()
-    -- Every 0.33 seconds...
-    self.timer:every(0.75, function()
+    self.double = #Game.battle.waves==2 --Make double idio
+    self.timer:every(self.double and 1.15 or 0.75, function()
         local center_x, _ = Game.battle.arena:getCenter()
         -- Our X position is offscreen, to the right
         local x = Utils.random(center_x-20, center_x+20)

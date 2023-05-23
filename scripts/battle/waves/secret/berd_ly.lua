@@ -7,6 +7,7 @@ function actuallyHim:init()
 end
 
 function actuallyHim:onStart()
+    self.double = #Game.battle.waves==2 --Make double idio
     self.timer:everyInstant(1.5, function()
         self.wave = self.wave+1
         local wave = self.wave

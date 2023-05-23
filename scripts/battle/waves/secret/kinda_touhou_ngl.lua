@@ -9,12 +9,14 @@ function kindaTouhou:init()
 end
 
 function kindaTouhou:onStart()
-    self.timer:every(1/3, function()
+    self.double = #Game.battle.waves==2 --Make double idiot
+    local add = self.double and 35*2 or 35
+    self.timer:every(self.double and 1 or 1/3, function()
         local angle = love.math.random(360)
         for i=1,20 do
             self:spawnBullet("lonelySnow", self.x, 0, math.rad(angle+360/20*i), 6)
         end
-        self.x = self.x + (self.dir =="right" and 35 or -35)
+        self.x = self.x + (self.dir =="right" and add or -add)
         if self.dir == "right" and self.x>640 then
             self.dir = "left"
         elseif self.dir == "left" and self.x<10 then

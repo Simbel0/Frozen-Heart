@@ -8,7 +8,14 @@ function shoot:init()
 end
 
 function shoot:onStart()
-    -- Every 0.33 seconds...
+    self.double = #Game.battle.waves==2 --Make double idio
+    if self.double then
+        for i,wave in ipairs(Game.battle.waves) do
+            if wave.id ~= self.id then
+                self.time = wave.time
+            end
+        end
+    end
     local berdly = self.encounter.berdly
     self.berdly_orig_x = berdly.x
     self.timer:script(function(wait)
@@ -27,10 +34,17 @@ function shoot:onStart()
             wait()
         end
         wait(0.1)
-        for i = 1, 10 do
-            local area = Utils.random()<0.5 and "up" or "down"
-            self:spawnBullet("secret/weird_sine", self.base.x, self.base.y, area, (i-1)*10)
-            wait(0.1)
+        if not self.double then
+            for i = 1, 10 do
+                local area = Utils.random()<0.5 and "up" or "down"
+                self:spawnBullet("secret/weird_sine", self.base.x, self.base.y, area, (i-1)*10)
+                wait(0.1)
+            end
+        else
+            self.timer:everyInstant(2, function()
+                local area = Utils.random()<0.5 and "up" or "down"
+                self:spawnBullet("secret/weird_sine", self.base.x, self.base.y, area, 0)
+            end, math.huge)
         end
         self.end_script = true
     end)
@@ -38,7 +52,7 @@ end
 
 function shoot:update()
 
-    if self.end_script then
+    if self.end_script and not self.double then
         if #self.bullets == 0 then
             self.timer:after(0.5, function()
                 self.finished = true
