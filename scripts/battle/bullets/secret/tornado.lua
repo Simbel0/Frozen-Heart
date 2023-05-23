@@ -6,6 +6,8 @@ function Tornado:init(x, y, dir, speed)
     self:setScale(1)
     self.sprite:setScaleOrigin(0.5, 0.5)
 
+    self:setHitbox(10, 8, 17, 26)
+
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir
     -- Speed the bullet moves (pixels per frame at 30FPS)

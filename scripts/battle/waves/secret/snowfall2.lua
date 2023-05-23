@@ -10,15 +10,13 @@ end
 
 function Snowfall2:onStart()
     -- Every 0.33 seconds...
-    self.timer:every(0.5, function()
+    self.timer:every(0.35, function()
         local x, y = Utils.random(Game.battle.arena.left, Game.battle.arena.right), -20
         if self.prev_x then
             local ok
             while true do
-                print(x, self.prev_x)
                 ok = true
                 for i=self.prev_x-5, self.prev_x+5 do
-                    print(i)
                     if i==x then
                         ok = false
                     end
@@ -41,7 +39,7 @@ function Snowfall2:onStart()
         self.timer:tween(0.25, rect, {scale_x=20}, nil, function()
             self.timer:tween(0.35, rect, {scale_x=0}, "in-cubic", function()
                 self.timer:after(0.1, function()
-                    self:spawnBullet("snowflakeBullet", x, y, math.rad(90), 20)
+                    self:spawnBullet("snowflakeBullet", x, y, math.rad(90), 25)
                 end)
             end)
         end)

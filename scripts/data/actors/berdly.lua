@@ -42,12 +42,15 @@ function actor:init()
         -- Looping animation with 0.25 seconds between each frame
         -- (even though there's only 1 idle frame)
         ["idle"] = {"idle", 0.25, true},
+        ["sine_start"] = {"sine_attack", 1/14, false, frames = {"1-7"}},
+        ["sine_end"] = {"sine_attack", 1/14, false, frames = {"8-12"}}
     }
 
     -- Table of sprite offsets (indexed by sprite name)
     self.offsets = {
         -- Since the width and height is the idle sprite size, the offset is 0,0
         ["idle"] = {0, 0},
+        ["sine_attack"] = {-48, -36}
     }
 end
 

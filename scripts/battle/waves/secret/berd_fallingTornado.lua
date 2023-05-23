@@ -7,9 +7,10 @@ end
 
 function falling_tornado:onStart()
     -- Every 0.33 seconds...
-    self.timer:every(1, function()
+    self.timer:every(0.75, function()
+        local center_x, _ = Game.battle.arena:getCenter()
         -- Our X position is offscreen, to the right
-        local x = Utils.random(Game.battle.arena.left, Game.battle.arena.right)
+        local x = Utils.random(center_x-20, center_x+20)
         -- Get a random Y position between the top and the bottom of the arena
         local y = -20
 
