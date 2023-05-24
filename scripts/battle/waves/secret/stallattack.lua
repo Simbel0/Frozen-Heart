@@ -10,8 +10,10 @@ end
 
 function StallAttack:onStart()
     self.double = #Game.battle.waves==2 --Make double idio
-    self:setArenaPosition(SCREEN_WIDTH/2, self.arena_y)
-    Game.battle.soul:setExactPosition(Game.battle.arena:getCenter())
+    if self.double then
+        self:setArenaPosition(SCREEN_WIDTH/2, self.arena_y)
+        Game.battle.soul:setExactPosition(Game.battle.arena:getCenter())
+    end
     self.timer:every(self.double and 2 or 0.7, function()
         print("yes_A")
         local x, y
