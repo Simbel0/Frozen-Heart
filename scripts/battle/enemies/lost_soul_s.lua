@@ -97,7 +97,7 @@ function Lost_Soul_S:onAct(battler, name)
     if name == "X-Slash" then
         Game.battle:startActCutscene(function(cutscene)
             print("A")
-            cutscene:text("* Kris uses X-Slash!", {wait=false})
+            local wait, _ = cutscene:text("* Kris uses X-Slash!", {wait=false})
             print("B")
             Game.battle.timer:everyInstant(0.5, function()
                 print("B2")
@@ -112,12 +112,13 @@ function Lost_Soul_S:onAct(battler, name)
                 battler:addChild(afIm)
             end, 2)
             print("C")
-            cutscene:wait(2.5)
+            cutscene:wait(1.5)
+            cutscene:wait(wait)
             print("D")
             cutscene:text("* But you notice it doesn't even scratch the ice.")
             print("E")
         end)
-        return true
+        return
     elseif name == "Standard" then
         if battler.chara.id == "ralsei" then
             self:addMercy(0)
@@ -143,7 +144,7 @@ function Lost_Soul_S:onAct(battler, name)
                 soul:play(1/15, false, function()
                     soul:remove()
                     for i,friend in ipairs(Game.battle.party) do
-                        friend:heal(friend.chara:getStat("max_health")/4)
+                        friend:heal(friend.chara:getStat("health")/4)
                     end
                 end)
                 soul:setOrigin(0.25, 0.25)
@@ -157,86 +158,240 @@ function Lost_Soul_S:onAct(battler, name)
             return "* Kris charges the power of your SOUL!"
         else
             Game.battle:startActCutscene(function(cutscene)
+
+
+                --oh god the functions
+                local function updateSoul(soul)
+                    if Input.pressed("confirm") and soul.hold_timer == 0 then -- fire normal shot
+                        fireShot(false, soul)
+                    end
+                    -- check release before checking hold, since if held is false it sets the timer to 0
+                    if Input.released("confirm") then -- fire big shot
+                        if soul.hold_timer >= 10 and soul.hold_timer < 40 then -- didn't hold long enough, fire normal shot
+                            fireShot(false, soul)
+                        elseif soul.hold_timer >= 40 then -- fire big shot
+                            fireShot(true, soul)
+                        end
+                        soul.hold_timer = 0
+                    end
+
+                    if Input.down("confirm") then -- charge a big shot
+                        soul.hold_timer = soul.hold_timer + DTMULT*2
+
+                        if soul.hold_timer >= 20 and not soul.charge_sfx then -- start charging sfx
+                            soul.charge_sfx = Assets.getSound("chargeshot_charge")
+                            soul.charge_sfx:setLooping(true)
+                            soul.charge_sfx:setPitch(0.1)
+                            soul.charge_sfx:setVolume(0)
+                            local timer = 0
+                            Game.battle.timer:during(2/3, function()
+                                timer = timer + DT
+                                if soul.charge_sfx then
+                                    soul.charge_sfx:setVolume(Utils.clampMap(timer, 0,2/3, 0,0.3))
+                                end
+                            end, function()
+                                if soul.charge_sfx then
+                                    soul.charge_sfx:setVolume(0.3)
+                                end    
+                            end)
+                            soul.charge_sfx:play()
+                        end
+                        if soul.hold_timer >= 20 and soul.hold_timer < 40 then
+                            soul.charge_sfx:setPitch(Utils.clampMap(soul.hold_timer, 20,40, 0.1,1))
+                        end
+                    else
+                        soul.hold_timer = 0
+                        if soul.charge_sfx then
+                            soul.charge_sfx:stop()
+                            soul.charge_sfx = nil
+                        end
+                    end
+                end
+
+                local function drawSoul(soul)
+                    local r,g,b,a = soul:getDrawColor()
+                    local heart_texture = Assets.getTexture(soul.sprite.texture_path)
+                    local heart_w, heart_h = heart_texture:getDimensions()
+
+                    local charge_timer = soul.hold_timer - 35
+                    if charge_timer > 0 then
+                        local scale = math.abs(math.sin(charge_timer / 10)) + 1
+                        love.graphics.setColor(r,g,b,a*0.3)
+                        love.graphics.draw(heart_texture, -heart_w/2 * scale, -heart_h/2 * scale, 0, scale)
+
+                        scale = math.abs(math.sin(charge_timer / 14)) + 1.2
+                        love.graphics.setColor(r,g,b,a*0.3)
+                        love.graphics.draw(heart_texture, -heart_w/2 * scale, -heart_h/2 * scale, 0, scale)
+                    end
+
+                    local circle_timer = math.min(soul.hold_timer - 15, 35)
+                    if circle_timer > 0 then
+                        local circle = Assets.getTexture("player/shot/charge")
+                        love.graphics.setColor(r,g,b,a*(circle_timer/5))
+                        for i=1,4 do
+                            local angle = (i*math.pi/2) - (circle_timer * math.rad(5))
+                            local x, y = math.cos(angle) * (35 - circle_timer), math.sin(angle) * (35 - circle_timer)
+                            local scale = Utils.clampMap(circle_timer, 0,35, 4,2)
+                            x, y = x - circle:getWidth()/2 * scale, y - circle:getHeight()/2 * scale
+                            love.graphics.draw(circle, x, y, 0, scale)
+                        end
+                    end
+
+                    if charge_timer > 0 then
+                        soul.color = {1,1,1}
+                    end
+                    soul.color = {r,g,b}
+                end
+
+                local function fireShot(big, soul)
+                    local shot
+                    if big then
+                        shot = Game.battle:addChild(YellowSoulBigShot(soul.x, soul.y, soul.rotation + math.pi/2))
+                        Assets.playSound("chargeshot_fire")
+                    else
+                        if #Game.stage:getObjects(YellowSoulShot) >= 3 then return end -- only allow 3 at once
+                        shot = Game.battle:addChild(YellowSoulShot(soul.x, soul.y, soul.rotation + math.pi/2))
+                        Assets.playSound("heartshot")
+                    end
+                end
+
+
+
+
+
                 local hider = Rectangle(-20, 0, SCREEN_WIDTH+40, SCREEN_HEIGHT)
-                hider:setColor(0, 0, 0, 0)
+                hider:setColor(0, 0, 0, 1)
                 hider:setLayer(BATTLE_LAYERS["top"])
                 Game.battle:addChild(hider)
+                Assets.playSound("noise")
                 local kris = cutscene:getCharacter("kris")
+                local fx = ColorMaskFX({0, 0, 0})
+                kris:addFX(fx)
                 local og_layer = kris.layer
                 kris:setLayer(hider.layer+10)
                 Game.battle.music:pause()
-                Game.battle.timer:tween(1, hider, {alpha=1})
-                cutscene:text("* ...")
-                cutscene:text("* A lot has happened lately.")
-                cutscene:text("* Too much for me to understand.")
-                cutscene:text("* ...")
-                cutscene:text("* YOU...")
-                cutscene:text("* If we really share the same goal...")
-                cutscene:text("* Do you trust me?")
-                cutscene:choicer({"Yes", "No"})
+                cutscene:wait(1.5)
+                cutscene:textSpecial("[voice:none][speed:0.7]* ...")
+                cutscene:textSpecial("[voice:none][speed:0.7]* If we really share the same goal...")
+                cutscene:wait(1)
+                Game.battle.timer:tween(1, fx, {color={1, 1, 1}})
+                cutscene:textSpecial("[voice:none][speed:0.7]* ...")
+                cutscene:textSpecial("[voice:none][speed:0.7]* Can I trust you?")
+                local c = -1
+                while c~=1 do
+                    c=cutscene:choicerSpecial({"Yes", "No"})
+                end
                 kris:setLayer(og_layer)
                 cutscene:wait(1.5)
-                cutscene:text("* ..[wait:4]Thank you.")
+                cutscene:textSpecial("[voice:none][speed:0.7]* ..[speed:1][wait:4]Thanks.")
+
+
                 Assets.playSound("break2")
                 hider:setColor(1, 1, 1)
+                kris:removeFX(fx)
                 Game.battle.timer:tween(0.5, hider, {alpha=0})
                 cutscene:wait(0.5)
+                local queen = self.encounter.queen
                 Game.battle.timer:after(7/30, function()
-                    Assets.playSound("boost")
+                    Assets.playSound("boost", 0.8, 1.2)
+                    Assets.playSound("boost", 0.8, 0.9)
+
+                    Game.battle.timer:tween(0.5, kris, {y=80}, "in-out-cubic")
+                    kris:setSprite("fall")
+                    kris.sprite:play(1/10)
+                    kris.sprite.flip_x = true
+
                     battler:flash()
                     local bx, by = Game.battle:getSoulLocation()
                     local soul = Sprite("effects/soulshine", bx, by)
                     soul:play(1/15, false, function()
                         soul:remove()
                         for i,friend in ipairs(Game.battle.party) do
-                            friend:heal(friend.chara:getStat("max_health"))
+                            friend:heal(friend.chara:getStat("health"))
                         end
                     end)
                     soul:setOrigin(0.25, 0.25)
                     soul:setScale(2, 2)
                     Game.battle:addChild(soul)
+                    Game.battle.timer:tween(0.5, soul, {y=45}, "in-out-cubic")
+
+                    Game.battle.timer:every(0.2, function()
+                        local k = AfterImage(kris.sprite, 1)
+                        k:setScaleOrigin(0.5, 0.5)
+                        k.graphics["grow"] = 0.005
+                        k.color = {1, 0, 0}
+                        Game.battle:addChild(k)
+                    end)
+
+                    Game.battle.party[2]:setSprite("shock_behind")
+                    Game.battle.party[2]:shake(5)
+                    Game.battle.party[3]:setSprite("shocked_behind")
+                    Game.battle.party[3]:shake(5)
+
+                    queen:setAnimation({"chair_shocked", 1/8, true})
+                    queen:shake(5)
+                    queen.air_mouv = false
+
+                    Game.battle.music:resume()
+                    Game.battle.music.pitch = 1.1
 
                     --[[local box = self.battle_ui.action_boxes[user_index]
                     box:setHeadIcon("spell")]]
 
                 end)
-                Game.battle.party[2]:setSprite("shock_behind")
-                Game.battle.party[2]:shake(5)
-                Game.battle.party[3]:setSprite("shock_behind")
-                Game.battle.party[3]:shake(5)
-                Game.battle.timer:every(0.1, function()
-                    local k = AfterImage(kris.sprite, 1)
-                    k:setScaleOrigin(0.5, 1)
-                    k.graphics = {
-                        grow = 0.1
-                    }
-                    k.color = {1, 0, 0}
-                    Game.battle:addChild(k)
-                end)
-                cutscene:text("* Kris charges the power of your SOUL!")
+
+                cutscene:text("* Kris unleaches the power of your SOUL!", {skip=false})
                 Assets.playSound("noise")
+                Game.battle.party[2].should_darken = true
+                Game.battle.party[2].darken_timer = 15
+                Game.battle.party[3].should_darken = true
+                Game.battle.party[3].darken_timer = 15
+                queen.darken_fx = queen:addFX(RecolorFX(0.5, 0.5, 0.5))
+                queen.sprite:pause()
                 Game.battle.background_fade_alpha=0.75
                 
                 local bx, by = Game.battle:getSoulLocation()
                 local soul = Sprite("player/heart_dodge", bx, by)
+                soul:setColor(1, 0, 0)
+                soul.hold_timer = 0
+                soul.charge_sfx = nil
                 local soul_outer = Sprite("player/heart_outline_outer", bx, by)
+                soul_outer:setColor(1, 0, 0)
                 soul_outer.alpha = 0
-                cutscene:wait(0.2)
+                Game.battle:addChild(soul)
+                soul:setRotationOrigin(0.5, 0.5)
+                Game.battle:addChild(soul_outer)
+                cutscene:wait(1)
                 Assets.playSound("transform1")
                 Game.battle.timer:tween(1, soul_outer, {alpha=1, x=self.x+self.width/2, y=self.y+50})
-                cutscene:wait(0.2)
-                Game.battle.music:resume()
-                Game.battle.music.pitch = 1.1
-                local x = self.x+self.width/2
+                cutscene:wait(1.5)
+                Game.battle.timer:tween(1, soul, {rotation=math.rad(-90)}, "in-out-back", function()
+                    soul:setColor(1, 1, 0)
+                    Game.world.timer:everyInstant(0.1, function()
+                        local image=AfterImage(soul, 0.5)
+                        image:setScaleOrigin(0.5)
+                        image.graphics.grow=0.3
+                        Game.battle:addChild(image)
+                    end, 3)
+                end)
+                cutscene:wait(1.5)
+                Game.battle.timer:tween(0.35, soul, {x=210, y=30})
+                cutscene:wait(0.75)
+                local x = (self.x+self.width/2)-20
                 local strings = 0
                 cutscene:during(function()
-                    soul_outer.x = x+math.cos(Kristal.getTime())*20
+                    soul_outer.x = x+math.cos(Kristal.getTime()*10)*70
                 end)
+                Game.battle:infoText("* Shoot with "..Input.getText("confirm").."![wait:2]\n* Send strings with "..Input.getText("cancel").."!")
                 cutscene:wait(function()
+
+                    updateSoul(soul)
+                    drawSoul(soul)
+
                     return strings==3
                 end)
             end)
-            return true
+            return
         end
     end
 
