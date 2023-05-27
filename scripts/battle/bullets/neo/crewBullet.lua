@@ -35,6 +35,7 @@ function crewBullet:init(x, y, dir, speed, destination, protected, shoot, shoota
         self.physics.direction = dir
         -- Speed the bullet moves (pixels per frame at 30FPS)
         self.physics.speed = speed
+        self.start = true
     else
         self.dest=destination
         self.speed=speed
