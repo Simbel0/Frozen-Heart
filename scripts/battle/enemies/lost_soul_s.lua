@@ -55,8 +55,11 @@ function Lost_Soul_S:init()
     self.tired_percentage = -1
 
     -- List of possible wave ids, randomly picked each turn
-    --self.waves = {
-    --}
+    self.waves = {
+        "secret/neo_emptymail",
+        "secret/neo_pick-a-hole",
+        "secret/neo_pipis"
+    }
 
     -- Dialogue randomly displayed in the enemy's speech bubble
     self.dialogue = {
@@ -64,7 +67,7 @@ function Lost_Soul_S:init()
     }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
-    self.check = {"Controlled by ice, this lost soul reminds you of someone...", "Without their strings, only ice prevents them to fall."}
+    self.check = {"Controlled by ice, this lost soul reminds you of someone...", "Without their strings,[wait:3] only ice prevents them to fall."}
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
@@ -81,6 +84,8 @@ function Lost_Soul_S:init()
 
     self.deal = 0
     self.charge = 0
+
+    self.advance = false
 
     self:registerAct("X-Slash", "Physical\nDamage", nil, 15)
 end
@@ -241,11 +246,14 @@ function Lost_Soul_S:onAct(battler, name)
 end
 
 function Lost_Soul_S:getAttackDamage(damage, battler)
+    self.advance = true
     return Utils.clamp(damage, 0, 1)
 end
 
 function Lost_Soul_S:hurt(amount, battler, on_defeat, color)
     self:statusMessage("damage", amount, color or (battler and {battler.chara:getDamageColor()}))
+
+    print("hurt")
 
     self.advance = true
 
