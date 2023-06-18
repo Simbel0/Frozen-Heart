@@ -20,6 +20,7 @@ function Part:init(path, x, y, ox, oy, rot)
     self.default_rotation = self.swing_rotation
     self.siner = 0
     self.shake = 0
+    self.friction = 0
     self.swing_shake = 0
 end
 
@@ -27,6 +28,7 @@ function Part:update()
     super:update(self)
     if self.shake > 0 then
         self.sprite:setPosition(love.math.random(-self.shake,self.shake), love.math.random(-self.shake,self.shake))
+        self.shake = self.shake - self.friction
     else
         self.sprite:setPosition(0,0)
     end

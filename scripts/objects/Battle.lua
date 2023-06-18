@@ -349,6 +349,16 @@ function Battle:commitSingleAction(action)
     self.character_actions[action.character_id] = action
 end
 
+function Battle:finishAction(action, keep_animation)
+    if not action or action and not action.character_id then
+        action = self.current_actions[self.current_action_index]
+        if not action then
+            return
+        end
+    end
+    super.finishAction(self, action, keep_animation)
+end
+
 function Battle:nextParty()
     table.insert(self.selected_character_stack, self.current_selecting)
     table.insert(self.selected_action_stack, Utils.copy(self.character_actions))

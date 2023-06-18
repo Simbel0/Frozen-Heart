@@ -212,7 +212,7 @@ function Spamton:setHeadAnimating(state)
     self.head.animating = state ~= false
 end
 
-function Spamton:setAllPartsShaking(shake)
+function Spamton:setAllPartsShaking(shake, friction)
     for _,part in ipairs(self.parts) do
         if type(shake) == "number" then
             part.shake = shake
@@ -221,6 +221,7 @@ function Spamton:setAllPartsShaking(shake)
         else
             part.shake = 0
         end
+        part.friction = friction or 0
     end
 end
 
