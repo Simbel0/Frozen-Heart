@@ -49,6 +49,14 @@ function Obstable:update()
 			end
 			if not shot.big then
 				shot:destroy("c")
+			else
+				print(shot.health, shot.ignore)
+				if self.health > 0 and shot.health then
+					shot.health = shot.health - 1
+				end
+				if shot.health <= 0 then
+					shot:destroy("b")
+				end
 			end
 		end
 	end

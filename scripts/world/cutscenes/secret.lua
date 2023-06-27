@@ -171,21 +171,21 @@ return {
         cutscene:wait(cutscene:walkTo(queen, queen.x, 400))
 
         cutscene:text("* Susie, what's happening??", "shock", "ralsei")
-        cutscene:text("* I don't know.[wait:2] What do you THINK is happening?!?", "annoyed", "susie")
+        cutscene:text("* I don't know.[wait:2] What do you THINK is happening?!", "annoyed", "susie")
         cutscene:wait(cutscene:walkTo(queen, queen.x, 310, 0.3))
         cutscene:look(queen, 'left')
         cutscene:text("* The Theme Of This Room Seems A Little Too Much Respected", "true", "queen")
         cutscene:look(queen, 'right')
         cutscene:text("* Noelle Honey Sweety Darling What Are You-", "smile_side_l", "queen")
         cutscene:text("* Holy Circuits What Happened Susie", "@@", "queen")
-        cutscene:text("* I don't know, she just went nuts out of nowhere!", "angry_b", "susie")
+        cutscene:text("* I don't know, she just lost it out of nowhere!", "angry_b", "susie")
         cutscene:look(queen, 'down')
         queen:setSprite("walk_unhappy")
         cutscene:text("* ...", "down_c", "queen")
         cutscene:text("* I Thought Sleeping Would Suppr This Power Of Her Deep Inside", "pout", "queen")
         queen:setSprite("walk")
         cutscene:text("* But It Seems I Miscaculated", "sorry", "queen")
-        cutscene:text("* What does that even mean?!?", "teeth", "susie")
+        cutscene:text("* What does that even mean??", "teeth", "susie")
 
         noelle.y=noelle.y-70
         ice_emitter.y=ice_emitter.y-70
@@ -209,6 +209,7 @@ return {
         cutscene:text("* ...", "shock", "ralsei")
         cutscene:look(queen, "down")
         cutscene:text("* Have Your (Organic) Tongue Froze Up?", "what", "queen")
+        cutscene:wait(1)
         Assets.playSound("whip")
         susie:setSprite("turn_around")
         cutscene:text("* WHAT IS GOING ON HERE??", "teeth", "susie")
@@ -249,6 +250,7 @@ return {
         cutscene:text("* You don't think...", "annoyed", "susie")
         cutscene:text("* Yes", "lmao", "queen")
         cutscene:look(susie, "right")
+        cutscene:wait(1)
         cutscene:text("* Ugh, fine. Let's go.", "suspicious", "susie")
         cutscene:detachCamera()
 

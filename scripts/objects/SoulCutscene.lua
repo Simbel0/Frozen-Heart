@@ -107,6 +107,7 @@ function SoulCutscene:fireShot(big)
 	local shot
     if big then
         shot = Game.battle:addChild(YellowSoulBigShot(self.x, self.y, self.rotation + math.pi/2))
+        shot.health = love.math.random(2,3)
         Assets.playSound("chargeshot_fire")
     else
         if #Game.stage:getObjects(YellowSoulShot) >= 3 then return end -- only allow 3 at once
