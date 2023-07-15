@@ -12,6 +12,8 @@ function Tornado:init(x, y, dir, speed)
     self.physics.direction = dir
     -- Speed the bullet moves (pixels per frame at 30FPS)
     self.physics.speed = speed
+
+    self.produce_snow = true
 end
 
 function Tornado:onWaveSpawn(wave)
@@ -19,15 +21,17 @@ function Tornado:onWaveSpawn(wave)
         self.sprite.scale_x = -self.sprite.scale_x
     end)
     wave.timer:every(1/6, function()
-        local snow = Sprite("bullets/lonelysnow")
-        snow:setScale(0.5)
-        snow:setPosition(math.random(5, self.sprite.width-5), self.sprite.height/2)
-        snow.physics = {
-            direction = math.rad(90),
-            speed = 5
-        }
-        snow:fadeOutSpeedAndRemove()
-        self:addChild(snow)
+        if self.produce_snow then
+            local snow = Sprite("bullets/lonelysnow")
+            snow:setScale(0.5)
+            snow:setPosition(math.random(5, self.sprite.width-5), self.sprite.height/2)
+            snow.physics = {
+                direction = math.rad(90),
+                speed = 5
+            }
+            snow:fadeOutSpeedAndRemove()
+            self:addChild(snow)
+        end
     end)
 end
 
