@@ -573,6 +573,8 @@ return {
 
             queen.alpha = 0
             Game.battle.encounter.queen = queen
+            Game.battle.encounter.gradient = gradient
+            Game.battle.encounter.snow = snow
             Game.world:removeChild(queen)
             Game.battle:addChild(Game.battle.encounter.queen)
 

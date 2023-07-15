@@ -14,13 +14,13 @@ function ring_noelle:init()
     self:setAnimation({"battle/idle", 0.2, true})
 
     -- Enemy health
-    self.max_health = 332*1997
-    self.health = 332*1997
+    self.max_health = 3320
+    self.health = 3320
     print(self.health)
     -- Enemy attack (determines bullet damage)
     self.attack = 8
     -- Enemy defense (usually 0)
-    self.defense = 2
+    self.defense = -10
 
     self.disable_mercy = true
 
@@ -141,7 +141,10 @@ function ring_noelle:onAct(battler, name)
     return super:onAct(self, battler, name)
 end
 
-function ring_noelle:getAttackDamage(damage, battler)
+function ring_noelle:getAttackDamage(damage, battler, points)
+    if self.encounter.last_section then
+        return super:getAttackDamage(self, damage, battler, points)
+    end
     return self.name == "???" and 0 or math.random(0,1)-- + (battler.chara.name=="Susie" and 3 or 0) --Her affection for Susie is no more
 end
 

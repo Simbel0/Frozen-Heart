@@ -14,15 +14,21 @@ function secret_battle:init()
     self.intro = true
     self.intro_actions_boxes_depla = false
 
-    self.turns = 0
+
+    self.turns = 6
 
     self.default_xactions = false
 
     self.def_boost = false
 
+    self.last_section = false
+    self.placed_neo = false
+
     -- Add the dummy enemy to the encounter
     self.noelle = self:addEnemy("ring_noelle", 505, 227)
-    --self.sneo = self:addEnemy("lost_soul_s", 525, 240)
+    --self.sneo = self:addEnemy("lost_soul_s", 525, 270)
+    --self.sneo:registerAct("Charge")
+    --self.sneo.charge = 4
 
     Utils.hook(Bullet, "onDamage", function(orig, og_self, soul)
         local damage = og_self:getDamage()
@@ -106,6 +112,24 @@ function secret_battle:update()
                 self.queen = queen
                 Game.world:removeChild(queen)
                 Game.battle:addChild(self.queen)
+
+                self.gradient = Sprite("effects/icespell/gradient")
+                self.gradient:setWrap(true, false)
+                self.gradient.layer = WORLD_LAYERS["below_ui"]
+                self.gradient:setScale(2)
+                self.gradient.alpha = 0.5
+                Game.world.timer:tween(3, self.gradient, {alpha=0.5})
+                Game.world:addChild(self.gradient)
+                self.snow = Sprite("effects/icespell/snowfall")
+                self.snow:setWrap(true)
+                self.snow:setScale(2)
+                self.snow.alpha = 1
+                self.snow.layer = self.gradient.layer - 0.6
+                self.snow.physics = {
+                    speed = 10,
+                    direction = math.rad(75)
+                }
+                Game.world:addChild(self.snow)
             end
             self.queen.air_mouv = true
 
@@ -125,6 +149,13 @@ function secret_battle:update()
             self.queen:setAnimation({"chair", 1/8, true})
             self.queen.x = 40
             self.queen.shield_broken = false
+        end
+    end
+
+    if self.ice_fountain then
+        for i,beam in ipairs(self.ice_fountain.light_beams) do
+            beam.color = self.true_fountain.color
+            beam.rotation = math.rad(0+math.sin(Kristal.getTime()*2)*10-i*4)
         end
     end
 end
@@ -165,6 +196,26 @@ function secret_battle:onStateChange(old, new)
                 self.queen.shield.ignore_state = false
             end
         end
+        if self.last_section then
+            if self.sneo and not self.placed_neo then
+                self.placed_neo = true
+                self.sneo:setPosition(17, -50)
+                self.sneo.flip_x = true
+                self.sneo:setLayer(self.queen.layer+10)
+                self.ice_fountain:setSprite("ice_fountain_break_1")
+                for i,beam in ipairs(self.ice_fountain.light_beams) do
+                    beam.alpha = 1
+                end
+                for i,part in ipairs(self.sneo.sprite.parts) do
+                    if part ~= self.sneo.head then
+                        part.swing_speed = 1 + (i-1)/5
+                    end
+                end
+                Game.battle.timer:tween(0.5, self.sneo, {y=280}, nil, function() Assets.playSound("impact") end)
+            end
+        else
+            self.noelle.health = self.noelle.max_health
+        end
     end
 end
 
@@ -187,7 +238,17 @@ function secret_battle:onBattleStart()
     self.ice_fountain = Sprite("ice_fountain", self.true_fountain.x, self.true_fountain.y-11)
     self.ice_fountain:setScale(2)
     self.ice_fountain:setOrigin(0.5, 1)
+    self.ice_fountain.state = 1
+    self.ice_fountain.light_beams = {
+        Triangle(28, 130, {0, 0, -200, -10, -200, 10}),
+        Triangle(114, 69, {0, 0, 200, -10, 200, 10})
+    }
     Game.world:addChild(self.ice_fountain)
+    for i,beam in ipairs(self.ice_fountain.light_beams) do
+        self.ice_fountain:addChild(beam)
+        beam.alpha = 0
+        beam:setLayer(self.ice_fountain.layer-5)
+    end
     self.ice_floor = Rectangle(self.fountain_floor.x, self.fountain_floor.y, self.fountain_floor.width, self.fountain_floor.height)
     self.ice_floor:setColor(143/255, 192/255, 251/255, 0.4)
     Game.world:addChild(self.ice_floor)
@@ -233,42 +294,74 @@ function secret_battle:getNextWaves()
 
         return waves
     end
-    if not self.berdly then
+    if not self.berdly or not self.last_section then
         return super:getNextWaves(self)
     end
 
-    local duo = Utils.random()>0.3
+    local duo = Utils.random()>self.last_section and 0.2 or 0.3
     local waves = {}
     if not duo then
-        local enemy = Utils.pick(Game.battle:getActiveEnemies())
-        local wave = enemy:selectWave()
-        if wave then
-            table.insert(waves, wave)
+        if self.last_section then
+            local enemy = Utils.pick(Game.battle:getActiveEnemies())
+            local wave = enemy:selectWave()
+            if wave then
+                table.insert(waves, wave)
+            end
+        else
+            return super:getNextWaves(self)
         end
     else
         local no_no_waves = {
             "dark_star_attack",
             "shadowSnowBullet",
-            "snowReject"
+            "snowReject",
+            "use_berdly"
         }
 
-        for _,enemy in ipairs(Game.battle:getActiveEnemies()) do
-            local wave = enemy:selectWave()
-            while Utils.containsValue(no_no_waves, wave:sub(8)) do
-                wave = enemy:selectWave()
+        if self.last_section then
+            for _,enemy in ipairs(Game.battle:getActiveEnemies()) do
+                local wave = enemy:selectWave()
+                while Utils.containsValue(no_no_waves, wave:sub(8)) do
+                    wave = enemy:selectWave()
+                end
+                if wave then
+                    table.insert(waves, wave)
+                end
             end
-            if wave then
-                table.insert(waves, wave)
+        else
+            while #waves<2 do
+                local wave = self.noelle:selectWave()
+                while Utils.containsValue(no_no_waves, wave:sub(8)) do
+                    wave = self.noelle:selectWave()
+                end
+                if wave then
+                    table.insert(waves, wave)
+                end
             end
         end
     end
     return waves
 end
 
---Debug function
+--Debug functions
 function secret_battle:forceDoubleWaves(waves)
     self.force_waves = waves
     Game.battle:setState("DEFENDINGBEGIN")
+end
+
+function secret_battle:skipPhase()
+    if not self.berdly and not self.sneo then
+        self.turns = 6
+        Console:log("Advancing the fight to Berdly's section.")
+    elseif self.berdly and self.berdly.mercy < 90 then
+        self.turns = 10
+        self.berdly.mercy = 99
+        Console:log("Advancing the fight to Spamton NEO's section.")
+    elseif self.sneo then
+        self.sneo.deal = 4
+        self.sneo.charge = 4
+        Console:log("Advancing the fight to the final section.")
+    end
 end
 
 function secret_battle:onTurnEnd()

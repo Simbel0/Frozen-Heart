@@ -498,6 +498,7 @@ return function(cutscene, battler, sneo)
         "* The temperature is going up.",
         "* The Angel is falling.",
         "* The ice pillar is breaking apart.",
+        "* There's a light piercing the cold.",
         "* You feel warmer."
     }
     Game.battle.encounter.noelle.waves = {
@@ -511,8 +512,8 @@ return function(cutscene, battler, sneo)
     Game.battle.encounter.noelle.comment="(Ring-Aim)"
     Game.battle.encounter.last_section = true
 
-    Game.battle.encounter.snow:remove()
-    Game.battle.encounter.gradient:remove()
+    Game.battle.encounter.snow.alpha = 0.5
+    Game.battle.encounter.gradient.alpha = 0.5
 
     cutscene:wait(2)
 
