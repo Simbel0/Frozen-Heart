@@ -16,7 +16,6 @@ function ring_noelle:init()
     -- Enemy health
     self.max_health = 3320
     self.health = 3320
-    print(self.health)
     -- Enemy attack (determines bullet damage)
     self.attack = 8
     -- Enemy defense (usually 0)
@@ -26,6 +25,8 @@ function ring_noelle:init()
 
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
+
+    self.tired_percentage = 0
 
     -- Dialogue randomly displayed in the enemy's speech bubble
     --self.dialogue = {

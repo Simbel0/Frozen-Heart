@@ -50,6 +50,7 @@ function IceShock:onWaveSpawn(wave)
         for _,particle in ipairs(particles) do
             particle:remove()
         end
+        self:remove()
     end)
 end
 

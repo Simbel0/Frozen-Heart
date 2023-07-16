@@ -10,6 +10,9 @@ function actor:init()
 	self.animations["cutscene_shock"]={"battle/intro", 1/16, false, next="walk_sad/right"}
 	self.animations["transition_snowgrave"]={"battle/trancesition", 0.2, false, next="battle/idleTrance"}
 	self.animations["battle/idleTrance"]={"battle/idleTrance", 0.2, true}
+
+	self.animations["battle/idleConfict"]={"battle/idle_conflict", 0.2, true}
+	self.animations["innerbattle"]={"party/noelle/dark_c/innerbattle", 0.2, true}
 end
 
 function actor:getDefault()
