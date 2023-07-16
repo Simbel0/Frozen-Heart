@@ -244,7 +244,10 @@ function Final:onStart()
 	        Game.battle.encounter.noelle.text = {"* ..."}
 	        Game.battle.encounter.noelle.defense = -100
 	        Game.battle.encounter.noelle.attack = Game.battle.encounter.noelle.attack/2
+	        Game.battle.encounter.noelle.snow_effect:remove()
+	        Game.battle.timer:cancel(Game.battle.encounter.noelle.af_effect)
 	        Game.battle.arena.color = {0, 0.75, 0}
+	        self.encounter.final_passed = true
 	        self.finished = true
 		end)
 	end)

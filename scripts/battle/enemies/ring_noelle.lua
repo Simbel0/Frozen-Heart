@@ -51,7 +51,7 @@ function ring_noelle:init()
 
     self.fly_anim = true
 
-    Game.battle.timer:every(0.1, function()
+    self.af_effect = Game.battle.timer:every(0.1, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
     end)
 
@@ -76,7 +76,9 @@ end
 
 function ring_noelle:update()
     if self.fly_anim then
-        self.x = self.intend_x + math.cos(Kristal.getTime()*2)*6
+        if not Game.battle.encounter.final_passed then
+            self.x = self.intend_x + math.cos(Kristal.getTime()*2)*6
+        end
         self.y = self.intend_y + math.sin(Kristal.getTime()*3)*20
     end
     super:update(self)
@@ -147,6 +149,12 @@ function ring_noelle:getAttackDamage(damage, battler, points)
         return super:getAttackDamage(self, damage, battler, points)
     end
     return self.name == "???" and 0 or math.random(0,1)-- + (battler.chara.name=="Susie" and 3 or 0) --Her affection for Susie is no more
+end
+
+function ring_noelle:onDefeat()
+    if not Game.battle.encounter.final_passed then
+        self.health = 500
+    end
 end
 
 return ring_noelle

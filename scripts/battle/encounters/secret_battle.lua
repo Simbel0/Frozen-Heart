@@ -277,6 +277,10 @@ function secret_battle:onBattleStart()
 end
 
 function secret_battle:getNextWaves()
+    if self.final and not self.final_passed then
+        self.noelle.selected_wave = "secret/final"
+        return {"secret/final"}
+    end
     if self.force_waves then
         local waves = {}
 
@@ -364,9 +368,21 @@ function secret_battle:skipPhase()
     end
 end
 
+function secret_battle:getEncounterText()
+    if self.final and not self.final_passed then
+        Assets.playSound("break2")
+        return "* The biggest snowstorm is coming!"
+    end
+    return super.getEncounterText(self)
+end
+
 function secret_battle:onTurnEnd()
     if not self.intro then
         self.turns = self.turns + 1
+    end
+
+    if self.last_section and self.noelle.health < (25*self.noelle.max_health)/100 then
+        self.final = true
     end
     
     if (self.queen and self.queen.shield) and self.queen.shield.health<=0 then
@@ -809,6 +825,24 @@ function secret_battle:getDialogueCutscene()
                 Game.battle.party[2]:resetSprite()
                 Game.battle.party[3]:resetSprite()
             end, true)
+        end
+    end
+    if self.last_section and self.noelle.health<self.noelle.max_health/2 and not self.noelle_final_dialogue then
+        self.noelle_final_dialogue = true
+        return function(cutscene)
+            cutscene:wait(0.5)
+            Assets.playSound("break2")
+            self.noelle:setAnimation({"battle/idle_conflict", 0.2, true})
+            self.noelle:shake(1, 0, 0)
+            Game.battle.timer:tween(0.5, self.noelle, {intend_x=self.noelle.intend_x+20}, "out-quint")
+            cutscene:wait(0.6)
+            cutscene:text("* ...", "crazy-snow_surprised", "noelle")
+            cutscene:text("* Wh-[wait:2]What's going on??", "trance-scared","noelle")
+            cutscene:text("* Where am I??", "trance-scared", "noelle")
+            cutscene:text("* I-[wait:2]It's so cold!", "trance_scared2", "noelle")
+            cutscene:text("* Noelle!!", "sad_frown", "susie")
+            cutscene:text("* Su-[wait:2]Susie?! Where are you??", "trance-scared", "noelle")
+            cutscene:text("* I-[wait:2]I can't see!", "trance_scared2", "noelle")
         end
     end
 end
