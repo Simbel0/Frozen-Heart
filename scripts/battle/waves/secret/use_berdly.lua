@@ -87,6 +87,7 @@ function berdly_dead:update()
                 })
                 self.ice_berdly.graphics.spin = math.rad(2)
                 wait(3)
+                member:resetSprite()
                 self.finished = true
 			end)
 		end
