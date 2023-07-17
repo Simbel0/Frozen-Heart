@@ -30,6 +30,14 @@ function secret_battle:init()
     --self.sneo:registerAct("Charge")
     --self.sneo.charge = 4
 
+    Utils.hook(Bullet, "getDamage", function(orig, og_self, soul)
+        local damage = orig(og_self, soul)
+        if self.last_section and damage<=0 then
+            return love.math.random(26, 28)*2
+        end
+        return damage
+    end)
+
     Utils.hook(Bullet, "onDamage", function(orig, og_self, soul)
         local damage = og_self:getDamage()
         if self.queen and self.queen.shield then
@@ -298,14 +306,17 @@ function secret_battle:getNextWaves()
 
         return waves
     end
-    if not self.berdly or not self.last_section then
+    print(not self.berdly, not self.last_section, (not self.berdly) and (not self.last_section))
+    if (not self.berdly) and (not self.last_section) then
+        print("duo attack not available")
         return super:getNextWaves(self)
     end
+    print("duo attack available")
 
-    local duo = Utils.random()>self.last_section and 0.2 or 0.3
+    local duo = Utils.random()>(self.last_section and 0.2 or 0.3)
     local waves = {}
     if not duo then
-        if self.last_section then
+        if not self.last_section then
             local enemy = Utils.pick(Game.battle:getActiveEnemies())
             local wave = enemy:selectWave()
             if wave then
@@ -322,7 +333,7 @@ function secret_battle:getNextWaves()
             "use_berdly"
         }
 
-        if self.last_section then
+        if not self.last_section then
             for _,enemy in ipairs(Game.battle:getActiveEnemies()) do
                 local wave = enemy:selectWave()
                 while Utils.containsValue(no_no_waves, wave:sub(8)) do
