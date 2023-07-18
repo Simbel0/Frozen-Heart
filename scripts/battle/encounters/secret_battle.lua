@@ -15,7 +15,7 @@ function secret_battle:init()
     self.intro_actions_boxes_depla = false
 
 
-    self.turns = 6
+    self.turns = 0
 
     self.default_xactions = false
 
@@ -33,7 +33,7 @@ function secret_battle:init()
     Utils.hook(Bullet, "getDamage", function(orig, og_self, soul)
         local damage = orig(og_self, soul)
         if self.last_section and damage<=0 then
-            return love.math.random(26, 28)*2
+            return love.math.random(26, 28)*1.5
         end
         return damage
     end)
@@ -372,10 +372,14 @@ function secret_battle:skipPhase()
         self.turns = 10
         self.berdly.mercy = 99
         Console:log("Advancing the fight to Spamton NEO's section.")
-    elseif self.sneo then
+    elseif self.sneo and not self.last_section then
         self.sneo.deal = 4
         self.sneo.charge = 4
         Console:log("Advancing the fight to the final section.")
+    else
+        self.noelle.health = 800
+        self.final = true
+        Console:log("Advancing the fight to the final wave.")
     end
 end
 
@@ -667,6 +671,85 @@ function secret_battle:getPartyPosition(index)
 end
 
 function secret_battle:getDialogueCutscene()
+    if self.noelle.health<=0 then
+        return function(cutscene)
+            cutscene:wait(0.75)
+            self.noelle.fly_anim = false
+            self.noelle:flash()
+            Assets.playSound("bump")
+            Assets.playSound("break2")
+            self.noelle:shake(2, 0, 0)
+            Game.battle.timer:tween(1, self.noelle, {x=self.noelle.x+20}, "out-cubic")
+            local wait_value = 1
+            Game.battle.music:fade(0, 1)
+            while wait_value>=0.1 do
+                cutscene:wait(wait_value)
+                self.noelle:shake(10-wait_value*5)
+                self.noelle:flash()
+                Assets.playSound("bump")
+                Assets.playSound("break2")
+                wait_value = wait_value - 0.1*DTMULT
+            end
+            Assets.playSound("break2")
+            Assets.playSound("break2", 1, 1.5)
+            Assets.playSound("mus_sfx_abreak")
+            self.noelle:setSprite("magical_collapse")
+            local wind = Assets.playSound("wind_blow", 1, 1.1)
+            Game.fader:fadeIn(nil, {speed=3, alpha=1, color={1, 1, 1}})
+            local gradient = Sprite("effects/icespell/gradient")
+            gradient:setWrap(true, false)
+            gradient.layer = BATTLE_LAYERS["top"]
+            gradient:setScale(2)
+            gradient.alpha = 0.5
+            Game.battle:addChild(gradient)
+            local snow_effect = ParticleEmitter(self.noelle.sprite.width/2, self.noelle.sprite.height/2, 0, 0, {
+                layer = self.noelle.layer-1,
+                every = 1/60,
+                amount = 8,
+                texture = "lonelysnow",
+                scale = 1,
+                remove_after = 5,
+
+                physics = {
+                    speed = 24
+                },
+                angle = {math.rad(0), math.rad(380)}
+            })
+            self.noelle:addChild(snow_effect)
+            for i,battler in ipairs(Game.battle.party) do
+                battler:setAnimation("battle/defend_ready")
+                Game.battle.timer:tween(1, battler, {x=battler.x-Utils.random(30, 50)}, "out-cubic")
+            end
+            Game.battle.timer:tween(1, self.queen, {x=-680}, "out-cubic")
+            Game.battle.timer:tween(1, self.sneo, {x=-680, rotation=math.rad(-45)}, "out-cubic")
+            Game.stage:shake(4, 0, 0)
+            cutscene:wait(7.5)
+            Game.stage:stopShake()
+            Game.fader:fadeIn(nil, {alpha=1, color={1, 1, 1}})
+            Assets.playSound("mus_sfx_abreak")
+            snow_effect:remove()
+            gradient:remove()
+            self.ice_fountain:remove()
+            self.ice_floor:remove()
+            self.true_fountain.visible = true
+            self.fountain_floor.visible = true
+            Game.battle.timer:everyInstant(0.2, function()
+                local vol = wind:getVolume()-0.1*DTMULT
+                print(vol)
+                wind:setVolume(vol < 0 and 0 or vol)
+                if vol<=0 then return false end
+            end)
+            cutscene:wait(2)
+            Game.battle.timer:tween(1, self.noelle, {y=300}, "in-quint", function()
+                Assets.playSound("noise")
+                self.noelle:setSprite("collapsed")
+            end)
+            cutscene:wait(2.5)
+            cutscene:after(function()
+                Game.battle:setState("VICTORY")
+            end, true)
+        end
+    end
     if not self.intro and not self.dialogue_cutscene then
         self.dialogue_cutscene = true
         return function(cutscene)
@@ -857,5 +940,8 @@ function secret_battle:getDialogueCutscene()
         end
     end
 end
+
+function secret_battle:getVictoryMoney(money) return 0 end
+function secret_battle:getVictoryXP(xp) return 1 end
 
 return secret_battle

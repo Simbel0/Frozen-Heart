@@ -21,6 +21,9 @@ function ring_noelle:init()
     -- Enemy defense (usually 0)
     self.defense = -10
 
+    self.money = 0
+    self.experience = 1
+
     self.disable_mercy = true
 
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
