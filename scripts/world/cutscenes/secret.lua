@@ -580,5 +580,298 @@ return {
 
             cutscene:fadeIn(1)
         end})
+        cutscene:gotoCutscene("secret.ending")
+    end,
+    ending = function(cutscene)
+        if Game.world.map.id ~= "fountain_room" then
+            Game:addPartyMember("kris", 1)
+            Game:movePartyMember("susie", 2)
+            Game:addPartyMember("ralsei", 3)
+            Game:removePartyMember("noelle")
+
+            Game:setFlag("plot", 10)
+            cutscene:wait(Game.world:loadMap("fountain_room"))
+            cutscene:detachCamera()
+            cutscene:detachFollowers()
+
+            cutscene:getCharacter("kris"):setPosition(150-190/2, 280)
+            cutscene:getCharacter("susie"):setPosition(155, 280)
+            cutscene:getCharacter("ralsei"):setPosition(55, 340)
+            cutscene:look(cutscene:getCharacter("kris"), "right")
+            cutscene:look(cutscene:getCharacter("susie"), "right")
+            cutscene:look(cutscene:getCharacter("ralsei"), "right")
+        end
+        Game.world.music:stop()
+
+        local kris = cutscene:getCharacter("kris")
+        local susie = cutscene:getCharacter("susie")
+        local ralsei = cutscene:getCharacter("ralsei")
+        local sneo = cutscene:spawnNPC("spamtonneo", -500, 360)
+        local noelle = cutscene:spawnNPC("noelle", 520, 300)
+        noelle:setSprite("collapsed")
+        sneo.flip_x = true
+        sneo.sprite:setStringCount(6)
+        sneo.sprite:getPart("wing_l"):setSprite(sneo.actor.path.."/wingl_f")
+        sneo.sprite:getPart("wing_r"):setSprite(sneo.actor.path.."/wingr_f")
+        sneo.sprite:getPart("arm_l"):setSprite(sneo.actor.path.."/arml_f")
+        sneo.sprite:getPart("arm_r"):setSprite(sneo.actor.path.."/armr_f")
+        sneo.sprite:getPart("leg_l"):setSprite(sneo.actor.path.."/legl_f")
+        sneo.sprite:getPart("leg_r"):setSprite(sneo.actor.path.."/legr_f")
+        sneo.sprite:getPart("head"):setSprite(sneo.actor.path.."/head_f")
+        sneo.sprite:getPart("body"):setSprite(sneo.actor.path.."/body_f")
+
+        sneo.sprite:getPart("wing_l").swing_speed = 0
+        sneo.sprite:getPart("wing_r").swing_speed = 0
+        sneo.sprite:getPart("arm_l").swing_speed = 0.5
+        sneo.sprite:getPart("arm_r").swing_speed = 0
+        sneo.sprite:getPart("leg_l").swing_speed = 1
+        sneo.sprite:getPart("leg_r").swing_speed = 1.5
+        sneo.sprite:getPart("head").swing_speed = 0
+        sneo.sprite:getPart("body").swing_speed = 0
+        for i,v in ipairs(sneo.sprite.bg_strings) do
+            v.visible = false
+        end
+        local queen = cutscene:spawnNPC("queen", -450, 250)
+        queen:setSprite("chair_feelgood")
+        queen:play(1/8)
+        local queen_base_y = queen.y
+        cutscene:during(function()
+            if queen then
+                queen.y = queen_base_y + math.sin(Kristal.getTime()*4)*10
+            end
+        end)
+
+        kris:resetSprite()
+        susie:resetSprite()
+        ralsei:resetSprite()
+
+        cutscene:wait(2)
+        --cutscene:setTextboxTop(true)
+        cutscene:text("* Did...[wait:3] Did we do it?", "sus_nervous", "susie")
+        cutscene:text("* I think so, Susie...", "smile_side", "ralsei")
+
+        cutscene:wait(1)
+
+        Assets.playSound("ui_cancel")
+        Assets.playSound("bell")
+        susie:setSprite("pose")
+        cutscene:text("* Hell yeah![wait:2] The $!$! Squad saved the day![react:1]", "closed_grin", "susie", {reactions={
+            {"...", "right", "bottom", "owo", "ralsei"}
+        }})
+        susie:resetSprite()
+        cutscene:look(kris, "left")
+        cutscene:look(susie, "left")
+        cutscene:look(ralsei, "left")
+        Game.world.camera.keep_in_bounds = false
+        local camera_x = Game.world.camera.x
+        cutscene:panTo(-25, Game.world.camera.y)
+        Game.world.timer:tween(1.5, queen, {x=-105})
+        cutscene:text("* Congratulations Lightners You Have Indeed: Won", "smile", "queen")
+        cutscene:text("* I'd Cue The Fanfare But I Don't Have Any For Winning A Battle", "true", "queen")
+        queen.flip_x = true
+        print(queen.x, queen.sprite.width)
+        queen.x = queen.x + queen.sprite.width*4
+        print(queen.x, queen.sprite.width)
+        local sneo_moov = Game.world.timer:tween(1.5, sneo, {x=-235}, nil)
+        cutscene:text("* DOES THAT MEAN I CAN HAVE THE [Mansion] NOW??", nil, "spamtonneo")
+        cutscene:text("* No", "lmao", "queen")
+        cutscene:text("* YOU F[wait:5][ilthy Weed Invading Your Garden]!!", nil, "spamtonneo")
+        cutscene:text("* While I'm Pretty Sure You Have Done A Lot Of Bad Stuff Today", "smile_side_l", "queen")
+        cutscene:text("* You Helped Us Saving Noelle So Maybe You Deserve A Little Thing", "lying", "queen")
+        cutscene:text("* A SURPRISE DEAL??[wait:3] I'M LISTENING!", nil, "spamtonneo")
+        cutscene:text("* Let's Speak Of That Elsewhere So Kris & Co Can Do Their Stuff", "neutral", "queen")
+        cutscene:text("* AHAHAHAHA!![wait:2] THANKS KRIS!![wait:2] I'M FINALLY", nil, "spamtonneo")
+        cutscene:text("* I'M FINALLY GONNA BE A [[BIG SHOT]] AGAIN!!", nil, "spamtonneo")
+        Game.world.timer:cancel(sneo_moov)
+        sneo.sprite:setAllPartsShaking(1)
+        Game.world.timer:tween(1.5, sneo, {x=-450})
+        local laugh = Assets.playSound("snd_sneo_laugh_long")
+        cutscene:wait(function() return not laugh:isPlaying() end)
+        queen.flip_x = false
+        queen.x = queen.x - queen.sprite.width*4
+        cutscene:text("* So Uh Yeah", "smile_side_r", "queen")
+        cutscene:text("* Do Your Stuff While I [wait:2]\"Kick\"[wait:2] His [wait:2]\"Big Shots\"[wait:2] To The Recycle Bin", "lmao", "queen")
+        Game.world.timer:tween(1, queen, {x=-460})
+        queen:setAnimation({"chair_ohoho", 1/8, true})
+        local laugh = Assets.playSound("queen/laugh")
+        cutscene:wait(function() return not laugh:isPlaying() end)
+        --cutscene:panTo(SCREEN_HEIGHT/2, Game.world.camera.y)
+
+        cutscene:wait(1)
+
+        cutscene:look(kris, "right")
+        cutscene:look(ralsei, "right")
+
+        cutscene:text("* So I guess it's over,[wait:2] right?", "neutral_side", "susie")
+        cutscene:look(susie, "right")
+        cutscene:text("* We just need to get Noelle over there and we'll be good to go!", "closed_grin", "susie")
+
+        cutscene:wait(cutscene:panTo(camera_x, Game.world.camera.y))
+
+        cutscene:wait(1)
+
+        cutscene:text("* Noelle?", "neutral_side", "susie")
+        cutscene:text("* Did we knocked her THAT hard??", "nervous_side", "susie")
+        cutscene:text("* Oh! Don't worry, Susie!", "surprise_smile", "ralsei")
+        cutscene:text("* Nothing a healing spell can't solve.", "wink", "ralsei")
+
+        cutscene:wait(cutscene:walkTo(ralsei, noelle.x - 100, noelle.y, 2))
+
+        cutscene:wait(0.5)
+
+        ralsei:setAnimation({"battle/spell", 1/15, false, next="walk"})
+        Assets.playSound("spellcast")
+        cutscene:wait(0.5)
+        noelle:flash()
+
+        cutscene:wait(2)
+
+        cutscene:text("* ...", "surprise_smile", "ralsei")
+        cutscene:text("* Well that's, uhm...", "surprise_neutral_side", "ralsei")
+        cutscene:text("* Weird.", "small_smile_side", "ralsei")
+        cutscene:text("* Ralsei..? You're sure everything's fine?", "nervous", "susie")
+        cutscene:text("* Of course... Let me try again.", "pleased", "ralsei")
+
+        ralsei:setAnimation({"battle/spell", 1/15, false, next="walk"})
+        Assets.playSound("spellcast")
+        cutscene:wait(0.5)
+        noelle:flash()
+
+        cutscene:wait(2)
+
+        cutscene:text("* (Why does it feel like...)", "surprise_neutral_side", "ralsei")
+        cutscene:wait(cutscene:walkTo(ralsei, noelle.x+5, noelle.y-5))
+        Assets.playSound("noise")
+        ralsei:setSprite("landed_1")
+
+        cutscene:wait(3)
+
+        cutscene:walkTo(kris, kris.x + 100, kris.y)
+        cutscene:wait(cutscene:walkTo(susie, susie.x + 100, susie.y))
+
+        cutscene:text("* ...[wait:2]Ralsei?", "nervous_side", "susie")
+
+        cutscene:wait(1)
+
+        ralsei:setSprite("landed_2")
+        cutscene:text("* Uhm...[wait:2] It may be a dumb question but you two know best...", "small_smile_side", "ralsei")
+        cutscene:text("* Can monsters,[wait:2] uhm..[wait:3] Not breathe?", "smile_side", "ralsei")
+
+        cutscene:text("* Uh?[wait:2] Well,[wait:2] I mean...[wait:2] I think some don't need to since they're not--", "nervous_side", "susie")
+        cutscene:text("* Wait,[wait:5] WHY[wait:2] are you asking??", "sad", "susie")
+        local overlay = Sprite("overlay")
+        overlay:setLayer(WORLD_LAYERS["below_textbox"])
+        overlay.alpha = 0
+        Game.world:addChild(overlay)
+        local pre_flashing = true
+        cutscene:during(function()
+            if pre_flashing and overlay.alpha < 1 then
+                overlay.alpha = overlay.alpha + 0.1
+                if overlay.alpha >= 1 then
+                    pre_flashing = false
+                end
+            else
+                overlay.alpha = Utils.random(0.5, 1)
+            end
+        end)
+        Game.world.music:play("heartbeat")
+        Game.stage:shake(0.1, -0.1, 0, 1/6)
+        cutscene:text("* ...", "frown_b", "ralsei")
+        cutscene:text("* Susie,[wait:3] I...", "frown_b", "ralsei")
+
+        cutscene:panTo(noelle)
+        cutscene:walkTo(kris, ralsei.x-65, ralsei.y)
+        local wait = cutscene:walkTo(susie, ralsei.x, ralsei.y)
+        cutscene:wait(0.5)
+        ralsei:resetSprite()
+        cutscene:walkTo(ralsei, ralsei.x+80, ralsei.y, 0.5, "left", true)
+        cutscene:wait(wait)
+        susie:setSprite("landed_1")
+
+        cutscene:text("* NOELLE?!"," sad_frown", "susie")
+        Game.world.fader.alpha = 0.1
+        cutscene:text("* CAN YOU HEAR US??", "sad_frown", "susie")
+        Game.world.fader.alpha = 0.25
+        cutscene:text("* There's no way we...", "sad", "susie")
+        Game.world.fader.alpha = 0.4
+        cutscene:text("* Maybe... That ring...", "pensive", "ralsei")
+        Game.world.fader.alpha = 0.55
+        cutscene:text("* No way...", "sad", "susie")
+        Game.world.fader.alpha = 0.7
+        cutscene:text("* Noelle!!", "teeth", "susie")
+        Game.world.fader.alpha = 0.85
+        cutscene:text("* Come back to us!!", "sad_frown", "susie")
+        Game.world.fader.alpha = 1
+
+        cutscene:wait(2)
+
+        cutscene:text("* Come on!!", nil, "susie")
+
+        Game.world.music:fade(0, 1.5)
+        Game.stage:stopShake()
+
+        cutscene:wait(3)
+
+        cutscene:text("[voice:n]* (Come on...)")
+
+        cutscene:wait(1)
+
+        cutscene:text("[voice:n]* (Where am I...)")
+
+        cutscene:wait(1)
+
+        cutscene:text("[voice:n]* (It's so bright... Too bright...)")
+
+        cutscene:wait(1)
+
+        cutscene:text("[voice:n]* (Why can't I feel anything...?)")
+
+        cutscene:wait(1)
+
+        cutscene:text("[voice:n]* (Susie...[wait:10] Kris...[wait:10] Dad...[wait:10] Dess...)")
+
+        Game:setPartyMembers("noelle")
+        Game.party[1].spells = {}
+        cutscene:loadMap("end")
+        local overlay = Sprite("overlay")
+        overlay:setLayer(WORLD_LAYERS["below_textbox"])
+        overlay.alpha = 1
+        Game.world:addChild(overlay)
+        Game.world.music:play("tv_noise", 0)
+        local noelle = cutscene:getCharacter("noelle")
+        noelle:setPosition(300, 400)
+        Game.world.camera.keep_in_bounds = true
+        noelle.actor.path = "party/noelle/dark_b"
+        noelle:setSprite("walk_kill")
+        Game.world.fader:fadeIn(nil, {speed=10})
+        Game.world.music:fade(1, 5)
+        cutscene:during(function()
+            if not overlay then return false end
+            overlay:setScreenPos(0, 0)
+        end, true)
+        cutscene:wait(cutscene:walkTo(noelle, 900, 400, 20))
+        cutscene:wait(cutscene:panTo(941+(117/2)-20, Game.world.camera.y))
+        cutscene:wait(1)
+        cutscene:look(noelle, "up")
+        cutscene:wait(2)
+        Game.world.fader.alpha = 1
+        overlay:remove()
+        Game.world.music:stop()
+
+        cutscene:wait(3)
+
+        local text = DialogueText("[noskip][speed:0.3][voice:n]* (I don't want to let go.)", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
+        text.width, text.height = text:getTextWidth(), text:getTextHeight()
+        text:setLayer(WORLD_LAYERS["top"])
+        Game.world:addChild(text)
+        text:setScreenPos((SCREEN_WIDTH/2)-text.width/2, SCREEN_HEIGHT/2)
+
+        cutscene:wait(function()
+            return text.done
+        end)
+        text:remove()
+        cutscene:wait(2)
+        Game.world.fader:fadeIn(nil, {speed=2})
+        cutscene:startEncounter("end", false)
     end
 }

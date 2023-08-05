@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="34" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#ffffff" nextlayerid="5" nextobjectid="1">
+ <editorsettings>
+  <export target="end.lua" format="lua"/>
+ </editorsettings>
+ <imagelayer id="2" name="back_mountains" offsetx="642.333" offsety="89.6667" parallaxx="0.9" repeatx="1">
+  <image source="../../../assets/sprites/back_mountains.png" width="732" height="120"/>
+ </imagelayer>
+ <imagelayer id="3" name="back_back_mountains" opacity="0.7" tintcolor="#ff55ff" offsetx="586.333" offsety="86.6667" parallaxx="1.3" repeatx="1">
+  <image source="../../../assets/sprites/back_mountains.png" width="732" height="120"/>
+ </imagelayer>
+ <imagelayer id="4" name="delta rune" offsetx="941.333" offsety="16.6667">
+  <image source="../../../assets/sprites/delta_rune.png" width="117" height="85"/>
+ </imagelayer>
+</map>

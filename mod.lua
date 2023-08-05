@@ -166,6 +166,13 @@ function Mod:getKristalID(id, type)
     return self.kristal_ids[type][id]
 end
 
+function Mod:getActionButtons(battler, buttons)
+    if battler.chara.id == "noelle" and Game.battle.encounter.id == "end" then
+        return {"magic", "defend"}
+    end
+    return buttons
+end
+
 function Mod:registerDebugOptions(d)
     d:registerMenu("frozen_heart_main", "~ FROZEN HEART DEBUG ~")
     d:registerMenu("frozen_heart_ending", "~ SETTING ENDING ~")
