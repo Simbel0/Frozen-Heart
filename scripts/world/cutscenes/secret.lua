@@ -401,6 +401,8 @@ return {
         cutscene:panTo(-25, Game.world.camera.y)
         cutscene:wait(cutscene:walkTo(noelle, kris.x-50, kris.y))
 
+        sneo:remove()
+
         cutscene:setTextboxTop(true)
 
         cutscene:text("* I am here, Kris.", "crazy-closed_eyes", "noelle")
@@ -711,7 +713,7 @@ return {
         cutscene:wait(1)
 
         cutscene:text("* Noelle?", "neutral_side", "susie")
-        cutscene:text("* Did we knocked her THAT hard??", "nervous_side", "susie")
+        cutscene:text("* Did we knock her THAT hard??", "nervous_side", "susie")
         cutscene:text("* Oh! Don't worry, Susie!", "surprise_smile", "ralsei")
         cutscene:text("* Nothing a healing spell can't solve.", "wink", "ralsei")
 
@@ -754,7 +756,7 @@ return {
         cutscene:wait(1)
 
         ralsei:setSprite("landed_2")
-        cutscene:text("* Uhm...[wait:2] It may be a dumb question but you two know best...", "small_smile_side", "ralsei")
+        cutscene:text("* Uhm...[wait:2] It may be a stupid question but you two know best...", "small_smile_side", "ralsei")
         cutscene:text("* Can monsters,[wait:2] uhm..[wait:3] Not breathe?", "smile_side", "ralsei")
 
         cutscene:text("* Uh?[wait:2] Well,[wait:2] I mean...[wait:2] I think some don't need to since they're not--", "nervous_side", "susie")
@@ -787,6 +789,7 @@ return {
         cutscene:walkTo(ralsei, ralsei.x+80, ralsei.y, 0.5, "left", true)
         cutscene:wait(wait)
         susie:setSprite("landed_1")
+        Game.world.fader.fade_color = {0, 0, 0}
 
         cutscene:text("* NOELLE?!"," sad_frown", "susie")
         Game.world.fader.alpha = 0.1
@@ -809,6 +812,7 @@ return {
 
         Game.world.music:fade(0, 1.5)
         Game.stage:stopShake()
+        cutscene:setTextboxTop(false)
 
         cutscene:wait(3)
 
@@ -832,7 +836,10 @@ return {
 
         Game:setPartyMembers("noelle")
         Game.party[1].spells = {}
+        Game.party[1].health = Game.party[1].stats.health
+
         cutscene:loadMap("end")
+
         local overlay = Sprite("overlay")
         overlay:setLayer(WORLD_LAYERS["below_textbox"])
         overlay.alpha = 1
@@ -871,7 +878,10 @@ return {
         end)
         text:remove()
         cutscene:wait(2)
-        Game.world.fader:fadeIn(nil, {speed=2})
+        Game.world.fader.alpha = 0
+        Game.fader.alpha = 1
+        Game.fader.fade_color = {0, 0, 0}
+        Game.fader:fadeIn(nil, {speed=2})
         cutscene:startEncounter("end", false)
     end
 }
