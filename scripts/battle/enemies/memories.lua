@@ -115,11 +115,12 @@ function Memories:onAct(battler, name)
             self:setSprite("dummy")
             return {
                 "* The memories are complete.",
-                "* She may not cherish them, but she is grateful to Spamton for his \"help\"."
+                "* She may not cherish them,[wait:2] but she is grateful to Spamton for his \"help\"."
             }
         end
         --Kris
         if self.remember == 5 then
+            self.wave_override = path.."kris_1"
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
@@ -128,11 +129,13 @@ function Memories:onAct(battler, name)
             end)
             return
         elseif self.remember == 6 then
+            self.wave_override = path.."kris_2"
             return {
                 "* Noelle asks her friend about their pranks.",
                 "* The friend laughs,[wait:2] and Noelle can't help but laugh too,[wait:2] now."
             }
         elseif self.remember == 7 then
+            self.wave_override = path.."kris_3"
             return {
                 "* Noelle ask her friend about everything they've done.",
                 "* The friend wished it didn't happen,[wait:2] but Noelle forgives them."
@@ -141,7 +144,7 @@ function Memories:onAct(battler, name)
             self:setSprite("dummy")
             return {
                 "* The memories are complete.",
-                "* Even though their relationship has degraded, she will always consider Kris a great friend."
+                "* Even though their relationship has degraded,[wait:2] she will always consider Kris a great friend."
             }
         end
         --Berdly
