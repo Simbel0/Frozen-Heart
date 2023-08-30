@@ -149,22 +149,25 @@ function Memories:onAct(battler, name)
         end
         --Berdly
         if self.remember == 9 then
+            self.wave_override = path.."berdly_1"
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("berdly")
-                cutscene:text("* Suddenly,[wait:5] she remembers a scam willing to help her.")
+                cutscene:text("* Suddenly,[wait:5] she remembers her annoying friend.")
             end)
             return
         elseif self.remember == 10 then
+            self.wave_override = path.."berdly_2"
             return {
-                "* Noelle asks the man about something she's searching for.",
-                "* An ad for a spyware pops up."
+                "* Noelle asks her friend his hobbies.",
+                "* She starts to regret it as he just doesn't stop talking."
             }
         elseif self.remember == 11 then
+            self.wave_override = path.."berdly_3"
             return {
-                "* Noelle asks the man about his pet.",
-                "* Upon seeing it, Noelle is amused and thanks the man."
+                "* Noelle asks her friend about why he's obsessed with being smart.",
+                "* Upon hearing his answer, Noelle remembers this day."
             }
         elseif self.remember == 12 then
             return {
@@ -248,8 +251,9 @@ function Memories:onAct(battler, name)
             }
         end
         --Dess
-        if self.remember == 1 then
+        if self.remember == 25 then
             Game.battle:startActCutscene(function(cutscene)
+                self.encounter.ending = true
                 cutscene:text("* [speed:0.1].....")
                 self:setSprite("dess")
                 cutscene:text("* [speed:0.3]Maybe...[wait:3] Maybe everyting is going to be okay.")
