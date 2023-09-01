@@ -167,37 +167,40 @@ function Memories:onAct(battler, name)
             self.wave_override = path.."berdly_3"
             return {
                 "* Noelle asks her friend about why he's obsessed with being smart.",
-                "* Upon hearing his answer, Noelle remembers this day."
+                "* Upon hearing his answer,[wait:2] Noelle remembers this day."
             }
         elseif self.remember == 12 then
             return {
                 "* The memories are complete.",
-                "* She may not cherish them, but she is grateful to Spamton for his \"help\"."
+                "* He messed up sometimes,[wait:2] but Berdly will always be a great friend to her."
             }
         end
         --Queen
         if self.remember == 13 then
+            self.wave_override = path.."queen_1"
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("queen")
-                cutscene:text("* Suddenly,[wait:5] she remembers a scam willing to help her.")
+                cutscene:text("* Suddenly,[wait:5] she remembers the ruler that kidnapped her.")
             end)
             return
         elseif self.remember == 14 then
+            self.wave_override = path.."queen_2"
             return {
-                "* Noelle asks the man about something she's searching for.",
-                "* An ad for a spyware pops up."
+                "* Noelle asks the ruler for why she did all of that.",
+                "* Her respose is unclear, but Noelle feels that she had good intentions."
             }
         elseif self.remember == 15 then
+            self.wave_override = path.."queen_3"
             return {
-                "* Noelle asks the man about his pet.",
-                "* Upon seeing it, Noelle is amused and thanks the man."
+                "* Noelle asks the ruler what she knows about her.",
+                "* The ruler goes into deep details about Noelle's troubles."
             }
         elseif self.remember == 16 then
             return {
                 "* The memories are complete.",
-                "* She may not cherish them, but she is grateful to Spamton for his \"help\"."
+                "* Despite being scared of her, she feels like Queen was willing to help her somehow."
             }
         end
         --Rudy
@@ -206,23 +209,23 @@ function Memories:onAct(battler, name)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("rudy")
-                cutscene:text("* Suddenly,[wait:5] she remembers a scam willing to help her.")
+                cutscene:text("* Suddenly,[wait:5] she remembers her ill father.")
             end)
             return
         elseif self.remember == 18 then
             return {
-                "* Noelle asks the man about something she's searching for.",
-                "* An ad for a spyware pops up."
+                "* Noelle asks her father about a life without him.",
+                "* He only smiles and laughs, claiming it's not gonna be his time anytime soon."
             }
         elseif self.remember == 19 then
             return {
-                "* Noelle asks the man about his pet.",
-                "* Upon seeing it, Noelle is amused and thanks the man."
+                "* Noelle asks her father about a life without her.",
+                "* His tone becomes more grim and sad."
             }
         elseif self.remember == 20 then
             return {
                 "* The memories are complete.",
-                "* She may not cherish them, but she is grateful to Spamton for his \"help\"."
+                "* She will always be thankful to Rudy for being a great and optimistic father."
             }
         end
         --Susie
@@ -231,7 +234,7 @@ function Memories:onAct(battler, name)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("susie")
-                cutscene:text("* Suddenly,[wait:5] she remembers a scam willing to help her.")
+                cutscene:text("* Suddenly,[wait:5] she remembers the bully she admires from afar.")
             end)
             return
         elseif self.remember == 22 then
