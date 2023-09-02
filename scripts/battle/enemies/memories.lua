@@ -205,6 +205,7 @@ function Memories:onAct(battler, name)
         end
         --Rudy
         if self.remember == 17 then
+            self.wave_override = path.."rudy_1"
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
@@ -213,11 +214,13 @@ function Memories:onAct(battler, name)
             end)
             return
         elseif self.remember == 18 then
+            self.wave_override = path.."rudy_2"
             return {
                 "* Noelle asks her father about a life without him.",
                 "* He only smiles and laughs, claiming it's not gonna be his time anytime soon."
             }
         elseif self.remember == 19 then
+            self.wave_override = path.."rudy_3"
             return {
                 "* Noelle asks her father about a life without her.",
                 "* His tone becomes more grim and sad."
@@ -257,9 +260,9 @@ function Memories:onAct(battler, name)
         if self.remember == 25 then
             Game.battle:startActCutscene(function(cutscene)
                 self.encounter.ending = true
-                cutscene:text("* [speed:0.1].....")
+                cutscene:text("[noskip]* [speed:0.1].....")
                 self:setSprite("dess")
-                cutscene:text("* [speed:0.3]Maybe...[wait:3] Maybe everyting is going to be okay.")
+                cutscene:text("* [speed:0.3]Maybe...[wait:5]\n* Maybe everyting is going to be okay.")
             end)
             return
         end
