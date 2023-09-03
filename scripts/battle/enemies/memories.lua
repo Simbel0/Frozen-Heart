@@ -13,6 +13,10 @@ function Memories:init()
 
     self.actor.offsets["spamton"] = {0, 10}
     self.actor.offsets["kris"] = {-8, 6}
+    self.actor.offsets["berdly"] = {-26, 3}
+    self.actor.offsets["queen"] = {-21, -41}
+    self.actor.offsets["rudy"] = {3, -19}
+    self.actor.offsets["susie"] = {-4, 0}
 
     self.rect_x, self.rect_y = 0, 0
     self.rect_offsets = {
@@ -29,7 +33,11 @@ function Memories:init()
     end)
     self.rect_pos = {
         spamton = {6, 14},
-        kris = {8, 12}
+        kris = {8, 12},
+        berdly = {0, 9},
+        queen = {13, -24},
+        rudy = {5, -7},
+        susie = {2, 7}
     }
 
     -- Enemy health
@@ -138,7 +146,7 @@ function Memories:onAct(battler, name)
             self.wave_override = path.."kris_3"
             return {
                 "* Noelle ask her friend about everything they've done.",
-                "* The friend wished it didn't happen,[wait:2] but Noelle forgives them."
+                "* The friend wished it didn't happen.[wait:3] Noelle understands and forgives them."
             }
         elseif self.remember == 8 then
             self:setSprite("dummy")
@@ -154,22 +162,23 @@ function Memories:onAct(battler, name)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("berdly")
-                cutscene:text("* Suddenly,[wait:5] she remembers her annoying friend.")
+                cutscene:text("* Suddenly,[wait:5] she remembers her school partner.")
             end)
             return
         elseif self.remember == 10 then
             self.wave_override = path.."berdly_2"
             return {
-                "* Noelle asks her friend his hobbies.",
+                "* Noelle asks her partner about his hobbies.",
                 "* She starts to regret it as he just doesn't stop talking."
             }
         elseif self.remember == 11 then
             self.wave_override = path.."berdly_3"
             return {
-                "* Noelle asks her friend about why he's obsessed with being smart.",
+                "* Noelle asks her partner about why he's obsessed with being smart.",
                 "* Upon hearing his answer,[wait:2] Noelle remembers this day."
             }
         elseif self.remember == 12 then
+            self:setSprite("dummy")
             return {
                 "* The memories are complete.",
                 "* He messed up sometimes,[wait:2] but Berdly will always be a great friend to her."
@@ -189,7 +198,7 @@ function Memories:onAct(battler, name)
             self.wave_override = path.."queen_2"
             return {
                 "* Noelle asks the ruler for why she did all of that.",
-                "* Her respose is unclear, but Noelle feels that she had good intentions."
+                "* Her respose is unclear,[wait:2] but Noelle feels that she had good intentions."
             }
         elseif self.remember == 15 then
             self.wave_override = path.."queen_3"
@@ -198,9 +207,10 @@ function Memories:onAct(battler, name)
                 "* The ruler goes into deep details about Noelle's troubles."
             }
         elseif self.remember == 16 then
+            self:setSprite("dummy")
             return {
                 "* The memories are complete.",
-                "* Despite being scared of her, she feels like Queen was willing to help her somehow."
+                "* Despite being scared of her,[wait:2] she feels like Queen was willing to help her somehow."
             }
         end
         --Rudy
@@ -217,7 +227,7 @@ function Memories:onAct(battler, name)
             self.wave_override = path.."rudy_2"
             return {
                 "* Noelle asks her father about a life without him.",
-                "* He only smiles and laughs, claiming it's not gonna be his time anytime soon."
+                "* He only smiles and laughs,[wait:2] claiming it's not gonna be his time anytime soon."
             }
         elseif self.remember == 19 then
             self.wave_override = path.."rudy_3"
@@ -226,6 +236,7 @@ function Memories:onAct(battler, name)
                 "* His tone becomes more grim and sad."
             }
         elseif self.remember == 20 then
+            self:setSprite("dummy")
             return {
                 "* The memories are complete.",
                 "* She will always be thankful to Rudy for being a great and optimistic father."
@@ -254,6 +265,7 @@ function Memories:onAct(battler, name)
                 "* To Noelle's joy,[wait:2] the bully answers positively."
             }
         elseif self.remember == 24 then
+            self:setSprite("dummy")
             return {
                 "* The memories are complete.",
                 "* She regrets not being able to be closer to Susie,[wait:2] but she is glad to have met her."
@@ -263,9 +275,26 @@ function Memories:onAct(battler, name)
         if self.remember == 25 then
             Game.battle:startActCutscene(function(cutscene)
                 self.encounter.ending = true
-                cutscene:text("[noskip]* [speed:0.1].....")
+                local wait, text = cutscene:text("[noskip]* [speed:0.1]...............", {wait=false})
+                cutscene:wait(function()
+                    print(wait(), Game.battle.party[1].chara:getHealth() <= 100)
+                    if Game.battle.party[1].chara:getHealth() <= 100 then
+                        return true
+                    end
+                    return wait()
+                end)
                 self:setSprite("dess")
-                cutscene:text("* [speed:0.3]Maybe...[wait:5]\n* Maybe everyting is going to be okay.")
+                cutscene:text("* [speed:0.1]Maybe...[wait:5]\n* Maybe everything is going to be okay.", {advance=false, wait=false, skip=false})
+                cutscene:wait(function()
+                    return self.encounter.alpha_fx.alpha <= 0.1
+                end)
+                cutscene:wait(2)
+                Game.battle.battle_ui.encounter_text.text:setText("")
+                cutscene:wait(cutscene:fadeOut(5, {color={0, 0, 0}}))
+                cutscene:wait(3)
+                Assets.playSound("monsterdust")
+                cutscene:wait(3)
+                --Game.battle:returnToWorld()
             end)
             return
         end

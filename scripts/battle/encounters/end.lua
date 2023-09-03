@@ -20,6 +20,12 @@ function End:init()
     Game.world.camera.x = 995
 end
 
+function End:onBattleStart()
+    self.alpha_fx = AlphaFX(1)
+    Game.battle.party[1]:addFX(self.alpha_fx)
+    Game.battle.battle_ui.action_boxes[1]:addFX(self.alpha_fx)
+end
+
 function End:update()
     if self.ending then
         local battler = Game.battle.party[1]
@@ -30,6 +36,10 @@ function End:update()
 
             if battler.chara:getHealth() >= 0 then
                 battler.chara:setHealth(battler.chara:getHealth() - 1)
+            end
+            if battler.chara:getHealth() == 0 then
+                Game.battle.timer:tween(3, self.alpha_fx, {alpha=0})
+                Game.battle.music:fade(0, 3)
             end
         end
     end

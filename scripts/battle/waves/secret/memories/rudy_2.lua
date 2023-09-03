@@ -30,7 +30,7 @@ function Stay_Around:onStart()
         end
         self.bullets[r].go_go = true
         self.count = self.count + 1
-        self.bullets[r].physics.speed = 10
+        self.bullets[r].physics.speed = -10
     end)
 end
 
