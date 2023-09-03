@@ -233,6 +233,7 @@ function Memories:onAct(battler, name)
         end
         --Susie
         if self.remember == 21 then
+            self.wave_override = path.."susie_1"
             Game.battle:startActCutscene(function(cutscene)
                 cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
@@ -241,19 +242,21 @@ function Memories:onAct(battler, name)
             end)
             return
         elseif self.remember == 22 then
+            self.wave_override = path.."susie_2"
             return {
-                "* Noelle asks the man about something she's searching for.",
-                "* An ad for a spyware pops up."
+                "* Noelle asks the bully why she ignores her despite her attempts.",
+                "* The answer is muffled and feels fake."
             }
         elseif self.remember == 23 then
+            self.wave_override = path.."susie_3"
             return {
-                "* Noelle asks the man about his pet.",
-                "* Upon seeing it, Noelle is amused and thanks the man."
+                "* Noelle asks the bully if she want to go on the ferris wheel with her.",
+                "* To Noelle's joy,[wait:2] the bully answers positively."
             }
         elseif self.remember == 24 then
             return {
                 "* The memories are complete.",
-                "* She may not cherish them, but she is grateful to Spamton for his \"help\"."
+                "* She regrets not being able to be closer to Susie,[wait:2] but she is glad to have met her."
             }
         end
         --Dess
