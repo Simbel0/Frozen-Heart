@@ -16,6 +16,7 @@ function dark_star_attack:onStart()
         wait(0.25)
         for i=1,15 do
             Game.battle.soul.x=Game.battle.soul.x+2*(i*(i%2==0 and 1 or -1))
+            Assets.playSound("break1")
             wait(0.1)
         end
         Game.battle.soul.visible = false
@@ -24,6 +25,7 @@ function dark_star_attack:onStart()
             {15, 22},
             {20, 30}
         }
+        Assets.playSound("break2")
         for i=1,3 do
             self.hearts[i] = self:spawnSprite("player/heart", Game.battle.soul.x, Game.battle.soul.y)
             self.hearts[i].color = {Game.battle.party[i].chara:getColor()}

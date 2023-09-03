@@ -29,10 +29,11 @@ function snowflakeBullet_shadow:onWaveSpawn(wave)
 	wave.timer:script(function(wait)
 		wave.timer:tween(0.25, self, {scale_x=1, scale_y=1})
 		wait(0.5)
-		Assets.playSound("ding")
+		Assets.playSound("bell")
 		self.shadow.alpha = 1
 		wave.timer:tween(0.5, self.shadow, {alpha=0})
 		wait(0.5)
+		Assets.playSound("snd_spearrise")
 		self.start=true
 	end)
 end

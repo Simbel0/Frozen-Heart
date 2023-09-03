@@ -19,6 +19,8 @@ function Tornado:init(x, y, area, delay)
     self.delay = delay
 
     self.remove_offscreen = true
+
+    Assets.playSound("snd_spearrise")
 end
 
 function Tornado:update()
@@ -31,6 +33,7 @@ function Tornado:update()
         self.rotation = Utils.ease(0, self.goto_rot, self.timer/30, "out-cubic")
     elseif self.timer >= 100+self.delay and not self.launched then
         self.launched = true
+        Assets.stopAndPlaySound("criticalswing")
         self.rotation = self.rotation + math.rad(360)
         self:setPhysics({
             match_rotation = true,

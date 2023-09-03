@@ -8,6 +8,7 @@ end
 function IceFall:onStart()
     self.double = #Game.battle.waves==2
     self.timer:every(self.double and 1.75 or 0.75, function()
+        Assets.playSound("criticalswing", 1, 1.5)
         local start = Utils.random()<0.5 and "left" or "right"
         local x, y, angle
 

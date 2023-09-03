@@ -19,8 +19,11 @@ function shoot:onStart()
     local berdly = self.encounter.berdly
     self.berdly_orig_x = berdly.x
     self.timer:script(function(wait)
+        Assets.playSound("jump")
         berdly:setAnimation("sine_start")
         wait(((1/14)*7)+0.5)
+        Assets.playSound("bell", 0.5, 0.6)
+        Assets.playSound("bell", 0.5, 0.8)
         berdly:setAnimation("sine_end")
         self.timer:tween((1/14)*2.5, berdly, {x=535}, "out-expo")
         wait((1/14)*5)

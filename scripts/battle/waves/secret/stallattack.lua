@@ -30,6 +30,7 @@ function StallAttack:onStart()
             y = SCREEN_HEIGHT
         end
 
+        Assets.playSound("snd_spearrise")
         self:spawnBullet("secret/stallactic", x, y, math.rad(270), 15)
     end)
 end

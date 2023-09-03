@@ -2,7 +2,7 @@ local kindaTouhou, super = Class(Wave)
 
 function kindaTouhou:init()
     super:init(self)
-    self.time = 20
+    self.time = 15
 
     self.x = 10
     self.dir = "right"
@@ -12,6 +12,7 @@ function kindaTouhou:onStart()
     self.double = #Game.battle.waves==2 --Make double idiot
     local add = self.double and 35*2 or 35
     self.timer:every(self.double and 1 or 1/3, function()
+        Assets.playSound("noise")
         local angle = love.math.random(360)
         for i=1,20 do
             self:spawnBullet("lonelySnow", self.x, 0, math.rad(angle+360/20*i), 6)
