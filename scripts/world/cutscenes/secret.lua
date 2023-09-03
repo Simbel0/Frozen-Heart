@@ -130,12 +130,14 @@ return {
         Game.world.timer:tween(1, snow, {alpha=1})
         cutscene:wait(2.5)
         --Game.world.timer:tween(0.5, wind, {volume=0})
-        cutscene:wait(cutscene:fadeOut(0.5, {global = true}))
+        cutscene:wait(cutscene:fadeOut(0.5, {color={1, 1, 1}}))
         -- Do the "Survivor Virovirokun and Ambyu-Lance get frozen part"
         cutscene:panTo(50, susie.y, 0)
         susie:setSprite("battle/defend_6")
+        cutscene:wait(1.5)
+        cutscene:text("* Ugh...", "", "susie")
         --Game.world.timer:tween(0.5, wind, {volume=1})
-        cutscene:wait(cutscene:fadeIn(0.5, {global = true}))
+        cutscene:wait(cutscene:fadeIn(0.5))
 
         cutscene:wait(1)
         cutscene:wait(cutscene:slideTo(susie, susie.x-70, susie.y, 0.5))
@@ -144,7 +146,7 @@ return {
         cutscene:wait(0.5)
 
         cutscene:setTextboxTop(true)
-        cutscene:text("* Ugh...[wait:5] Come on...", "down", "susie")
+        cutscene:text("* Come on...", "down", "susie")
 
         cutscene:wait(1)
         cutscene:wait(cutscene:slideTo(susie, susie.x-70, susie.y, 0.4))
