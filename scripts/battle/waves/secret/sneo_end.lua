@@ -13,9 +13,9 @@ function you_ve_got_mail:onStart()
     sneo.sprite:setPartSwingSpeed("arm_l", 0)
     sneo.sprite:setHeadFrame(3)
     sneo.sprite:tweenPartRotation("arm_l", math.rad(170), 0.3, "out-cubic")
-    self.timer:tween(0.3, sneo, {y=260}, "out-cubic")
+    self.timer:tween(0.3, sneo, {y=258}, "out-cubic")
     local x, y = arm:getScreenPos()
-    local laser = self:spawnSprite("bullets/neo/laser_friendly", x-67, y+46)
+    local laser = self:spawnSprite("bullets/neo/laser_friendly", x-67, 172)
     laser:setOrigin(1, 0.5)
     laser:setGraphics({
     	fade = 0.3,
@@ -52,7 +52,17 @@ function you_ve_got_mail:onStart()
     	Game.stage:shake(2, 2, 0, 1/30)
     	laser:setSprite("bullets/neo/laser")
     	local ow = self.timer:during(math.huge, function()
-    		Game.battle:hurt(3, true, "ANY")
+            local party_downed = 0
+            for i,battler in ipairs(Game.battle.party) do
+                if battler.is_down then
+                    party_downed = party_downed + 1
+                end
+            end
+            print("Downed: "..party_downed)
+            local ok_to_hurt = party_downed ~= 2
+            if ok_to_hurt then
+                Game.battle:hurt(2, true, "ANY")
+            end
     		--There's some bug in kristal where a downed battler will still take damage in the next frame, keeping them up despite being down
     		--So i'm calling battler:down() manually to be sure that they are put down *and stay down*
     		for i,battler in ipairs(Game.battle.party) do
@@ -87,6 +97,12 @@ function you_ve_got_mail:onEnd()
     sneo.sprite:resetPart("arm_l", true)
 
     Game.battle.timer:tween(0.5, sneo, {y=self.org_y}, "out-cubic")
+
+    -- Revive Kris if they're down (plot armor strikes again)
+    if Game.battle.party[1].is_down then
+        Game.battle.party[1]:heal(math.abs(Game.battle.party[1].chara.health)+1, nil, true)
+        Game.battle.party[1]:resetSprite()
+    end
 
     super:onEnd(self)
 end
