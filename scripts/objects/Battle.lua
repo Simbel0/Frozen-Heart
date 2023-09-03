@@ -256,6 +256,9 @@ function Battle:spawnSoul(x, y)
     if Game:getFlag("plot", 0)>=2 then
         print("o")
         local bx, by = self:getSoulLocation()
+        if self.encounter.id == "end" then
+            bx, by = 325, 55
+        end
         local color = {Game:getSoulColor()}
         self:addChild(HeartBurst(bx, by, color))
         if not self.soul then

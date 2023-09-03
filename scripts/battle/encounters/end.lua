@@ -18,6 +18,19 @@ function End:init()
     Game.battle:registerXAction("noelle", "Remember", nil, 10)
 
     Game.world.camera.x = 995
+
+    Utils.hook(Battle, "returnSoul", function(orig, og_self, dont_destroy)
+        if dont_destroy == nil then dont_destroy = false end
+        local bx, by = 325, 55
+        if og_self.soul then
+            og_self.soul:transitionTo(bx, by, not dont_destroy)
+        end
+    end)
+
+    Utils.hook(HeartBurst, "init", function(orig, og_self, x, y, color)
+        orig(og_self, x-9, y-9, color)
+        print("oh")
+    end)
 end
 
 function End:onBattleStart()
