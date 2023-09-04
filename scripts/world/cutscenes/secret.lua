@@ -885,5 +885,6 @@ return {
         Game.fader.fade_color = {0, 0, 0}
         Game.fader:fadeIn(nil, {speed=2})
         cutscene:startEncounter("end", false)
+        cutscene:gotoCutscene("full_credits")
     end
 }

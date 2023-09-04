@@ -120,8 +120,10 @@ function Battle:onStateChange(old,new)
 
         self.seen_encounter_text = false
         self.intro_timer = 0
-        Assets.playSound("impact", 0.7)
-        Assets.playSound("weaponpull_fast", 0.8)
+        if self.encounter.id ~= "end" then
+            Assets.playSound("impact", 0.7)
+            Assets.playSound("weaponpull_fast", 0.8)
+        end
 
         for _,battler in ipairs(self.party) do
             battler:setAnimation("battle/intro")

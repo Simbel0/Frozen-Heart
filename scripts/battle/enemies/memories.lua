@@ -277,7 +277,6 @@ function Memories:onAct(battler, name)
                 self.encounter.ending = true
                 local wait, text = cutscene:text("[noskip]* [speed:0.1]...............", {wait=false})
                 cutscene:wait(function()
-                    print(wait(), Game.battle.party[1].chara:getHealth() <= 100)
                     if Game.battle.party[1].chara:getHealth() <= 100 then
                         return true
                     end
@@ -290,11 +289,12 @@ function Memories:onAct(battler, name)
                 end)
                 cutscene:wait(2)
                 Game.battle.battle_ui.encounter_text.text:setText("")
+                self:setSprite("dummy")
                 cutscene:wait(cutscene:fadeOut(5, {color={0, 0, 0}}))
                 cutscene:wait(3)
                 Assets.playSound("monsterdust")
                 cutscene:wait(3)
-                --Game.battle:returnToWorld()
+                Game.battle:returnToWorld()
             end)
             return
         end
