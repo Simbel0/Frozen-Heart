@@ -27,19 +27,26 @@ function itsRainingPipis:onStart()
         sneo.sprite:tweenPartRotation("arm_l", math.rad(270), 0.3, "out-cubic")
         wait(0.5)
         sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon_egg")
+        local reboot_egg = 0
         self.timer:every(0.75, function()
             sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon")
             sneo.sprite:tweenPartRotation("arm_l", math.rad(290), 0.1, "out-cubic")
             Assets.playSound("wing")
             for i = 0, 2 do
-                local pipis = Sprite("bullets/neo/pipis", -5, -25)
+                local pipis = Sprite("bullets/neo/pipis", 0, -35)
                 pipis.physics.direction = math.rad(250+(20*i)+Utils.random(-10, 10))
                 pipis.physics.speed = 12
                 pipis.graphics.spin = love.math.random(1, 4)
                 arm:addChild(pipis)
             end
+            reboot_egg = reboot_egg + 1
             self.timer:after(0.12, function()
                 sneo.sprite:tweenPartRotation("arm_l", math.rad(270), 0.2, "out-cubic")
+                if reboot_egg<(self.mode==1 and 3 or 4) then
+                    self.timer:after(0.1, function()
+                        sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon_egg")
+                    end)
+                end
             end)
         end, self.mode==1 and 3 or 4)
         wait((0.75*(self.mode==1 and 3 or 4))+0.25)

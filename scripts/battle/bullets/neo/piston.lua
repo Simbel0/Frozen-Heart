@@ -1,6 +1,6 @@
 local piston, super = Class(Bullet)
 
-function piston:init(x, y, dir, speed, shootable, flip, shoot, anim)
+function piston:init(x, y, dir, speed, shootable, flip)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/neo/crew")
     self:setOrigin(0.5, 0.5)
@@ -10,16 +10,11 @@ function piston:init(x, y, dir, speed, shootable, flip, shoot, anim)
     self.y_orig = y
 
     self.shootable = shootable~=nil and shootable or true
-    self.shoot = shoot~=nil and shoot or false
-    self.animation = anim
-    print(self.animate, anim, anim~=nil)
     self.siner = 0
     self.timer = 0
 
     self.sprite.flip_x = flip
     self.stopped = true
-
-    self.bullet_speed = 10
 
     if not flip then
         self.remove_offscreen = false
@@ -92,26 +87,22 @@ function piston:update()
         self.timer = self.timer + DT
     end
 
-    if not self.animation then
-        if self.sprite.flip_x then
-            self.x=self.x+0.5
-        else
-            if not self.stopped then
-                self.x = (self.x_orig-25) + math.cos(self.timer*4)*60
-                self.y = (self.y_orig-55) + math.sin(self.timer*2)*95
-            end
-        end
+    if self.sprite.flip_x then
+        self.x=self.x+0.5*DTMULT
     else
-        self.animation()
+        if not self.stopped then
+            self.x = (self.x_orig-25) + math.cos(self.timer*4)*60
+            self.y = (self.y_orig-55) + math.sin(self.timer*2)*95
+        end
     end
 
     if not self.stopped then
-        if self.sprite.alpha==1 and self.shoot then
+        if self.sprite.alpha==1 and not self.sprite.flip_x then
             if self.sprite.frame==3 then
                 if not self.shooted then
                     self.shooted=true
                     for i=-1,2 do
-                        self.wave:spawnBullet("neo/bullet", self.x, self.y, self.sprite.flip_x and math.rad((i*8)) or math.rad(180+(i*8)), self.bullet_speed)
+                        self.wave:spawnBullet("neo/bullet", self.x, self.y, math.rad(180+(i*8)), 10)
                     end
                 end
             else

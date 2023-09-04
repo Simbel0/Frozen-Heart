@@ -97,6 +97,19 @@ function Mod:postInit(newfile)
         Game.world:loadMap("dog")
         return
     end]]
+    
+    -- The last resort
+    --[[
+    if FRAMERATE==0 or FRAMERATE>30 then
+        FRAMERATE = 30
+    end
+    Utils.hook(Kristal, "returnToMenu", function(orig, self)
+        if FRAMERATE~=Kristal.Config["fps"] then
+            FRAMERATE = Kristal.Config["fps"]
+        end
+        orig(self)
+    end)
+    ]]
 
     if newfile then
         if not Game:getFlag("plot", nil) then
@@ -137,6 +150,7 @@ function Mod:postInit(newfile)
             local tea_flavor=Utils.pick(tea_flavors)
             Game.inventory:addItem(tea_flavor.."_tea")
         end
+        Game:setFlag("susie_reaction_save", false)
 
         Game.inventory:removeItem("cell_phone")
 

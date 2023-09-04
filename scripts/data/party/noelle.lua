@@ -46,4 +46,21 @@ function character:drawPowerStat(index, x, y, menu)
     end
 end
 
+function character:getReaction(item, user)
+    if item and item.id == "thornring" then
+        return "Su-Susie..?"
+    end
+    if user.id == "susie" then
+        return "(What is she doing?)"
+    end
+    return super:getReaction(self, item, user)
+end
+
+function character:onEquip(item, item2)
+    if item and item.id == "thornring" then
+        return false
+    end
+    return super:onEquip(self, item, item2)
+end
+
 return character

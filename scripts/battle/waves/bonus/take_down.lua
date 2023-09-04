@@ -17,18 +17,20 @@ function Take_Down:onStart()
 
         local susie = Game.battle.party[2]
         local noelle = Game.battle.party[3]
-        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, susie.x, susie.y), 0.3, "out-cubic")
+        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, susie.x+susie.sprite.width/2, susie.y+susie.sprite.height/2), 0.3, "out-cubic")
         wait(0.5)
         sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon_egg")
         wait(0.5)
-        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, susie.x, susie.y)+math.rad(10), 0.3, "out-cubic")
+        --local pos_x, pos_y = arm:getScreenPos()
+        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, susie.x+susie.sprite.width/2, susie.y+susie.sprite.height/2)+math.rad(10), 0.3, "out-cubic")
         sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon")
-        local pos_x, pos_y = arm:getScreenPos()
-        local pipis = Sprite("bullets/neo/pipis_1", pos_x-10, pos_y+10)
+        Assets.playSound("noise")
+        --Hard-coded value because
+        local pipis = Sprite("bullets/neo/pipis_1", 400, 140)
         pipis:setScale(2)
         pipis:setRotationOrigin(0.5, 0.5)
         pipis.graphics.spin = 4
-        Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[2].x, y=Game.battle.party[2].y-10}, "linear", function()
+        Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[2].x, y=Game.battle.party[2].y-(Game.battle.party[2].sprite.height/2)-20}, "linear", function()
             pipis:explode()
             Game.battle.party[2]:hurt(999)
             Game.battle.party[2].chara.health = -242
@@ -37,17 +39,18 @@ function Take_Down:onStart()
 
         wait(1.5)
 
-        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, noelle.x, noelle.y), 0.3, "out-cubic")
+        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, noelle.x+noelle.sprite.width/2, noelle.y+noelle.sprite.height/2), 0.3, "out-cubic")
         wait(0.5)
         sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon_egg")
         wait(0.5)
-        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, noelle.x, noelle.y)+math.rad(10), 0.3, "out-cubic")
+        sneo.sprite:tweenPartRotation("arm_l", Utils.angle(sneo.x, sneo.y, noelle.x+noelle.sprite.width/2, noelle.y+noelle.sprite.height/2)+math.rad(10), 0.3, "out-cubic")
         sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon")
-        local pipis = Sprite("bullets/neo/pipis_1", pos_x-10, pos_y+10)
+        Assets.playSound("noise")
+        local pipis = Sprite("bullets/neo/pipis_1", 415, 160)
         pipis:setScale(2)
         pipis:setRotationOrigin(0.5, 0.5)
         pipis.graphics.spin = 4
-        Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[3].x, y=Game.battle.party[3].y-10}, "linear", function()
+        Game.battle.timer:tween(0.25, pipis, {x=Game.battle.party[3].x, y=Game.battle.party[3].y-(Game.battle.party[3].sprite.height/2)-20}, "linear", function()
             pipis:explode()
             Game.battle.party[3]:hurt(999)
             Game.battle.party[3].chara.health = -229

@@ -9,6 +9,8 @@ function character:init()
     self.stats["attack"]=18
     self.stats["magic"]=3
 
+    self.soul_color = {1, 0, 0}
+
     self.health=190
 
     self.max_stats = {}
@@ -51,10 +53,17 @@ function character:getTitle()
 end
 
 function character:getSoulColor()
-    if Game:getFlag("plot", 0)==2 and Game:getFlag("plot", 0)==3 then
+    if Game:getFlag("plot", 0)<=3 and Game:getFlag("plot", 0)~=0 then
         return 1, 1, 1, 1
     end
     return super:getSoulColor(self)
+end
+
+function character:getReaction(item, user)
+    if item and item.id == "thornring" then
+        return "(What the HELL?! No!)"
+    end
+    return super:getReaction(self, item, user)
 end
 
 return character

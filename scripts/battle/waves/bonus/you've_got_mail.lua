@@ -25,7 +25,11 @@ function you_ve_got_mail:onStart()
     sneo.sprite:setPartSprite("arm_l", "npcs/spamton/arm_cannon")
     sneo.sprite:setPartSwingSpeed("arm_l", 0)
     sneo.sprite:setHeadFrame(3)
-    sneo.sprite:tweenPartRotation("arm_l", math.rad(math.deg(Utils.angle(sneo.x, sneo.y, Game.battle.soul.x, Game.battle.soul.y))-20), 0.3, "out-cubic")
+    sneo.sprite:tweenPartRotation("arm_l", math.rad(math.deg(Utils.angle(sneo.x, sneo.y, Game.battle.soul.x, Game.battle.soul.y))), 0.3, "out-cubic")
+
+    self.charge_sound = Assets.playSound("sneo_overpower", 1, 1)
+    self.charge_sound:setLooping(true)
+    self.shot_sound = Assets.playSound("spamton_laugh", 1, 1)
 end
 
 function you_ve_got_mail:update()
@@ -35,7 +39,7 @@ function you_ve_got_mail:update()
 
     self.siner=self.siner+DTMULT
 
-    sneo.y = sneo.y+math.sin(self.siner*0.3)*10
+    sneo.y = self.org_y+math.sin(self.siner*0.3)*40
 
     if self.timer_n==0 then
         self.circle=Sprite("bullets/neo/bigcircle", arm.sprite.width, 9)
@@ -45,19 +49,36 @@ function you_ve_got_mail:update()
         --self.circle:setOrigin(1, 0)
         self.circle:shiftOrigin(0.5, 0.5)
         arm.sprite:addChild(self.circle)
+        self.charge_sound:setPitch(1)
+        self.charge_sound:play()
+        self.shot_played = false
     elseif self.timer_n<=30 then
-        arm.swing_rotation = math.rad(math.deg(Utils.angle(sneo.x, sneo.y, Game.battle.soul.x, Game.battle.soul.y))-13)
+        arm.swing_rotation = Utils.angle(arm, Game.battle.soul)
+        self.charge_sound:setPitch(1+(self.timer_n)/10)
     elseif self.timer_n>=40 and self.timer_n<60 then
         if self.circle then
             self.soul_pos = {Game.battle.soul.x, Game.battle.soul.y}
             self.circle:remove()
             self.circle=nil
         end
-        local x, y = arm:getScreenPos()
-        self:spawnBullet("neo/mail", x-(arm.sprite.width+10), y+Utils.random(-14, 9), math.rad(math.deg(Utils.angle(sneo.x, sneo.y, self.soul_pos[1], self.soul_pos[2]))-13), Utils.random(20, 30))
+        if not self.timer_set then
+            self.bullet_handler = self.timer:every(1/30, function()
+                local x, y = arm:getScreenPos()
+                local mail_x, mail_y = x-(arm.sprite.width+20)+math.cos(arm.sprite.rotation), y+75*math.sin(arm.sprite.rotation)
+                self:spawnBullet("neo/mail", mail_x, mail_y, arm.swing_rotation+math.rad(Utils.random(-3.5, 3.5)), Utils.random(20, 30))
+            end, math.huge)
+            self.timer_set = true
+        end
         sneo.sprite:tweenPartRotation("head", math.rad(Utils.random(90, 110)), 0.2, "out-cubic")
+        self.charge_sound:stop()
+        if not self.shot_played then
+            self.shot_sound:play()
+            self.shot_played = true
+        end
     elseif self.timer_n>60 then
         sneo.sprite:tweenPartRotation("head", math.rad(0), 0.3, "out-cubic")
+        self.timer:cancel(self.bullet_handler)
+        self.timer_set = false
         self.timer_n=-99
     end
 
@@ -71,15 +92,19 @@ function you_ve_got_mail:update()
 end
 
 function you_ve_got_mail:onEnd()
+    self.charge_sound:stop()
+
     local sneo = self.encounter.sneo
 
     sneo:setAnimation("idle")
     sneo.sprite:setHeadAnimating(true)
     sneo.sprite:resetPart("arm_l", true)
 
-    sneo.sprite:tweenPartRotation("head", math.rad(10), 0.3, "out-cubic")
-    sneo.sprite:getPart("wing_l").swing_speed = 0
-    sneo.sprite:getPart("wing_r").swing_speed = 0
+    Game.battle.timer:after(0.1, function()
+        sneo.sprite:tweenPartRotation("head", math.rad(10), 0.3, "out-cubic")
+        sneo.sprite:getPart("wing_l").swing_speed = 0
+        sneo.sprite:getPart("wing_r").swing_speed = 0
+    end)
 
     Game.battle.timer:tween(0.5, sneo, {y=self.org_y}, "out-cubic")
 

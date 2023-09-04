@@ -30,7 +30,7 @@ end
 function Snowstorm:update()
     -- Code here gets called every frame
 
-    Game.battle.arena:setPosition(Game.battle.arena.x-0.5, Game.battle.arena.y)
+    Game.battle.arena:setPosition(Game.battle.arena.x-DTMULT, Game.battle.arena.y)
 
     super:update(self)
 end

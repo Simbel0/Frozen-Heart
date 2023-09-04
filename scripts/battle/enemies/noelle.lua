@@ -122,11 +122,11 @@ function Noelle:onAct(battler, name)
                 cutscene:setAnimation(susie, {"walk/right", 0.35*2, true})
                 cutscene:during(function()
                     if walkSusie then
-                        if susie.x<=noelle.x-40 then
+                        if susie.x<=noelle.x-80 then
                             susie.x=susie.x+0.35
                         else
                             cutscene:setSprite(susie, "walk")
-                            cutscene:look(susie, "right")
+                            susie.sprite:setFacing("right")
                         end
                     else
                         if cur_x then

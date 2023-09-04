@@ -7,11 +7,12 @@ function mail:init(x, y, dir, speed)
     self.sprite:setFrame(love.math.random(1, 2))
 
     self.sprite:setScale(0.5, 0.5)
-    self:setHitbox(5, 5, (self.sprite.width/2)-10, (self.sprite.height/2)-10)
+    self:setHitbox((self.sprite.width/4)-2.5, (self.sprite.height/4)-2.5, 5, 5)
 
-    self.physics.match_rotation = true
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.rotation = dir
+
+    self.physics.match_rotation = true
     -- Speed the bullet moves (pixels per frame at 30FPS)
     self.physics.speed = speed
 end

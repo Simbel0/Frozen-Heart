@@ -49,6 +49,7 @@ function Spamton_NEO:init()
     }
     self.current_id = 0
     self.wave_loop = 1
+    self.no_no_wave = nil
 
     -- Dialogues Spamton might say depending on the selected wave
     self.waves_dialogues = {
@@ -102,28 +103,40 @@ function Spamton_NEO:init()
 end
 
 function Spamton_NEO:selectWave()
+    print("Do not take this wave: "..(self.no_no_wave and self.no_no_wave or "None"))
     if self.encounter.phase == 2 and self.encounter.item_used then
         self.encounter.item_used = false
         self.selected_wave = "bonus/take_down"
         return "bonus/take_down"
     end
 
-    if self.selected_wave then
-        local i = self.selected_wave
-        self.selected_wave = self.waves[i]
-        return self.waves[i]
+    if self.nb_wave then
+        self.selected_wave = self.waves[self.nb_wave]
+        self.no_no_wave = self.selected_wave
+        self.nb_wave = nil
+        print("Selected wave: "..self.selected_wave)
+        return self.selected_wave
     end
 
-    if self.wave_loop<=1 then
-        self.current_id = self.current_id + 1
-        if self.current_id>#self.waves then
-            self.current_id = 1
-            self.wave_loop = self.wave_loop + 1
-        end
+    self.current_id = self.current_id + 1
+    if self.current_id>#self.waves then
+        self.current_id = 1
+        self.wave_loop = self.wave_loop + 1
+    end
+    if self.wave_loop == 1 then
         self.selected_wave = self.waves[self.current_id]
+        print("Selected wave: "..self.selected_wave)
         return self.waves[self.current_id]
     end
-    return super:selectWave(self)
+    local wave = super:selectWave(self)
+    if self.encounter.phase==2 then
+        while wave==self.no_no_wave do
+            wave = super:selectWave(self)
+        end
+    end
+    self.no_no_wave = wave
+    print("Selected wave: "..wave)
+    return wave
 end
 
 function Spamton_NEO:onAct(battler, name)
@@ -324,8 +337,12 @@ function Spamton_NEO:getEnemyDialogue()
     end
 
     if self.encounter.phase==1 and Utils.random()<0.5 then
-        self.selected_wave = love.math.random(1, #self.waves)
-        return self.waves_dialogues[self.selected_wave][love.math.random(1, 2)]
+        self.nb_wave = love.math.random(#self.waves)
+        if self.waves[self.nb_wave]~=self.no_no_wave then
+            return self.waves_dialogues[self.nb_wave][love.math.random(1, 2)]
+        else
+            self.nb_wave = nil
+        end
     end
     return super:getEnemyDialogue(self)
 end
