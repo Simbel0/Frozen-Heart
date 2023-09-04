@@ -1,4 +1,5 @@
 return function(cutscene)
+	Game.fader.alpha = 0
 	Game.world.fader.alpha = 1
 	Game.world.fader.color = {0, 0, 0}
 	for _,music in ipairs(Music.getPlaying()) do
@@ -60,7 +61,41 @@ return function(cutscene)
     end
     cutscene:wait(cutscene:fadeIn(1, {global=true}))
     cutscene:wait(2)
-    local credits = FullCreditsText()
+    local credits = FullCreditsText(FH_logo)
     credits.layer = 2
     Game.stage:addChild(credits)
+    local fade = Sprite("credits_fade")
+    fade.alpha = 0
+    fade.layer = 1
+    Game.stage:addChild(fade)
+    Game.world.timer:every(1/2, function()
+    	local s = Sprite("bullets/snowflakeBullet", Utils.random(0, SCREEN_WIDTH), SCREEN_HEIGHT)
+    	s:setScale(0.5)
+    	s:setLayer(0)
+    	s:setRotationOrigin(0.5)
+    	s.alpha = 0.75
+    	s:setPhysics({
+    		speed=2,
+    		direction=math.rad(-90+Utils.random(-10, 10))
+    	})
+    	s:setGraphics({
+    		spin=math.rad(5),
+    		fade_to=0,
+    		fade=0.005
+    	})
+    	Game.stage:addChild(s)
+    end)
+    cutscene:during(function()
+    	if fade.alpha < 0.5 then
+    		fade.alpha = fade.alpha + 0.01*DTMULT
+    	end
+    end)
+    cutscene:wait(function()
+    	return credits.ended
+    end)
+    cutscene:wait(2)
+    cutscene:wait(cutscene:fadeOut(2, {global=true, color={0, 0, 0}}))
+    cutscene:wait(1)
+    Kristal.Config["extras"] = true
+    Kristal.returnToMenu()
 end

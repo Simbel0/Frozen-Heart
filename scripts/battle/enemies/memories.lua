@@ -12,11 +12,12 @@ function Memories:init()
     self.alpha = 0
 
     self.actor.offsets["spamton"] = {0, 10}
-    self.actor.offsets["kris"] = {-8, 6}
-    self.actor.offsets["berdly"] = {-26, 3}
-    self.actor.offsets["queen"] = {-21, -41}
-    self.actor.offsets["rudy"] = {3, -19}
-    self.actor.offsets["susie"] = {-4, 0}
+    self.actor.offsets["kris"]    = {-8, 6}
+    self.actor.offsets["berdly"]  = {-26, 3}
+    self.actor.offsets["queen"]   = {-21, -41}
+    self.actor.offsets["rudy"]    = {3, -19}
+    self.actor.offsets["susie"]   = {-4, 0}
+    self.actor.offsets["dess"]    = {2, 2}
 
     self.rect_x, self.rect_y = 0, 0
     self.rect_offsets = {
@@ -37,7 +38,8 @@ function Memories:init()
         berdly = {0, 9},
         queen = {13, -24},
         rudy = {5, -7},
-        susie = {2, 7}
+        susie = {2, 7},
+        dess = {6, 6}
     }
 
     -- Enemy health
@@ -292,7 +294,7 @@ function Memories:onAct(battler, name)
                 self:setSprite("dummy")
                 cutscene:wait(cutscene:fadeOut(5, {color={0, 0, 0}}))
                 cutscene:wait(3)
-                Assets.playSound("monsterdust")
+                Assets.playSound("monsterdust", 0.1)
                 cutscene:wait(3)
                 Game.battle:returnToWorld()
             end)
