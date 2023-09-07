@@ -30,7 +30,7 @@ function FullCredits:init(logo)
 
 		"Sprites",
 		"Deltarune sprites - The DELTARUNE Team",
-		"Dess sprites & design - HUECYCLES",
+		"Dess sprite & design - HUECYCLES",
 		"Original sprites - Simbel",
 		"Frozen Heart Logo - Soup Taels",
 
@@ -41,6 +41,7 @@ function FullCredits:init(logo)
 		"Yellow Soul Library - vitellary",
 		"Particle System Library - vitellary",
 		"Vending Machine Library - Simbel",
+		"Achievements Library - AcousticJamm, BrandonK7200, SciSpaceProductions",
 
 		"",
 		"w/Betatesters",
@@ -76,7 +77,6 @@ function FullCredits:init(logo)
 		"",
 
 		"You have unlocked the extras.",
-		"You will find the codes in a file in the game folder.",
 		"See you soon.",
 		"-Simbel"
 	}
