@@ -1,5 +1,6 @@
 return {
 	no_trance=function(cutscene)
+		Kristal.callEvent("completeAchievement", "spare")
 		local susie = cutscene:getCharacter("susie")
 		local noelle = cutscene:getCharacter("noelle")
 		susie:setSprite("walk")
@@ -51,6 +52,7 @@ return {
 		Game:setFlag("plot", 3)
 	end,
 	thorn_kill=function(cutscene)
+		Kristal.callEvent("completeAchievement", "thorn")
 		local susie = cutscene:getCharacter("susie")
 		local noelle = cutscene:getCharacter("noelle")
 		susie:setSprite("walk")
@@ -102,6 +104,7 @@ return {
 		cutscene:gotoCutscene("ending.killing_spamton")
 	end,
 	killspare=function(cutscene)
+		Kristal.callEvent("completeAchievement", "violentspare")
 		local susie = cutscene:getCharacter("susie")
 		local noelle = cutscene:getCharacter("noelle")
 		susie:setSprite("walk")
@@ -184,6 +187,7 @@ return {
 		Game:setFlag("plot", 3)
 	end,
 	killkill=function(cutscene)
+		Kristal.callEvent("completeAchievement", "violence")
 		cutscene:fadeOut(0)
 		Game:setFlag("plot", 3)
 		cutscene:gotoCutscene("ending.killing_spamton")

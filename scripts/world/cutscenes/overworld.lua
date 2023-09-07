@@ -637,6 +637,7 @@ return {
 				Assets.stopAndPlaySound("egg")
 				Game.inventory:addItemTo("key_items", "egg", false)
 				cutscene:text("* (You received an Egg.)")
+				Kristal.callEvent("completeAchievement", "egg")
 			end
 		else
 			cutscene:text("* (Well[wait:1], there was not a man here.)")

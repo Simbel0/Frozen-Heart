@@ -234,6 +234,7 @@ return {
                 cutscene:wait(0.5)
                 Assets.playSound("snd_icespell2")
                 cutscene:wait(2.5)
+                Kristal.callEvent("completeAchievement", "bonus")
                 --cutscene:text("* (You got the PuppetScarf.)")
                 --cutscene:text("* (You got the ShadowCrystal.)")
                 cutscene:gotoCutscene("ending.closing_fountain")

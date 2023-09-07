@@ -3,6 +3,7 @@ local Basic, super = Class(Wave)
 function Basic:init()
     super:init(self)
     self.time = 15
+    self.mode = 1
 end
 
 function Basic:onStart()

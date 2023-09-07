@@ -263,6 +263,7 @@ return {
         cutscene:wait(1)
         cutscene:wait(cutscene:fadeOut(2))
         cutscene:wait(1)
+        wind:stop()
         cutscene:gotoCutscene("secret.intro_2")
 	end,
     intro_2=function(cutscene)
@@ -572,9 +573,127 @@ return {
         Game.world.camera:stopShake()
         cutscene:panTo(320, 240, 0)
         noelle.sprite.alpha = 0
+        Game:setFlag("plot", 11)
+        Game:saveQuick()
         cutscene:startEncounter("secret_battle", false, nil, {on_start=function()
-            print(Game.battle, Game.battle.encounter)
+            queen.alpha = 0
+            Game.battle.encounter.queen = queen
+            Game.battle.encounter.gradient = gradient
+            Game.battle.encounter.snow = snow
+            Game.world:removeChild(queen)
+            Game.battle:addChild(Game.battle.encounter.queen)
 
+            cutscene:fadeIn(1)
+        end})
+        cutscene:gotoCutscene("secret.ending")
+    end,
+    quickstart = function(cutscene)
+        Game.world.camera.keep_in_bounds = false
+        Game.world.fader.alpha = 1
+        cutscene:panTo(-25, Game.world.camera.y, 0)
+        cutscene:fadeIn(1)
+        cutscene:detachCamera()
+        cutscene:detachFollowers()
+        local kris = cutscene:getCharacter("kris")
+        kris:setPosition(-450, 280)
+        local susie = cutscene:getCharacter("susie")
+        susie:setPosition(-420, 280)
+        local ralsei = cutscene:getCharacter("ralsei")
+        ralsei:setPosition(-420, 340)
+        local queen = cutscene:spawnNPC("queen", -450, 230)
+        queen:setAnimation({"chair", 1/8, true})
+        local noelle = cutscene:spawnNPC("noelle", SCREEN_WIDTH/2, (SCREEN_HEIGHT/2)-20)
+        noelle.actor.path = "party/noelle/dark_c"
+        noelle:setSprite("walk")
+        cutscene:look(noelle, "left")
+        cutscene:fadeIn(2)
+        cutscene:during(function()
+            noelle.y = ((SCREEN_HEIGHT/2)-20) + math.sin(Kristal.getTime()*3)*20
+            if Game.battle == nil then
+                queen.y = 230 + math.sin(Kristal.getTime()*4)*10
+            end
+        end)
+        local walks = {
+            cutscene:walkTo(kris, 50, 280, 2),
+            cutscene:walkTo(susie, 150, 280, 2),
+            cutscene:walkTo(ralsei, 50, ralsei.y, 2),
+            cutscene:slideTo(queen, -120, queen.y, 2)
+        }
+        cutscene:wait(function()
+            return walks[1]() and walks[2]() and walks[3]() and walks[4]()
+        end)
+        cutscene:wait(0.5)
+        cutscene:wait(cutscene:panTo(320/2, 240))
+        cutscene:wait(0.3)
+
+        Assets.playSound("laz_c", 1, susie.attack_pitch)
+        susie:setAnimation({"battle/attack", 1/15, false})
+        Assets.playSound("laz_c", 1, kris.attack_pitch)
+        kris:setAnimation({"battle/intro", 1/15, false})
+        Assets.playSound("laz_c", 1, ralsei.attack_pitch)
+        ralsei:setAnimation({"battle/intro", 1/15, false})
+
+        cutscene:wait(0.5)
+
+        noelle:setSprite("closed-in")
+        cutscene:slideTo(noelle, noelle.x+40, noelle.y, 0.5, "out-quad")
+        cutscene:wait(0.7)
+        noelle:setSprite("spell")
+        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-80, 0, 0, {
+            layer = WORLD_LAYERS["below_ui"],
+            every = 0.0001,
+            amount = 4,
+            texture = "snowflake",
+            scale = 1,
+
+            remove_after = 5,
+
+            physics = {
+                speed = 20
+            },
+            angle = {math.rad(235), math.rad(295)}
+        })
+        Game.world:addChild(ice_emitter)
+        cutscene:shakeCamera(5, 1, false)
+        Game.world.camera.shake_friction = nil
+        local wind=Assets.playSound("snowwind")
+        wind:setLooping(false)
+        cutscene:wait(0.2)
+        local gradient = Sprite("effects/icespell/gradient")
+        gradient:setWrap(true, false)
+        gradient.layer = WORLD_LAYERS["below_ui"]
+        gradient:setScale(2)
+        gradient.alpha = 0
+        Game.world.timer:tween(3, gradient, {alpha=0.5})
+        Game.world:addChild(gradient)
+        cutscene:wait(1)
+        local snow = Sprite("effects/icespell/snowfall")
+        snow:setWrap(true)
+        snow:setScale(2)
+        snow.alpha = 0
+        snow.layer = gradient.layer - 0.6
+        snow.physics = {
+            speed = 16,
+            direction = math.rad(75)
+        }
+        Game.world:addChild(snow)
+        Game.world.timer:tween(1, snow, {alpha=1})
+        cutscene:wait(1.5)
+        --Game.world.timer:tween(0.5, wind, {volume=0})
+        cutscene:wait(cutscene:fadeOut(1, {color = {1, 1, 1}}))
+        ice_emitter:remove()
+        cutscene:wait(1)
+        wind:stop()
+        snow.physics.speed = 10
+        gradient.alpha = 0.5
+        --snow:remove()
+        --gradient:remove()
+        Game.world.camera:stopShake()
+        cutscene:panTo(320, 240, 0)
+        noelle.sprite.alpha = 0
+        Game:setFlag("plot", 11)
+        Game:saveQuick()
+        cutscene:startEncounter("secret_battle", false, nil, {on_start=function()
             queen.alpha = 0
             Game.battle.encounter.queen = queen
             Game.battle.encounter.gradient = gradient
@@ -659,6 +778,7 @@ return {
         Assets.playSound("ui_cancel")
         Assets.playSound("bell")
         susie:setSprite("pose")
+        Kristal.callEvent("completeAchievement", "alt")
         cutscene:text("* Hell yeah![wait:2] The $!$! Squad saved the day![react:1]", "closed_grin", "susie", {reactions={
             {"...", "right", "bottom", "owo", "ralsei"}
         }})

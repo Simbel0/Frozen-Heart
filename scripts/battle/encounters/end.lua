@@ -31,6 +31,16 @@ function End:init()
         orig(og_self, x-9, y-9, color)
         print("oh")
     end)
+
+    Utils.hook(Bullet, "onDamage", function(orig, self, soul)
+        local damage = self:getDamage()
+        if Game.battle.party[1].chara:getHealth() - damage <= 0 then
+            Game.battle:hurt(Game.battle.party[1].chara:getHealth()-1, true, self:getTarget())
+            Game.battle:setState("ACTIONSELECT")
+        else
+            orig(self, soul)
+        end
+    end)
 end
 
 function End:onBattleStart()
