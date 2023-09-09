@@ -305,7 +305,6 @@ return {
         cutscene:wait(3)
 
         Assets.playSound("phone")
-        noelle:setSprite("desk/desk_wake_up_left")
 
         cutscene:wait(1)
 
@@ -318,6 +317,8 @@ return {
         cutscene:wait(1)
 
         cutscene:text("* ...", "nervous_side", "susie")
+
+        cutscene:wait(1)
 
         Assets.playSound("phone")
 
