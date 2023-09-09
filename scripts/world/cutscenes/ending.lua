@@ -9,6 +9,8 @@ return {
             local amount
             if color[2]==0 then
                 amount = 208 + love.math.random(10) + (crit and 100 or 0)
+            elseif color[1]==0.5 then
+                amount = 1 + (crit or 0)
             else
                 amount = 684 + love.math.random(20)
             end
@@ -30,12 +32,12 @@ return {
         Kristal.hideBorder(1)
         cutscene:wait(1)
 
-        if spamton_boss and ending=="killkill" then
-            Game:removePartyMember("susie")
-            Game:addPartyMember("kris")
-            Game:movePartyMember("kris", 1)
-            cutscene:gotoCutscene("spamton_cutscenes.standing_here")
-        end
+        --if spamton_boss and ending=="killkill" then
+        --    Game:removePartyMember("susie")
+        --    Game:addPartyMember("kris")
+        --    Game:movePartyMember("kris", 1)
+        --    cutscene:gotoCutscene("spamton_cutscenes.standing_here")
+        --end
 
         local laugh=Assets.playSound("snd_sneo_laugh_long")
         cutscene:wait(function()
@@ -43,7 +45,7 @@ return {
         end)
         cutscene:wait(0.5)
 
-        if not quick_start or ending~="killkill" then
+        if not quick_start then
             local i=0
             Game.world.timer:everyInstant(1/22, function()
                 Assets.playSound("voice/sneo")
@@ -104,6 +106,43 @@ return {
             cutscene:wait(0.1)
             Assets.stopAndPlaySound("damage")
             statusMessage({1, 1, 0}, 2)
+        elseif ending == "killkill" then
+            Assets.playSound("laz_c")
+            cutscene:wait(0.2)
+            Assets.playSound("damage")
+            statusMessage({0.5, 1, 1}, 0)
+            cutscene:wait(0.5)
+            Assets.playSound("laz_c")
+            cutscene:wait(0.2)
+            Assets.playSound("damage")
+            statusMessage({0.5, 1, 1}, 1)
+            cutscene:wait(0.5)
+            Assets.playSound("laz_c")
+            cutscene:wait(0.2)
+            Assets.playSound("damage")
+            statusMessage({0.5, 1, 1}, 2)
+            cutscene:wait(1.5)
+            local count = 2
+            local delay = 0.5
+            local loop = 0
+            cutscene:wait(function()
+                count = count - delay*DTMULT
+
+                if count <= 0 then
+                    Assets.playSound("laz_c")
+                    count = 10
+                    loop = loop+0.05
+                    delay = 0.5+loop
+                end
+                return delay >= 3.075
+            end)
+            local i = 0
+            Game.world.timer:everyInstant(1/14, function()
+                Assets.stopAndPlaySound("damage")
+                statusMessage({0.5, 1, 1}, i, love.math.random(0, 3))
+                i=i+1
+            end, 50)
+            cutscene:wait(((1/12)*50))
         end
         cutscene:wait(2.5)
 
