@@ -107,7 +107,7 @@ return {
         end
         cutscene:wait(2.5)
 
-        if spamton_boss then
+        if spamton_boss and ending == "no_trance" then
             Game:setFlag("plot", 4)
 
             Game:addPartyMember("kris")
