@@ -24,8 +24,8 @@ function DELTARUNE:onAddToStage()
     self.siner = 0
     self.factor = 1
     self.factor2 = 0
-    self.x = 20
-    self.y = 40
+    self.x = 35
+    self.y = 65
     self.animation_phase = 0
     self.animation_phase_timer = 0
     self.animation_phase_plus = 0
@@ -38,18 +38,17 @@ function DELTARUNE:onAddToStage()
 end
 
 function DELTARUNE:drawScissor(image, left, top, width, height, x, y, alpha)
-    love.graphics.push()
+    Draw.pushScissor()
 
     local scissor_x = ((math.floor(x) >= 0) and math.floor(x) or 0)
     local scissor_y = ((math.floor(y) >= 0) and math.floor(y) or 0)
     --print(scissor_x, scissor_y, width, height)
-    love.graphics.setScissor(scissor_x, scissor_y, width, height)
+    Draw.scissor(scissor_x, scissor_y, width, height)
 
     love.graphics.setColor(1, 1, 1, alpha)
     love.graphics.draw(image, math.floor(x) - left, math.floor(y) - top)
     love.graphics.setColor(1, 1, 1, 1)
-    love.graphics.setScissor()
-    love.graphics.pop()
+    Draw.popScissor()
 end
 
 function DELTARUNE:drawSprite(image, x, y, alpha)
@@ -68,7 +67,7 @@ function DELTARUNE:draw()
     local dt_mult = DT * 15
 
     -- We need to draw the logo on a canvas
-    Draw.setCanvas(self.logo_canvas)
+    Draw.pushCanvas(self.logo_canvas)
     love.graphics.clear()
 
     if (self.animation_phase == 0) then
@@ -134,7 +133,7 @@ function DELTARUNE:draw()
     end
 
     -- Reset canvas to draw to
-    Draw.setCanvas(SCREEN_CANVAS)
+    Draw.popCanvas()
 
     -- Draw the canvas on the screen scaled by 2x
     love.graphics.setColor(1, 1, 1, 1)
