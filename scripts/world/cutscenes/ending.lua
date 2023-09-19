@@ -1089,7 +1089,7 @@ return {
         local CutMusic = Music("flashback_excerpt")
         CutMusic.pitch = 0.3
 
-        cutscene:text("* Brr...[wait:1] Damn, they studied the lifehood of pinguins or what??", "","susie")
+        cutscene:text("* Brr...[wait:1] Damn, they studied the lifehood of penguins or what??", "","susie")
         cutscene:text("* ...[wait:1]Unless it was caused in the dark world?", "", "susie")
         cutscene:text("* Hmm...[wait:1] Everything I did before Kris sealed the fountain is blurry...", "", "susie")
         cutscene:text("* Maybe I just took a nap without realizing it?", "", "susie")
