@@ -136,6 +136,65 @@ function ring_noelle:onAct(battler, name)
     elseif name == "Shield" then
         Game.battle:startActCutscene("shield_act")
         return
+    elseif name == "FriedPipis" then
+        Game.battle:startActCutscene(function(cutscene)
+            Assets.playSound("snd_spell_cure_slight_smaller")
+            local up = false
+            local wait = cutscene:text("* RECOVERED HP with pipis![func:up_ad]", {wait=false, functions={
+                up_ad = function()
+                    print("yes")
+                    up = true
+                end
+            }})
+            local text = Text("[ "..love.math.random(300, 1997).." ] Liked this!", 420, SCREEN_HEIGHT+20, {font_size=16})
+            text.alpha = 0.5
+            text.layer = BATTLE_LAYERS["above_ui"]
+            Game.battle:addChild(text)
+            cutscene:during(function()
+                if not text then return false end
+                print(up, text.y, text.alpha, wait())
+                if up then
+                    text.graphics.fade_to = 1
+                    text.graphics.fade = 0.05
+                    if text.y > 445 then
+                        text.y = text.y - 3
+                    end
+                    if wait() then
+                        text.alpha = 0
+                        text:resetGraphics()
+                        return false
+                    end
+                end
+            end)
+            local pipis = Sprite("bullets/neo/pipis_1", battler.width+30, battler.sprite.height/2)
+            pipis:setScale(0)
+            pipis:setOrigin(0.5)
+            battler:addChild(pipis)
+            local continue = false
+            Game.battle.timer:tween(1, pipis, {scale_x=1, scale_y=1, rotation=math.rad(360*3)}, "out-quad", function()
+                continue = true
+            end)
+            cutscene:wait(function()
+                return continue
+            end)
+            continue = false
+            Game.battle.timer:tween(0.35, pipis, {x=battler.width/2}, "out-cubic", function()
+                Game.battle.timer:after(1/12, function()
+                    Game.battle.timer:tween(0.35, pipis, {alpha=0, scale_x=4, scale_y=4}, nil, function()
+                        continue = true
+                        pipis:remove()
+                    end)
+                end)
+            end)
+            cutscene:wait(function()
+                return continue
+            end)
+            battler:heal(120)
+            cutscene:wait(wait)
+            text:remove()
+            cutscene:endCutscene()
+        end)
+        return
     elseif name == "Standard" then
         if battler.chara.id == "susie" then
             return "* Susie tries to talk Noelle out of this.\n* Noelle do not listen."

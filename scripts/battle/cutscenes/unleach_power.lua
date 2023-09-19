@@ -494,7 +494,7 @@ return function(cutscene, battler, sneo)
     Game.battle.encounter.noelle.visible = true
     Game.battle.encounter.noelle.sprite.alpha = 1
     Game.battle.encounter.noelle.fly_anim = true
-    Game.battle.encounter.noelle:registerAct("FriedPipis")
+    Game.battle.encounter.noelle:registerAct("FriedPipis", "Heals\n120HP", {"kris"}, 32, nil, {"spamton-icon"})
     Game.battle.encounter.noelle.text = {
         "* The end is close.",
         "* The temperature is going up.",
