@@ -61,7 +61,13 @@ function you_ve_got_mail:onStart()
             print("Downed: "..party_downed)
             local ok_to_hurt = party_downed ~= 2
             if ok_to_hurt then
-                Game.battle:hurt(2, true, "ANY")
+                if Game.battle.encounter.queen.shield then
+                    Game.battle.encounter.queen.shield:hurt(6)
+                else
+                    Game.battle:hurt(2, true, "ANY")
+                end
+            else
+                Assets.playSound("hurt")
             end
     		--There's some bug in kristal where a downed battler will still take damage in the next frame, keeping them up despite being down
     		--So i'm calling battler:down() manually to be sure that they are put down *and stay down*
