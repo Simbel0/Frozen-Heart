@@ -18,9 +18,15 @@ end
 
 function snowflakeBullet:onWaveSpawn(wave)
     if self.afterimg then
-        wave.timer:everyInstant(1/16, function()
+        self.af_timer = wave.timer:everyInstant(1/16, function()
             Game.battle:addChild(AfterImage(self.sprite, 0.5))
         end)
+    end
+end
+
+function snowflakeBullet:onRemoveFromStage()
+    if self.afterimg then
+        self.wave.timer:cancel(self.af_timer)
     end
 end
 

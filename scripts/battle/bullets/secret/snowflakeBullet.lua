@@ -23,7 +23,7 @@ function snowflakeBullet_shadow:init(x, y, dir, speed)
 end
 
 function snowflakeBullet_shadow:onWaveSpawn(wave)
-	wave.timer:everyInstant(1/16, function()
+	self.af_timer = wave.timer:everyInstant(1/16, function()
         Game.battle:addChild(AfterImage(self.sprite, 0.5))
     end)
 	wave.timer:script(function(wait)
@@ -38,12 +38,8 @@ function snowflakeBullet_shadow:onWaveSpawn(wave)
 	end)
 end
 
-function snowflakeBullet_shadow:onRemove(parent)
-	for i, img in ipairs(Game.stage:getObjects(AfterImage)) do
-		if img.parent == self then
-			img:remove()
-		end
-	end
+function snowflakeBullet_shadow:onRemoveFromStage()
+    self.wave.timer:cancel(self.af_timer)
 end
 
 function snowflakeBullet_shadow:update()
