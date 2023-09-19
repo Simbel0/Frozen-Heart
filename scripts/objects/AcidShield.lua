@@ -478,7 +478,7 @@ function AcidShield:draw()
 				self.imabouttobreak_alpha = (0.1 + (math.sin(self.imabouttobreak_siner) / 6))
 				--d3d_set_fog(true, c_white, 0, 1) --Apparently, it's basically a blur effect but with colors. And it's outdated in GM2 so does it even work in Deltarune?
 				if #self.moveorder>ii then
-					love.graphics.setColor(1, 1, 1, self.imabouttobreak_alpha)
+					love.graphics.setColor(1, 1, 1, self.imabouttobreak_alpha*Utils.clamp(self.alpha, 0, 1))
 					love.graphics.draw(self.shield_parts_texture[ii], self.shieldpiece_x[ii], (self.shieldpiece_y[ii] + self.y), 0, self.shieldpiece_xscale[ii], self.shieldpiece_yscale[ii])
 				end
 				--d3d_set_fog(false, c_black, 0, 0)
