@@ -101,7 +101,7 @@ function you_ve_got_mail:onEnd()
     sneo.sprite:resetPart("arm_l", true)
 
     Game.battle.timer:after(0.1, function()
-        sneo.sprite:tweenPartRotation("head", math.rad(10), 0.3, "out-cubic")
+        sneo.sprite:tweenPartRotation("head", self.orig_rot, 0.3, "out-cubic")
         sneo.sprite:getPart("wing_l").swing_speed = 0
         sneo.sprite:getPart("wing_r").swing_speed = 0
     end)
