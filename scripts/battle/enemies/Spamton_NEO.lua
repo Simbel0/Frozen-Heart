@@ -347,9 +347,12 @@ function Spamton_NEO:getEnemyDialogue()
     return super:getEnemyDialogue(self)
 end
 
-function Spamton_NEO:getAttackDamage(damage, battler)
+function Spamton_NEO:getAttackDamage(damage, battler, points)
+    if damage == 0 then
+        damage = super:getAttackDamage(self, damage, battler, points)
+    end
     if damage>0 then
-        return Utils.clamp(damage, 50, 75)
+        return Utils.round(Utils.clampMap(damage, 0, ((battler.chara:getStat("attack") * 150) / 20) - (self.defense * 3), 0, 75))
     end
     return 0
 end
