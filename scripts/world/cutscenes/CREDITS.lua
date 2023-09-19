@@ -109,9 +109,25 @@ return function(cutscene)
     if Spamton then
         if not Kristal.Config["canAccessSecret"] then
             Kristal.Config["canAccessSecret"] = true
+            Kristal.Config["secret_unlocked"] = true
             Kristal.saveConfig()
             Mod.registerSecret = true
-            Game:save()
+            local data
+            if Kristal.hasSaveFile() then
+                -- Use the unchanged save data to add the secret file variable without actually saving the game
+                data = Kristal.getSaveFile()
+                data["is_secret_file"] = true
+                Kristal.saveGame(Game.save_id, data)
+            else
+                -- If the player never saved, the game will automatically save but put them in the Rooftop instead of the computer lab
+                data = Game:save()
+                data["room_name"] = "Queen's Mansion - Rooftop"
+                data["room_id"] = "mansion_queen_prefountain"
+                data["is_secret_file"] = true
+                Kristal.Config["secret_file_data"] = data
+                Kristal.Config["secret_file_data"].id = Game.save_id
+                Kristal.saveConfig()
+            end
             yellow_text = "You have unlocked\nan alternative fight!"
         else
             yellow_text = "An alternative awaits you!"

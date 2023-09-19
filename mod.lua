@@ -162,11 +162,14 @@ function Mod:postInit(newfile)
     end
 end
 
-function Mod:save(data)
+--[[function Mod:save(data)
+    print("Saving the game")
     if self.registerSecret then
+        print("Hmm?")
         data = self.old_data
         data["is_secret_file"] = true
     end
+    print(data["is_secret_file"])
     return data
 end
 
@@ -174,7 +177,7 @@ function Mod:load(data, newfile, index)
     print("Loading")
     print(Game:getFlag("plot", 0)==2, Game:getFlag("noelle_battle_status", nil)==nil)
     self.old_data = data
-end
+end]]
 
 function Mod:getKristalID(id, type)
     return self.kristal_ids[type][id]
