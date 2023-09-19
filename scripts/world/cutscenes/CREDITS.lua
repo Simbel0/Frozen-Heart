@@ -121,8 +121,8 @@ return function(cutscene)
             else
                 -- If the player never saved, the game will automatically save but put them in the Rooftop instead of the computer lab
                 data = Game:save()
-                data["room_name"] = "Queen's Mansion - Rooftop"
-                data["room_id"] = "mansion_queen_prefountain"
+                data.room_name = ""
+                data.playtime = nil
                 data["is_secret_file"] = true
                 Kristal.Config["secret_file_data"] = data
                 Kristal.Config["secret_file_data"].id = Game.save_id
