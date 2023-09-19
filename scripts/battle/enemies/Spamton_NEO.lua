@@ -357,4 +357,8 @@ function Spamton_NEO:getAttackDamage(damage, battler, points)
     return 0
 end
 
+function Spamton_NEO:onDefeat()
+    self.health = 1
+end
+
 return Spamton_NEO
