@@ -47,7 +47,7 @@ function snowflakeBullet_shadow:update()
 
 	if self.start then
 		if self.y>-20 and self.timer==0 then
-			self.y = self.y - 10*DTMULT
+			self.y = self.y - 20*DTMULT
 			self.rotation = math.rad(math.deg(self.rotation) - 5*DTMULT)
 			if self.y<-20 then
 				self.timer = 1
@@ -63,7 +63,7 @@ function snowflakeBullet_shadow:update()
 			self.timer = self.timer+DTMULT
 			print(self.timer)
 
-			if self.timer>11 then
+			if self.timer>6 then
 				self.y = self.y + 20*DTMULT
 			end
 		end
