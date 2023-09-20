@@ -7,6 +7,8 @@ function Player:init(x, y, dir, speed)
 
     self.timer = 0
 
+    self.destroy_on_hit = false
+
     -- Move the bullet in dir radians (0 = right, pi = left, clockwise rotation)
     self.physics.direction = dir
     -- Speed the bullet moves (pixels per frame at 30FPS)
