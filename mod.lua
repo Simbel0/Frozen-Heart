@@ -160,6 +160,17 @@ function Mod:postInit(newfile)
             Game.world:startCutscene("TEST_DOGUNCHECK")
         end
     end
+
+    --[[Utils.hook(Game, "save", function(orig, self, x, y)
+        local data = orig(self, x, y)
+        print("Hooked")
+        if Mod.registerSecret then
+            print("yep")
+            data["is_secret_file"] = true
+        end
+        print(data["is_secret_file"])
+        return data
+    end)]]
 end
 
 --[[function Mod:save(data)
