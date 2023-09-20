@@ -575,6 +575,7 @@ return {
         noelle.sprite.alpha = 0
         Game:setFlag("plot", 11)
         Game:saveQuick()
+        Game.world.music:stop()
         cutscene:startEncounter("secret_battle", false, nil, {on_start=function()
             queen.alpha = 0
             Game.battle.encounter.queen = queen
@@ -724,7 +725,7 @@ return {
             cutscene:look(cutscene:getCharacter("susie"), "right")
             cutscene:look(cutscene:getCharacter("ralsei"), "right")
         end
-        Game.world.music:stop()
+        --Game.world.music:stop()
 
         local kris = cutscene:getCharacter("kris")
         local susie = cutscene:getCharacter("susie")
