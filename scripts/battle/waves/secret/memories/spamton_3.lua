@@ -19,9 +19,9 @@ function PipisFall:update()
     local arena = Game.battle.arena
 
     if self.arena_throw > 0 then
-        self.arena_throw = self.arena_throw - 0.5*DTMULT
+        self.arena_throw = self.arena_throw - 0.25*DTMULT
 
-        arena.y = arena.y + self.arena_throw
+        arena.y = arena.y + self.arena_throw*DTMULT
     end
 
     if arena.y > 172 then
