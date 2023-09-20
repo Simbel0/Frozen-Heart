@@ -49,6 +49,8 @@ function crewBullet:init(x, y, dir, speed, destination, protected, shoot, shoota
 
     self.shot_health = 1
     self.shot_tp = 1
+
+    self.flash_fx = self:addFX(ColorMaskFX({1, 1, 1}, 0))
 end
 
 function crewBullet:onWaveSpawn()
@@ -71,8 +73,21 @@ end
 function crewBullet:update()
     super:update(self)
 
+    if self.flash_fx.amount > 0 then
+        self.flash_fx.amount = self.flash_fx.amount-0.1*DTMULT
+    end
+
     if not self.red_mode then
         if self.start then
+            if self.sprite.frame == 1 then
+                self.flashed=false
+            end
+            if self.flash and self.sprite.frame==2 then
+                if not self.flashed then
+                    self.flashed = true
+                    self.flash_fx.amount = 0.5
+                end
+            end
             if self.shoot and self.sprite.frame==3 then
                 if not self.shooted then
                     self.shooted=true

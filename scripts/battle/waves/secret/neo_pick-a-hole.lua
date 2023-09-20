@@ -23,6 +23,7 @@ function Basic:onStart()
                 if i == shooter then
                     print("oh hi :D")
                     bullet.shoot = true
+                    bullet.flash = true
                 end
             end
         end
