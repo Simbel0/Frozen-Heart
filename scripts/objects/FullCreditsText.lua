@@ -9,8 +9,17 @@ function FullCredits:init(logo)
 		"Based on",
 		"DELTARUNE - Toby Fox & The DELTARUNE Team",
 
-		"Engine",
-		"Kristal - The KRISTAL Team",
+		"Kristal Engine",
+		"Nyakorita - Lead Developer",
+		"SylviBlossom - Lead Developer",
+		"Vitellary - Lead Developer",
+		"Agent7 - GitHub Contributor",
+		"Archie-osu - GitHub Contributor",
+		"Dobby233Liu - GitHub Contributor",
+		"Luna - GitHub Contributor",
+		"prokube - GitHub Contributor",
+		"AcousticJamm - GitHub Contributor",
+		"Simbel - GitHub Contributor",
 
 		"Musics",
 		"Flasback Excerpt - Toby Fox",
@@ -20,7 +29,7 @@ function FullCredits:init(logo)
 		"Until Next Time - Toby Fox",
 		"Astrogirl - Tsukumo Sana",
 		"Astrogirl (Music Box) - R3 Music Box",
-		"SnowGrave NEO - Netcavy",
+		"SnowGrave NEO - ShinkoNet",
 		"Deal Gone Wrong - Toby Fox",
 		"Deal Gone Wrong (Orchestral) - FAYNALY",
 		"GALLERY - Toby Fox",
@@ -35,11 +44,11 @@ function FullCredits:init(logo)
 		"Frozen Heart Logo - Soup Taels",
 
 		"Libraries",
-		"Queen Library - Nyako",
-		"Hangplug Library - Nyako",
-		"Spamton NEO Library - vitellary",
-		"Yellow Soul Library - vitellary",
-		"Particle System Library - vitellary",
+		"Queen Library - Sylvi, Vitellary",
+		"Hangplug Library - Sylvi",
+		"Spamton NEO Library - Vitellary",
+		"Yellow Soul Library - Vitellary",
+		"Particle System Library - Vitellary",
 		"Vending Machine Library - Simbel",
 		"Achievements Library - AcousticJamm, BrandonK7200, SciSpaceProductions",
 
@@ -99,7 +108,7 @@ function FullCredits:draw()
 	self.full_mode = false
 	love.graphics.setFont(self.font)
 
-	if self.text_y > -1755 then
+	if self.text_y > -2026 then
 		self.logo.y = self.logo.y - DTMULT
 		self.text_y = self.text_y - DTMULT
 	else

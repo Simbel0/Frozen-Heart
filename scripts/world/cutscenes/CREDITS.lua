@@ -60,7 +60,7 @@ return function(cutscene)
 
         cutscene:wait(wait_times[3])
 
-        text:setText("[color:555555]Music[color:reset]\nSnowgrave NEO\n\nNetcavy")
+        text:setText("[color:555555]Music[color:reset]\nSnowgrave NEO\n\nShinkoNet")
 
         cutscene:wait(wait_times[3])
 
