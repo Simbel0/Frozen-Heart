@@ -37,7 +37,7 @@ function preview:draw()
 		if self.menu.state == "FILESELECT" then
 			offset = 6
 			noelle = self.noelle_2
-			if self.menu.files and self.menu.files.focused_button then
+			if self.menu.files and (self.menu.files.focused_button and self.menu.files.state == "SELECT") then
 				noelle = self.noelle_3
 			end 
 		end
