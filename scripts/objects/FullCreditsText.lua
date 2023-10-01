@@ -35,7 +35,7 @@ function FullCredits:init(logo)
 		"GALLERY - Toby Fox",
 		"Destroy the Dark Power! - Yoko Shimomura",
 		"Soliloquy - FNF Corruption Reimagined",
-		"Full Credits Song - ???",
+		"Aftermatch - ToxicFlame",
 
 		"Sprites",
 		"Deltarune sprites - The DELTARUNE Team",
@@ -89,6 +89,9 @@ function FullCredits:init(logo)
 		"See you soon.",
 		"-Simbel"
 	}
+
+	self.music = Music("fullcredits")
+	self.music.source:setLooping(false)
 
 	self.full_mode = true
 

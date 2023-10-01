@@ -95,7 +95,8 @@ return function(cutscene)
     end)
     cutscene:wait(2)
     cutscene:wait(cutscene:fadeOut(2, {global=true, color={0, 0, 0}}))
-    cutscene:wait(1)
+    cutscene:wait(2)
     Kristal.Config["extras"] = true
+    Kristal.saveConfig()
     Kristal.returnToMenu()
 end
