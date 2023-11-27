@@ -81,6 +81,7 @@ end
 
 function Noelle_Battle:onReturnToWorld(events)
     if self.turns<30 then
+        Assets.playSound("sparkle_gem")
         Game:setFlag("spamton_boss", true)
     end
 end
@@ -310,7 +311,8 @@ function Noelle_Battle:onGameOver()
         Game.battle.cutscene:endCutscene()
         print("b")
         Game.battle:startCutscene(function(cutscene)
-            cutscene:wait(1)
+            cutscene:wait(3)
+            Assets.playSound("noise")
             self.noelle:setSprite("battle/defeat")
             cutscene:wait(5)
             cutscene:wait(cutscene:fadeOut(3))

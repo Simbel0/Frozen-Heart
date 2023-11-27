@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="40" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#1b1b2a" nextlayerid="11" nextobjectid="28">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="40" height="12" tilewidth="40" tileheight="40" infinite="0" backgroundcolor="#1b1b2a" nextlayerid="11" nextobjectid="46">
  <editorsettings>
   <export target="data.lua" format="lua"/>
  </editorsettings>
@@ -22,12 +22,6 @@
   <object id="22" x="304" y="406" width="40" height="74"/>
  </objectgroup>
  <objectgroup color="#ff00ff" id="6" name="objects">
-  <object id="10" name="susie_statue" x="165.461" y="257.685">
-   <point/>
-  </object>
-  <object id="11" name="ice-e cushion" x="405.063" y="249.548">
-   <point/>
-  </object>
   <object id="15" name="interactable" x="232" y="200" width="58" height="35">
    <properties>
     <property name="cutscene" value="interactable_noelle_room"/>
@@ -58,7 +52,7 @@
     <property name="id" type="int" value="5"/>
    </properties>
   </object>
-  <object id="20" name="transition" x="229.975" y="477.641" width="76.6585" height="17.6904">
+  <object id="20" name="transition" x="230" y="480" width="78" height="15">
    <properties>
     <property name="map" value="queen_mansion_4f_b"/>
     <property name="marker" value="out_noelle_room"/>
@@ -77,6 +71,19 @@
    <properties>
     <property name="cutscene" value="interactable_noelle_room"/>
     <property name="id" type="int" value="6"/>
+   </properties>
+  </object>
+  <object id="30" name="interactable" x="370" y="222" width="70" height="40">
+   <properties>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="7"/>
+   </properties>
+  </object>
+  <object id="31" name="interactable" x="145" y="235" width="60" height="35">
+   <properties>
+    <property name="cutscene" value="interactable_noelle_room"/>
+    <property name="id" type="int" value="8"/>
+    <property name="solid" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

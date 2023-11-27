@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.4",
+  tiledversion = "1.10.0",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 40,
@@ -9,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 28,
+  nextobjectid = 46,
   backgroundcolor = { 27, 27, 42 },
   properties = {},
   tilesets = {
@@ -26,6 +27,7 @@ return {
       image = "../../../../assets/sprites/tilesets/noelle_room_moon.png",
       id = 9,
       name = "moon",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = -100,
@@ -41,6 +43,7 @@ return {
       image = "../../../../assets/sprites/tilesets/noelle_room.png",
       id = 8,
       name = "room",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -56,6 +59,7 @@ return {
       draworder = "topdown",
       id = 4,
       name = "collisions",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -168,6 +172,7 @@ return {
       draworder = "topdown",
       id = 6,
       name = "objects",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -176,32 +181,6 @@ return {
       parallaxy = 1,
       properties = {},
       objects = {
-        {
-          id = 10,
-          name = "susie_statue",
-          type = "",
-          shape = "point",
-          x = 165.461,
-          y = 257.685,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 11,
-          name = "ice-e cushion",
-          type = "",
-          shape = "point",
-          x = 405.063,
-          y = 249.548,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
         {
           id = 15,
           name = "interactable",
@@ -287,10 +266,10 @@ return {
           name = "transition",
           type = "",
           shape = "rectangle",
-          x = 229.975,
-          y = 477.641,
-          width = 76.6585,
-          height = 17.6904,
+          x = 230,
+          y = 480,
+          width = 78,
+          height = 15,
           rotation = 0,
           visible = true,
           properties = {
@@ -331,6 +310,39 @@ return {
             ["cutscene"] = "interactable_noelle_room",
             ["id"] = 6
           }
+        },
+        {
+          id = 30,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 370,
+          y = 222,
+          width = 70,
+          height = 40,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 7
+          }
+        },
+        {
+          id = 31,
+          name = "interactable",
+          type = "",
+          shape = "rectangle",
+          x = 145,
+          y = 235,
+          width = 60,
+          height = 35,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "interactable_noelle_room",
+            ["id"] = 8,
+            ["solid"] = true
+          }
         }
       }
     },
@@ -339,6 +351,7 @@ return {
       draworder = "topdown",
       id = 5,
       name = "collisions_objects",
+      class = "",
       visible = false,
       opacity = 1,
       offsetx = 0,
@@ -406,6 +419,7 @@ return {
       draworder = "topdown",
       id = 7,
       name = "markers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -447,6 +461,7 @@ return {
       image = "../../../../assets/sprites/tilesets/noelle_ferris_wheel.png",
       id = 10,
       name = "ferris_wheel",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,

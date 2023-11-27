@@ -463,7 +463,7 @@ return {
         cutscene:text("* Like something terrible just happened.", "", "susie")
         cutscene:text("* Could it be that...?", "", "susie")
         cutscene:text("* ...Well I sure hope not.", "", "susie")
-        cutscene:text("* It's fucking terrifying...", "", "susie")
+        cutscene:text("* It's freaking terrifying...", "", "susie")
         CutMusic:stop()
         cutscene:text("[speed:0.75]* When your choices don't matter anymore.", "", "susie")
 
