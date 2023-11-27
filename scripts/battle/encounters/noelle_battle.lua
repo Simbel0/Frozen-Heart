@@ -77,6 +77,22 @@ function Noelle_Battle:onBattleStart()
         self.text = self:getEncounterText()
         self:quickBattle(false)
     end
+
+    self.old_health_amount = Game.battle.party[1].chara.health
+    local presence = Kristal.getPresence()
+    presence.details = "Fighting against Noelle"
+    presence.state = Game.battle.party[1].chara.health.."/"..Game.battle.party[1].chara.stats["health"].." HPs"
+    Kristal.setPresence(presence)
+    Game.battle.timer:every(1, function()
+        print("call")
+        if Game.battle.party[1].chara.health ~= self.old_health_amount then
+            print("change")
+            local presence = Kristal.getPresence()
+            presence.state = Game.battle.party[1].chara.health.."/"..Game.battle.party[1].chara.stats["health"].." HPs"
+            Kristal.setPresence(presence)
+            self.old_health_amount = Game.battle.party[1].chara.health
+        end
+    end)
 end
 
 function Noelle_Battle:onReturnToWorld(events)

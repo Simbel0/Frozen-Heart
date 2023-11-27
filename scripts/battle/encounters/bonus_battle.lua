@@ -77,6 +77,87 @@ function Bonus_Battle:onBattleStart()
     Game.battle.party[2].chara.stats["attack"]=18
     Game.battle.party[2].chara.stats["defense"]=2
     Game.battle.party[2].chara.stats["magic"]=3
+    self.old_health_amount = {}
+    local presence = Kristal.getPresence()
+    presence.details = "Fighting against Spamton NEO"
+
+    local message = "Doing well!"
+    local downed = 0
+    local max_hp = true
+    for i,member in ipairs(Game.battle.party) do
+        if member.is_down then
+            downed = downed + 1
+        end
+        if member.chara:getHealth() < member.chara:getStat("health") then
+            max_hp = false
+        end
+
+        table.insert(self.old_health_amount, member.chara:getHealth())
+    end
+
+    if max_hp then
+        message = "Doing perfect!"
+    elseif downed > 0 then
+        message = downed.." down."
+        if downed == 2 then
+            for i,member in ipairs(Game.battle.party) do
+                if not member.is_down then
+                    if member.chara:getHealth() < member.chara:getStat("health")/4 then
+                        message = message.." Almost dead!"
+                    end
+                    break
+                end
+            end
+        end
+    end
+
+    presence.state = message
+
+    Kristal.setPresence(presence)
+    Game.battle.timer:every(1, function()
+        local change = false
+        for i,member in ipairs(Game.battle.party) do
+            if member.chara:getHealth() ~= self.old_health_amount[i] then
+                change = true
+                break
+            end
+        end
+        if change then
+            print("change")
+            local presence = Kristal.getPresence()
+            local message = "Doing well!"
+            local downed = 0
+            local max_hp = true
+            for i,member in ipairs(Game.battle.party) do
+                if member.is_down then
+                    downed = downed + 1
+                end
+                if member.chara:getHealth() < member.chara:getStat("health") then
+                    max_hp = false
+                end
+            end
+
+            if max_hp then
+                message = "Doing perfect!"
+            elseif downed > 0 then
+                message = downed.." down."
+                if downed == 2 then
+                    for i,member in ipairs(Game.battle.party) do
+                        if not member.is_down then
+                            if member.chara:getHealth() <= Game.battle.party[1].chara:getStat("health")/4 then
+                                message = message.." Almost dead!"
+                            end
+                            break
+                        end
+                    end
+                end
+            end
+
+            presence.state = message
+
+            Kristal.setPresence(presence)
+        end
+    end)
 end
 
 function Bonus_Battle:onStateChange(old, new)

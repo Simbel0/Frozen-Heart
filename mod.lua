@@ -171,6 +171,40 @@ function Mod:postInit(newfile)
         print(data["is_secret_file"])
         return data
     end)]]
+
+    Utils.hook(Game, "gameOver", function(orig, self, x, y)
+        orig(self, x, y)
+        local presence = Kristal.getPresence()
+        presence.startTimestamp = nil
+        presence.details = "Game over!"
+
+        local messages = {
+            "ded",
+            "You suck",
+            "Man...",
+            "They tried their best.",
+            "👌",
+            "Their heart got frozen.",
+            "a",
+            "Press F in the chat gaymers"
+        }
+
+        presence.state = Utils.pick(messages)
+        Kristal.setPresence(presence)
+    end)
+
+    Utils.hook(World, "loadMap", function(orig, self, ...)
+        orig(self, ...)
+
+        local presence = Kristal.getPresence()
+        presence.details = "In the Overworld"
+        if Game.world.map.id ~= "redemption_egg" then
+            presence.state = Game.world.map.name or "Queen's Mansion"
+        else
+            presence.state = "He has something for you."
+        end
+        Kristal.setPresence(presence)
+    end)
 end
 
 --[[function Mod:save(data)
@@ -182,13 +216,33 @@ end
     end
     print(data["is_secret_file"])
     return data
-end
+end]]
 
 function Mod:load(data, newfile, index)
-    print("Loading")
-    print(Game:getFlag("plot", 0)==2, Game:getFlag("noelle_battle_status", nil)==nil)
-    self.old_data = data
-end]]
+    --if not newfile and Game:getFlag("plot") == 3 then
+    --    print("what")
+    --    local presence = Kristal.getPresence()
+
+    --    presence.details = "In the Overworld"
+    --    presence.state = Game.world.map.name or "Queen's Mansion"
+
+    --    Kristal.setPresence(presence)
+    --end
+end
+
+function Mod:getPresenceState()
+    if Game:getFlag("plot") == 3 then
+        return Game.world.map.name or "Queen's Mansion"
+    end
+    return nil
+end
+
+function Mod:getPresenceDetails()
+    if Game:getFlag("plot") == 3 then
+        return "In the Overworld"
+    end
+    return nil
+end
 
 function Mod:getKristalID(id, type)
     return self.kristal_ids[type][id]
