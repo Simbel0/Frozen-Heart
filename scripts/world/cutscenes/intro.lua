@@ -1,6 +1,11 @@
 return {
     goner=function(cutscene)
         love.window.setTitle("RECONTACT")
+        local presence = Kristal.getPresence()
+        presence.state = "RECONTACT"
+        presence.details = (love.math.random(1,100)==1 and "Bottom Text" or "")
+        Kristal.setPresence(presence)
+
         cutscene:fadeOut(0)
 
         gonerMusic=Music("AUDIO_DRONE")
@@ -277,6 +282,9 @@ return {
     end,
     intro=function(cutscene)
         cutscene:fadeOut(0)
+        local presence = Kristal.getPresence()
+        presence.state = Kristal.callEvent("getPresenceState") or ("Playing " .. (Kristal.getModOption("name") or "a mod"))
+        presence.details = Kristal.callEvent("getPresenceDetails")
 
         cutscene:wait(2)
 

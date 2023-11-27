@@ -4,6 +4,14 @@ return {
 		love.window.setTitle("Frozen Heart")
         Game:setFlag("plot", 10)
 
+        Kristal.setPresence({
+            details = "In the Overworld",
+            largeImageKey = "logo_alt",
+            largeImageText = "Kristal v" .. tostring(Kristal.Version),
+            startTimestamp = os.time(),
+            instance = 1
+        })
+
         Game.party[1]:removeSpell("tension_absorb")
 
         cutscene:wait(2)
@@ -962,6 +970,15 @@ return {
         Game.party[1].health = Game.party[1].stats.health
 
         cutscene:loadMap("end")
+
+        local p = Kristal.getPresence()
+        Kristal.setPresence({
+            details = "At the end",
+            largeImageKey = "logo_end",
+            largeImageText = "Kristal v" .. tostring(Kristal.Version),
+            startTimestamp = p.startTimestamp,
+            instance = p.instance
+        })
 
         local overlay = Sprite("overlay")
         overlay:setLayer(WORLD_LAYERS["below_textbox"])
