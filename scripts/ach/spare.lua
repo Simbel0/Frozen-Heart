@@ -3,10 +3,10 @@ local Ach, super = Class(Achievement)
 function Ach:init()
     super:init(self)
     
-    self.name = "Felling better around you" -- Display name
+    self.name = "Feeling better around you" -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
-    self.icon = "achievements/dummy" -- Normal icon
+    self.icon = "achievements/mercy" -- Normal icon
     self.desc = "Get the Sparing Ending" -- Description
     self.hint = nil -- If info hidden is true then this will show up in place of description, used for hints
     self.hidden = false -- Doesn't show up in the menu if not collected

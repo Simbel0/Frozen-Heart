@@ -6,7 +6,7 @@ function Ach:init()
     self.name = "I did bad, but now I'm good" -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
-    self.icon = "achievements/dummy" -- Normal icon
+    self.icon = "achievements/mercykill" -- Normal icon
     self.desc = "Get the Violent Sparing Ending" -- Description
     self.hint = nil -- If info hidden is true then this will show up in place of description, used for hints
     self.hidden = false -- Doesn't show up in the menu if not collected

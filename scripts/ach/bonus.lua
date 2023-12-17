@@ -6,7 +6,7 @@ function Ach:init()
     self.name = "[[LAST SHOT]]" -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
-    self.icon = "achievements/dummy" -- Normal icon
+    self.icon = "achievements/bonus" -- Normal icon
     self.desc = "Win the bonus fight" -- Description
     self.hint = "Maybe you need to meet a few requirements before this." -- If info hidden is true then this will show up in place of description, used for hints
     self.hidden = true -- Doesn't show up in the menu if not collected

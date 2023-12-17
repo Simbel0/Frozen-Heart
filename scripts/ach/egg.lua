@@ -6,7 +6,7 @@ function Ach:init()
     self.name = "May I give you an egg in those trying time?" -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
-    self.icon = "achievements/dummy" -- Normal icon
+    self.icon = "achievements/egg" -- Normal icon
     self.desc = "Get the Egg" -- Description
     self.hint = "Somewhere, a man is happy that you changed your path. He has something for you now." -- If info hidden is true then this will show up in place of description, used for hints
     self.hidden = true -- Doesn't show up in the menu if not collected
