@@ -600,12 +600,12 @@ function secret_battle:onTurnEnd()
                 cutscene:text("* Like..[wait:3] really...", "shy_down", "susie")
                 cutscene:text("* Fine Kris.[wait:3] I understand.", "crazy-neutral", "noelle")
                 cutscene:text("* Maybe it wasn't enough to remind you of what we did.", "crazy-side", "noelle")
-                cutscene:text("* Then watch me forcing him to [func:kris_shake]proceed.", "crazy-snow", "noelle", {functions={
+                cutscene:text("* Then watch me follow in your tracks[func:kris_shake]!", "crazy-snow", "noelle", {functions={
                     kris_shake=function()
                         cutscene:getCharacter("kris"):shake(2)
                     end
                 }})
-                cutscene:text("* I-..[wait:3] I didn't sign up for this..![react:1]", "sweat", "berdly", {reactions={
+                cutscene:text("* I-..[wait:3] I didn't sign up for this...![react:1]", "sweat", "berdly", {reactions={
                     {"You think any of\nus did??", "right", "bottommid", "teeth_b", "susie"}
                 }})
             end
