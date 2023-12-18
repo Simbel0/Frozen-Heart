@@ -205,6 +205,8 @@ function Mod:postInit(newfile)
         end
         Kristal.setPresence(presence)
     end)
+
+    Game:setFlag("altPull", Kristal.Config["altPull"])
 end
 
 --[[function Mod:save(data)
