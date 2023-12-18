@@ -123,7 +123,6 @@ function Bonus_Battle:onBattleStart()
             end
         end
         if change then
-            print("change")
             local presence = Kristal.getPresence()
             local message = "Doing well!"
             local downed = 0
