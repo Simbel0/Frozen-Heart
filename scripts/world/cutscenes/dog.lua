@@ -1,7 +1,7 @@
 return function(cutscene)
 	cutscene:fadeOut(0)
 	love.window.setTitle("Dogtal")
-	maracas = Utils.random()<=0.95
+	maracas = Utils.random()>=0.95
 	print(maracas)
 	local dog = Sprite(maracas and "kristal/dog_maracas" or "kristal/dog", SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
 	dog:setOrigin(0.5, 0.5)
