@@ -92,11 +92,11 @@ end
 
 function Mod:postInit(newfile)
 
-    --[[if self.secretFight and not Kristal.Config["canAccessSecret"] then
+    if self.secretFight and not Kristal.Config["canAccessSecret"] then
         Game:setFlag("plot", -1)
         Game.world:loadMap("dog")
         return
-    end]]
+    end
     
     -- The last resort
     --[[
