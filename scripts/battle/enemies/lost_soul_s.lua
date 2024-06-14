@@ -79,7 +79,7 @@ function Lost_Soul_S:init()
         "* Noelle laughs from afar.",
         "* Noelle notices your despair.",
         "* It's the end.",
-        "* The ice is as fresh as it is solid."
+        "* The ice is freshly solid."
     }
 
     self.deal = 0

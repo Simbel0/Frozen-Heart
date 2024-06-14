@@ -81,7 +81,7 @@ function Memories:init()
         {
             vec4 pixel = Texel(tex, texture_coords);
 
-            float gray = (pixel.r+pixel.g+pixel.b)/3;
+            float gray = dot(pixel.rgb, vec3(0.299, 0.587, 0.114));
 
             return vec4(gray, gray, gray, color.a*pixel.a);
         }

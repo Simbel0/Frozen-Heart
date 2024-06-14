@@ -44,7 +44,7 @@ function Lost_Soul_B:init()
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {
         "* The Lost Soul is silent.\n* It feels unusual.",
-        "* The Lost Soul tried to summons allies.[wait:3]\n* But nobody came.",
+        "* The Lost Soul tried to summon allies.[wait:3]\n* But nobody came.",
         "* Smells like frozen chicken.",
         "* Noelle looks at Kris from afar.",
         ""

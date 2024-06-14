@@ -29,7 +29,7 @@ function ring_noelle:init()
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
 
-    self.tired_percentage = 0
+    self.tired_percentage = -999
 
     -- Dialogue randomly displayed in the enemy's speech bubble
     --self.dialogue = {

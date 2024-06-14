@@ -3,7 +3,7 @@ local AchievementPopUp, super = Class(Object)
 function AchievementPopUp:init(achievement)
     super:init(self, SCREEN_WIDTH, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
 	
-	self.achievement = Kristal.callEvent("getAchievement", achievement)
+	self.achievement = Kristal.callEvent("getAchievement", achievement) or achievement
 	
 	self.icon = self.achievement.icon
 	self.rarity = self.achievement.rarity

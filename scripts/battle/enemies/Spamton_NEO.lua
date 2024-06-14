@@ -275,7 +275,7 @@ function Spamton_NEO:getEnemyDialogue()
         elseif d==4 then
             return {
                 "SO WHY KRIS?",
-                "WHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?\nWHY?",
+                "WHY? WHY? WHY? WHY? WHY?\nWHY? WHY? WHY? WHY? WHY? WHY?\nWHY? WHY? WHY? WHY? WHY? WHY?",
                 "...[wait:2]Why did you\nleave me behind\ntoo...?"
             }
         elseif d==5 then
@@ -293,7 +293,7 @@ function Spamton_NEO:getEnemyDialogue()
             return {
                 "DOESn4T IT SOUND\n[Satisfied or\nSatisfied]??",
                 "YOU'LL STILL HAVE [Mean Girl],\n[Hoochi Mama] and [Frozen Chicken]\nALONGSIDE YOU!!",
-                "WELL MAYBE NOT\nTHE [3rd] ONE"
+                "WELL MAYBE NOT\nTHE LAST ONE"
             }
         elseif d==8 then
             return {
