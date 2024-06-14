@@ -5,7 +5,7 @@ function End:init()
 
     self.text = ""
 
-    self.music = "soliloquy"
+    self.music = "memories"
     self.background = false
 
     self.memories = self:addEnemy("memories")
@@ -62,7 +62,7 @@ function End:update()
             end
             if battler.chara:getHealth() == 0 then
                 Game.battle.timer:tween(3, self.alpha_fx, {alpha=0})
-                Game.battle.music:fade(0, 3)
+                --Game.battle.music:fade(0, 3)
             end
         end
     end

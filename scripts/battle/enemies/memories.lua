@@ -3,12 +3,13 @@ local Memories, super = Class(EnemyBattler)
 function Memories:init()
     super:init(self)
 
+    self.music = Music()
+
     -- Enemy name
     self.name = ""
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("dummy")
     self.actor.path = "enemies/memories"
-    self:setSprite("dummy")
     self.alpha = 0
 
     self.actor.offsets["spamton"] = {0, 10}
@@ -88,13 +89,19 @@ function Memories:init()
 
     self.remember = 0
     self:registerAct("Remember")
+
+    self:setSprite("dummy")
 end
 
 function Memories:onAct(battler, name)
     if name == "Remember" then
         self.remember = self.remember + 1
         if Game.party[1].health < Game.party[1].stats.health then
-            Game.party[1]:heal(math.ceil(166/3))
+            local amount = math.ceil(166/3)
+            if self.remember == 25 then
+                amount = 999
+            end
+            Game.party[1]:heal(amount)
         end
 
         local path = "secret/memories/"
@@ -276,6 +283,10 @@ function Memories:onAct(battler, name)
         --Dess
         if self.remember == 25 then
             Game.battle:startActCutscene(function(cutscene)
+                Game.battle.music:stop()
+                self.music:play("memories_dess", 1, 1)
+                self.music.source:setLooping(false)
+
                 self.encounter.ending = true
                 local wait, text = cutscene:text("[noskip]* [speed:0.1]...............", {wait=false})
                 cutscene:wait(function()
@@ -311,10 +322,19 @@ end
 function Memories:setSprite(sprite, speed, loop, after)
     if sprite == "dummy" then
         self:fadeTo(0, 3, function() super:setSprite(self, sprite, speed, loop, after) end)
+        if self.remember < 25 then
+            self.music:fade(0, 3)
+        end
     else
         super:setSprite(self, sprite, speed, loop, after)
         self:fadeTo(1, 3)
+        if self.remember < 25 then
+            self.music:play("memories_"..sprite, 0)
+            self.music:seek(Game.battle.music:tell())
+            self.music:fade(0.85, 3)
+        end
     end
+
     self.rect_x = (self.rect_pos and self.rect_pos[sprite]) and self.rect_pos[sprite][1] or self.rect_x
     self.rect_y = (self.rect_pos and self.rect_pos[sprite]) and self.rect_pos[sprite][2] or self.rect_y
 end

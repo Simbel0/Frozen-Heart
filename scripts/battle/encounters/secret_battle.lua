@@ -7,7 +7,7 @@ function secret_battle:init()
     self.text = "* Snow fills your vision."
 
     -- Battle music ("battle" is rude buster)
-    self.music = "alt"
+    self.music = "frozen_heart_intro"
     -- Enables the purple grid battle background
     self.background = false
 
@@ -54,10 +54,21 @@ function secret_battle:update()
     if self.intro and Game.battle.music.source then
         local progress = Game.battle.music:tell()
         print(progress, math.floor(progress), math.ceil(progress))
+
+        if Game:getFlag("allow_music_skip", false) and self.skip_text then
+            if Input.pressed("menu", false) and math.ceil(progress) < 28 then
+                self.skip_text:remove()
+                self.skip_text = nil
+                Game.battle.music:seek(27)
+            end
+        end
+
         if math.ceil(progress)==28 and not self.fade_out_intro then
             Game.fader:fadeOut(nil, {color={1, 1, 1}, speed=1})
             self.fade_out_intro = true
         elseif math.ceil(progress)==31 then
+            Game.battle.music:play("frozen_heart")
+
             self.fog:remove()
             self.default_xactions = true
             self.noelle.name = "Noelle"
@@ -363,6 +374,14 @@ function secret_battle:onBattleStart()
             Kristal.setPresence(presence)
         end
     end)
+
+    if Game:getFlag("allow_music_skip", false) then
+        self.skip_text = DialogueText("Press "..Input.getText("menu").." to skip.", 10, 5)
+        self.skip_text:setColor(0, 0, 0, 1)
+        self.skip_text:setLayer(BATTLE_LAYERS["top"])
+        self.skip_text.state["typing_sound"] = nil
+        Game.battle:addChild(self.skip_text)
+    end
 end
 
 function secret_battle:getNextWaves()
@@ -469,7 +488,7 @@ end
 
 function secret_battle:getEncounterText()
     if self.final and not self.final_passed then
-        Assets.playSound("break2")
+        Assets.playSound("break2", 2)
         return "* The biggest snowstorm is coming!"
     end
     return super.getEncounterText(self)

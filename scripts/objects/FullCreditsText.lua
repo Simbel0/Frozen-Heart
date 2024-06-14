@@ -9,7 +9,7 @@ function FullCredits:init(logo)
 		"Based on",
 		"DELTARUNE - Toby Fox & The DELTARUNE Team",
 
-		"Kristal Engine",
+		"Kristal Engine v0.8.1",
 		"Nyakorita - Lead Developer",
 		"SylviBlossom - Lead Developer",
 		"Vitellary - Lead Developer",
@@ -33,9 +33,9 @@ function FullCredits:init(logo)
 		"Deal Gone Wrong - Toby Fox",
 		"Deal Gone Wrong (Orchestral) - FAYNALY",
 		"GALLERY - Toby Fox",
-		"Destroy the Dark Power! - Yoko Shimomura",
-		"Soliloquy - FNF Corruption Reimagined",
-		"Aftermatch - ToxicFlame",
+		"Freezing Burns - BonwtrixARTS",
+		"Warm Memories - Glazko (Razor Xo)",
+		"A Cold World - ToxicFlame",
 
 		"Sprites",
 		"Deltarune sprites - The DELTARUNE Team",

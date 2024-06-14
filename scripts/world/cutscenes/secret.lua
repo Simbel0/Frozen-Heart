@@ -701,6 +701,7 @@ return {
         cutscene:panTo(320, 240, 0)
         noelle.sprite.alpha = 0
         Game:setFlag("plot", 11)
+        Game:setFlag("allow_music_skip", true)
         Game:saveQuick()
         cutscene:startEncounter("secret_battle", false, nil, {on_start=function()
             queen.alpha = 0
