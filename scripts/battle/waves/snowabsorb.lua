@@ -12,6 +12,7 @@ end
 
 function snowAbsorb:onStart()
     -- Every 0.33 seconds...
+    Game.battle.soul.inv_timer = 3
     bigBullet = self:spawnBullet("snowflakeBullet", Game.battle.arena.left+142/2, Game.battle.arena.top+142/2, 0, 0, false, 0, false)
     bigBullet.alpha=0
     bigBullet.destroy_on_hit=false

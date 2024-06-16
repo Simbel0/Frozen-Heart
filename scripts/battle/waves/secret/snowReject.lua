@@ -8,11 +8,12 @@ function snowReject:init()
 end
 
 function snowReject:onStart()
+    Game.battle.soul.inv_timer = 1.5
     bigBullet = self:spawnBullet("snowflakeBullet", Game.battle.arena.left+142, Game.battle.arena.top+142, 0, 0, false, 0, false)
+    bigBullet.damage=0
     bigBullet.alpha=0
     bigBullet.destroy_on_hit=false
     bigBullet.tp=0
-    bigBullet.damage=0
     self.timer:script(function(wait)
         self.timer:tween(1.5, bigBullet, {alpha=1, scale_x=1, scale_y=1})
         wait(2)
