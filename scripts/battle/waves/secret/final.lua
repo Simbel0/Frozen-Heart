@@ -147,7 +147,7 @@ function Final:onStart()
 	        Assets.playSound("snd_swing")
 	        local value = 3
 	        while value>-4 do
-	        	radius = radius + value
+	        	radius = radius + value*DTMULT
 	        	value = value - 0.1*DTMULT
 
 	        	for i,bullet in ipairs(self.bullets) do
