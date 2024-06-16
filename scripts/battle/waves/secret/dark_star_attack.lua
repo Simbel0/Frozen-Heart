@@ -41,7 +41,7 @@ function dark_star_attack:onStart()
         self.can_jump = true
         Game.battle.arena:remove()
         wait(0.5)
-        Game.battle:infoText("* ([color:"..Utils.rgbToHex({Game.battle.party[1].chara:getColor()}).."]"..Input.getText("up").."+[K]->Kris jumps![color:reset]\n[color:"..Utils.rgbToHex({Game.battle.party[2].chara:getColor()}).."]"..Input.getText("up").."+[S]->Susie jumps![color:reset]\n[color:"..Utils.rgbToHex({Game.battle.party[3].chara:getColor()}).."]"..Input.getText("up").."+[R]->Ralsei jumps![color:reset])")
+        Game.battle:infoText("* ([color:"..Utils.rgbToHex({Game.battle.party[1].chara:getColor()}).."]"..Input.getText("up").."+[X]->Kris jumps![color:reset]\n[color:"..Utils.rgbToHex({Game.battle.party[2].chara:getColor()}).."]"..Input.getText("up").."+[C]->Susie jumps![color:reset]\n[color:"..Utils.rgbToHex({Game.battle.party[3].chara:getColor()}).."]"..Input.getText("up").."+[V]->Ralsei jumps![color:reset])")
         for i=1,5 do
             local bullet = self:spawnBullet("snowflakeBullet", ((SCREEN_WIDTH/2)-42)+(50*i-5), ((SCREEN_HEIGHT/2)-50)+(5*i-1), 0, 0)
             bullet:setScale(0)
@@ -83,7 +83,7 @@ function dark_star_attack:update()
     -- Code here gets called every frame
 
     if self.can_jump then
-        if not self.is_jumping[1] and Input.down("up") and Input.down("k") then
+        if not self.is_jumping[1] and Input.down("up") and Input.down("x") then
             print("Kris jumped!")
             self.is_jumping[1] = true
             local kris = Game.battle.party[1]
@@ -109,7 +109,7 @@ function dark_star_attack:update()
                     self.soul_jump_timer = self.timer:tween(0.5, Game.battle.soul, {y=Game.battle.soul.y+70}, "in-quad")
                 end)
             end
-        elseif not self.is_jumping[2] and Input.down("up") and Input.down("s") then
+        elseif not self.is_jumping[2] and Input.down("up") and Input.down("c") then
             print("Susie jumped!")
             self.is_jumping[2] = true
             local susie = Game.battle.party[2]
@@ -135,7 +135,7 @@ function dark_star_attack:update()
                     self.soul_jump_timer = self.timer:tween(0.5, Game.battle.soul, {y=Game.battle.soul.y+70}, "in-quad")
                 end)
             end
-        elseif not self.is_jumping[3] and Input.down("up") and Input.down("r") then
+        elseif not self.is_jumping[3] and Input.down("up") and Input.down("v") then
             print("Ralsei jumped!")
             self.is_jumping[3] = true
             local ralsei = Game.battle.party[3]
