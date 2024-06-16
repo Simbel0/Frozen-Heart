@@ -98,6 +98,7 @@ function PlugSpark:draw()
 end
 
 function PlugSpark:onDamage(soul)
+    if Game.world:hasCutscene() then return end
     super:onDamage(self, soul)
     Game:addFlag("hangplug_hits", 1)
     if Game:getFlag("hangplug_hits", 1)>=5 then
