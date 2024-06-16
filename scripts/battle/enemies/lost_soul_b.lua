@@ -24,6 +24,7 @@ function Lost_Soul_B:init()
 
     -- Mercy given when sparing this enemy before its spareable (20% for basic enemies)
     self.spare_points = 0
+    self.exit_on_defeat = false
 
     self.tired_percentage = -1
 
@@ -107,6 +108,16 @@ function Lost_Soul_B:hurt(amount, battler, on_defeat, color)
 
     --No need to check if Berdly is dead or not. He is.
     --self:checkHealth(on_defeat, amount, battler)
+end
+
+function Lost_Soul_B:getSpareText(battler, success)
+    local text = super:getSpareText(self, battler, success)
+
+    if success then
+        text = {text.."[wait:10]\n* But Berdly can't leave the battle..."}
+    end
+
+    return text
 end
 
 return Lost_Soul_B
