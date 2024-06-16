@@ -39,7 +39,7 @@ return {
 		cutscene:text("* Sure.[wait:1] I'll come along!", "blush_smile", "noelle")
 		cutscene:text("* Nice,[wait:1] let's go then!", "sincere_smile", "susie")
 		Assets.playSound("charjoined")
-		cutscene:text("* Noelle has joined the party!")
+		cutscene:text("[voice:default]* Noelle has joined the party!")
 
 		noelle.actor.default = "walk_blush"
 		noelle:setSprite("walk_blush")
@@ -50,6 +50,7 @@ return {
 		cutscene:wait(cutscene:attachCamera(1))
 		Game.inventory:addItem("thornring")
 		Game:setFlag("plot", 3)
+		Game:saveQuick()
 	end,
 	thorn_kill=function(cutscene)
 		Kristal.callEvent("completeAchievement", "thorn")
@@ -185,6 +186,7 @@ return {
 		cutscene:wait(0.5)
 		Game.inventory:addItem("thornring")
 		Game:setFlag("plot", 3)
+		Game:saveQuick()
 	end,
 	killkill=function(cutscene)
 		Kristal.callEvent("completeAchievement", "violence")

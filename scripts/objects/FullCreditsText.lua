@@ -50,7 +50,7 @@ function FullCredits:init(logo)
 		"Yellow Soul Library - Vitellary",
 		"Particle System Library - Vitellary",
 		"Vending Machine Library - Simbel",
-		"Achievements Library - AcousticJamm, BrandonK7200, SciSpaceProductions",
+		"Achievements Library - AcousticJamm, BrendaK7200, SciSpaceProductions",
 
 		"",
 		"w/Betatesters",

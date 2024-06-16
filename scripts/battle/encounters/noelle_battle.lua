@@ -94,7 +94,8 @@ function Noelle_Battle:onBattleStart()
 end
 
 function Noelle_Battle:onReturnToWorld(events)
-    if self.turns<30 then
+    print(Game:getFlag("noelle_battle_status", ""))
+    if self.turns<30 and Game:getFlag("noelle_battle_status", "") == "no_trance" then
         Assets.playSound("sparkle_gem")
         Game:setFlag("spamton_boss", true)
     end
