@@ -15,7 +15,7 @@ function soundwave:init(x, y, speed, flip, aim_player, rot_offset)
         self.sprite.color=COLORS.aqua
     end]]
 
-    print(math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+4)
+    --print(math.deg(Utils.angle(self.x, self.y, Game.battle.soul.x, Game.battle.soul.y))+4)
     rot_offset = rot_offset or 0
 
     self.physics.speed=speed

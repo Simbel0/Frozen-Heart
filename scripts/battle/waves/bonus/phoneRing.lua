@@ -8,7 +8,7 @@ function phoneRing:init()
 end
 
 function phoneRing:onStart()
-    self:spawnBullet("neo/phone", 470, -20, self.mode==1 and 1/4 or 1/3)
+    self:spawnBullet("neo/phone", 470, -20, self.mode==1 and 1/4 or 1/6)
 end
 
 function phoneRing:update()

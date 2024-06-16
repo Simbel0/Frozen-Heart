@@ -43,15 +43,35 @@ function phone:update()
                     self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 10, false, false)
                     self.sound_fired=true
                 else
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 14, false, true)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 12, false, true)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 14, false, true)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, true)
+                    local bullets = {}
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 6, false, true))
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 6, false, true))
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, true))
+                    --self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, true)
 
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 14, false, false)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 12, false, false)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 14, false, false)
-                    self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 12, false, false)
+                    --self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 12, false, false)
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y+10, 6, false, true))
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 6, false, true))
+                    table.insert(bullets, self.wave:spawnBullet("neo/soundbullet", self.x, self.y-self.sprite.height, 6, false, true))
+
+                    print(#bullets)
+                    --[[local b = table.remove(bullets, love.math.random(1, #bullets))
+                    print(b)
+                    if b then --???
+                        b.rotation = b.rotation + math.rad(Utils.random(-5, 5))
+                        b.physics.speed = 11
+                    end
+
+                    local b2 = table.remove(bullets, love.math.random(1, #bullets))
+                    print(b2)
+                    if b2 then --???
+                        b2.rotation = b2.rotation + math.rad(Utils.random(-5, 5))
+                        b2.physics.speed = 11
+                    end]]
+                    for i,v in ipairs(bullets) do
+                        v.rotation = v.rotation + math.rad(Utils.random(-7, 7))
+                    end
+
                     self.sound_fired=true
                 end
             end
