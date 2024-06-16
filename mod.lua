@@ -206,6 +206,10 @@ function Mod:postInit(newfile)
         Kristal.setPresence(presence)
     end)
 
+    Utils.hook(Spell, "getTarget", function(orig, self)
+        return self.target
+    end)
+
     Game:setFlag("altPull", Kristal.Config["altPull"])
 end
 

@@ -461,21 +461,31 @@ function Battle:onKeyPressed(key)
                     self.ui_select:stop()
                     self.ui_select:play()
 
-                    if menu_item.data.target == "xact" then
+                    local target
+                    if menu_item.data.getTarget then
+                        target = menu_item.data:getTarget()
+                    else
+                        target = menu_item.data.target
+                    end
+                    print(menu_item.data.name, target)
+
+                    if target == "xact" then
                         self.selected_xaction = menu_item.data
                         self:setState("XACTENEMYSELECT", "SPELL")
-                    elseif not menu_item.data.target or menu_item.data.target == "none" then
+                    elseif not target or target == "none" then
                         self:pushAction("SPELL", nil, menu_item)
-                    elseif menu_item.data.target == "ally" then
+                    elseif target == "ally" then
                         self:setState("PARTYSELECT", "SPELL")
-                    elseif menu_item.data.target == "enemy" then
+                    elseif target == "enemy" then
                         self:setState("ENEMYSELECT", "SPELL")
-                    elseif menu_item.data.target == "party" then
+                    elseif target == "party" then
                         self:pushAction("SPELL", self.party, menu_item)
-                    elseif menu_item.data.target == "enemies" then
+                    elseif target == "enemies" then
                         self:pushAction("SPELL", self:getActiveEnemies(), menu_item)
-                    elseif menu_item.data.target == "all" then
+                    elseif target == "all" then
                         self:setState("ALLSELECT", "SPELL")
+                    else
+                        error("Invalid target type used: "..target)
                     end
                 end
                 return
