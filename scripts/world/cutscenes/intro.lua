@@ -285,6 +285,7 @@ return {
         local presence = Kristal.getPresence()
         presence.state = Kristal.callEvent("getPresenceState") or ("Playing " .. (Kristal.getModOption("name") or "a mod"))
         presence.details = Kristal.callEvent("getPresenceDetails")
+        Kristal.setPresence(presence)
 
         cutscene:wait(2)
 
@@ -413,6 +414,11 @@ return {
 
             return false
         end
+
+        local presence = Kristal.getPresence()
+        presence.state = Kristal.callEvent("getPresenceState") or ("Playing " .. (Kristal.getModOption("name") or "a mod"))
+        presence.details = Kristal.callEvent("getPresenceDetails")
+        Kristal.setPresence(presence)
 
         cutscene:fadeOut(0.1)
         cutscene:detachCamera()

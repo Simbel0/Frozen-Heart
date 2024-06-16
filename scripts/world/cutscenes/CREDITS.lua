@@ -110,7 +110,6 @@ return function(cutscene)
         if not Kristal.Config["canAccessSecret"] then
             Kristal.Config["canAccessSecret"] = true
             Kristal.Config["secret_unlocked"] = true
-            Kristal.saveConfig()
             Mod.registerSecret = true
             local data
             if Kristal.hasSaveFile() then
@@ -126,7 +125,6 @@ return function(cutscene)
                 data["is_secret_file"] = true
                 Kristal.Config["secret_file_data"] = data
                 Kristal.Config["secret_file_data"].id = Game.save_id
-                Kristal.saveConfig()
             end
             yellow_text = "You have unlocked\nan alternative fight!"
         else
@@ -147,6 +145,9 @@ return function(cutscene)
         return not theme:isPlaying()
     end)
 
+    Kristal.Config["beat_once"] = true
+    Kristal.saveConfig()
+    
     Kristal:returnToMenu()
 end
 

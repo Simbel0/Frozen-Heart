@@ -25,10 +25,24 @@ return function(cutscene)
 	local nextCut="intro.goner"
 	if skip then
 		cutscene:text("* Would you like to see the goner intro again?")
-		local c=cutscene:choicer({"Yes", "No"})
+        local choices = {"Yes", "No"}
+
+        if (Kristal.Config["canAccessSecret"] or Kristal.Config["extras"] or Kristal.Config["allclear_scene"]) and not Kristal.Config["beat_once"] then
+            Kristal.Config["beat_once"] = true
+            Kristal.saveConfig()
+        end
+
+        if Kristal.Config["beat_once"] then
+            table.insert(choices, "Skip Intro")
+        end
+        
+		local c=cutscene:choicer(choices)
 		print(c)
 		if c==2 then
 			nextCut="intro.intro"
+        elseif c == 3 then
+            Game:setFlag("plot", 2)
+            nextCut = "intro.quickintro"
 	    end
 	end
 
