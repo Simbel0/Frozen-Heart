@@ -97,7 +97,7 @@ function Final:onStart()
 				    	self:spawnBullet("secret/stallactic", x, y, math.rad(270), 15)
 			    	end)
 			    	delay_timer = 0
-			    	delay = delay - 2
+			    	delay = delay - 4
 			    end
 		    end)
 		    while delay >= 20 do
@@ -129,7 +129,7 @@ function Final:onStart()
 	            bullet.remove_offscreen = false
 	        end
 	        while radius>=100 do
-	        	radius = radius - 1*DTMULT
+	        	radius = radius - 2*DTMULT
 
 	        	for i,bullet in ipairs(self.bullets) do
 	        		local x = SCREEN_WIDTH/2 + math.cos(angle * i) * radius
@@ -206,7 +206,7 @@ function Final:onStart()
 	        self.tornado1:setLayer(BATTLE_LAYERS["top"])
 	        self.tornado2:setLayer(BATTLE_LAYERS["top"])
 	        local final = self.timer:everyInstant(2, function()
-	        	for i=1,SCREEN_HEIGHT/10, 3 do
+	        	for i=1,SCREEN_HEIGHT/10, 4 do
 	        		local bullet = self:spawnBullet("lonelySnow", self.tornado1.x, 10*i, math.rad(Utils.random(-60, 60)), 2)
 	        		bullet.remove_offscreen = false
 	        		bullet = self:spawnBullet("lonelySnow", self.tornado2.x, 10*i, math.rad(Utils.random(120, 250)), 2)
