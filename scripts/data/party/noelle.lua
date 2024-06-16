@@ -63,4 +63,15 @@ function character:onEquip(item, item2)
     return super:onEquip(self, item, item2)
 end
 
+function character:getGameOverMessage(main)
+    if Game.world.map.id == "queen_mansion_4f_c" then
+        return {
+            "Su-[wait:3]Susie??",
+            "Why??[wait:5] Why did\nyou do that??",
+            "[shake:1]Pl-[wait:3]Please...[wait:5]\nWake up...!"
+        }
+    end
+    return super:getGameOverMessage(self, main)
+end
+
 return character

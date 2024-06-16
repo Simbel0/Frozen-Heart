@@ -24,6 +24,13 @@ function character:onTurnStart(battler)
 end
 
 function character:getGameOverMessage(main)
+    if Game.world.map.id == "queen_mansion_4f_c" then
+        return {
+            "Are you serious?!",
+            "You JUST wanted to\nsee what happens,[wait:5]\ndidn't you??",
+            "...[wait:5]Whatever."
+        }
+    end
     return {
         "Come on,[wait:5]\nthat all you got!?",
         main.name..",[wait:5]\nget up...!"
