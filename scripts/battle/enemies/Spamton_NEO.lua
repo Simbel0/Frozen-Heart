@@ -63,6 +63,7 @@ function Spamton_NEO:init()
         {"[Hoochi Mama]!! I HAVE\nA [Gift] FOR YOU!!!", "CAN YOU FEEL\n[Wipe My Save]??"},
         {"KRIS, LOOK AT THOSE [E-Mail Guy]\nREVIEW JUST FOR YOU!!", "I HAVE A [$!$#]\nLETTER FOR YOU!!"},
         {{"KRIS, DO YOU\nFEEL [Trap]?","THEN PLEASE\nSHOOT FOR THE [Deal]"}, "WE CAN FREE OURSELVES\nFROM THOSE [Vulnerable Walls]!!"},
+        {"KRIS! CAN YOU\nHEAR MY [Cardiac Arrest]?!", "MY [$!$!] IS BURSTING\nOUT OF MY CHEST!!"}
     }
 
     -- Dialogue randomly displayed in the enemy's speech bubble
