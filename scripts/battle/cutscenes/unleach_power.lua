@@ -203,6 +203,10 @@ return function(cutscene, battler, sneo)
     cutscene:wait(function()
         return #strings==3
     end)
+    if soul.charge_sfx then
+        soul.charge_sfx:stop()
+        soul.charge_sfx = nil
+    end
     Game.battle.battle_ui.encounter_text:setText("")
     health_limit = 3
     soul.start_shoot = false
@@ -290,6 +294,10 @@ return function(cutscene, battler, sneo)
         return #strings==6
     end)
     soul.start_shoot = false
+    if soul.charge_sfx then
+        soul.charge_sfx:stop()
+        soul.charge_sfx = nil
+    end
     continue_cutscene = true
     for i=#obstacles, 1, -1 do
         obstacles[i]:destroy()
