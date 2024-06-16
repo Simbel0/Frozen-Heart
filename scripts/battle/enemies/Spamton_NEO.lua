@@ -45,7 +45,8 @@ function Spamton_NEO:init()
         "bonus/protectedCrew",
         "bonus/rainPipis",
         "bonus/you've_got_mail",
-        "bonus/pistonTrap"
+        "bonus/pistonTrap",
+        "bonus/open_heart_surgery"
     }
     self.current_id = 0
     self.wave_loop = 1

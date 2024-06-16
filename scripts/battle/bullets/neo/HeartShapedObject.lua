@@ -10,7 +10,7 @@ function HeartShapedObject:init(x, y, speed_x, speed_y)
     self.remove_offscreen = false
     self.destroy_on_hit = false
 
-    self.physics.speed_x = -love.math.random(3, 8)
+    self.physics.speed_x = -love.math.random(5, 8)
     self.physics.speed_y = -love.math.random(1, 10)
     self.physics.gravity = 0.5
 
@@ -38,13 +38,15 @@ function HeartShapedObject:update()
     
     if self.y + self.height >= Game.battle.arena.bottom and self.x > Game.battle.arena.left then
         self.physics.speed_y = -self.physics.speed_y + 0.6
-        for i=1,2 do
+        --[[for i=1,2 do
             local bullet = self.wave:spawnBullet("smallbullet", self.x, self.y, math.rad(i==1 and 265 or 285), 10)
             bullet.physics.gravity = Utils.random(0.2, 0.6)
-        end
-        for i=1,2 do
-            local bullet = self.wave:spawnBullet("smallbullet", self.x+self.width, self.y+self.height, math.rad(i==1 and 265 or 285), 10)
-            bullet.physics.gravity = Utils.random(0.2, 0.6)
+        end]]
+        if self.wave.mode > 1 then
+            for i=1,3 do
+                local bullet = self.wave:spawnBullet("smallbullet", self.x+self.width/2, self.y+self.height/2, math.rad(i==1 and 265 or (285-10*i)), 10)
+                bullet.physics.gravity = Utils.random(0.2, 0.6)
+            end
         end
         self.y = self.y - 10
     end
