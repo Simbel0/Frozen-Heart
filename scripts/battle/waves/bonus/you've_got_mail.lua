@@ -9,13 +9,16 @@ function you_ve_got_mail:init()
     self.time=Utils.random(10, 15)
     self:setArenaSize(310, 132)
     self:setArenaOffset(-100, 0)
+
+    self.crew_bullets = {}
 end
 
 function you_ve_got_mail:onStart()
     if not (self.mode==1) then
         self.timer:everyInstant(1.4, function()
             local y = Game.battle.soul.y+7
-            self:spawnBullet("neo/crewBullet", SCREEN_WIDTH+20, y, nil, 0.7, {Utils.random(Game.battle.arena.right, SCREEN_WIDTH-20), y}, false, true, true)
+            local b = self:spawnBullet("neo/crewBullet", SCREEN_WIDTH+20, y, nil, 0.7, {Utils.random(Game.battle.arena.right+30, SCREEN_WIDTH-20), y}, false, true, true)
+            table.insert(self.crew_bullets, b)
         end)
     end
     local sneo = self.encounter.sneo
@@ -64,8 +67,8 @@ function you_ve_got_mail:update()
         if not self.timer_set then
             self.bullet_handler = self.timer:every(1/30, function()
                 local x, y = arm:getScreenPos()
-                local mail_x, mail_y = x-(arm.sprite.width+20)+math.cos(arm.sprite.rotation), y+75*math.sin(arm.sprite.rotation)
-                self:spawnBullet("neo/mail", mail_x, mail_y, arm.swing_rotation+math.rad(Utils.random(-3.5, 3.5)), Utils.random(20, 30))
+                local mail_x, mail_y = x-(arm.sprite.width+20)+math.cos(arm.sprite.rotation), y+50*math.sin(arm.sprite.rotation)
+                self:spawnBullet("neo/mail", mail_x, mail_y, arm.swing_rotation+math.rad(Utils.random(-1.5, 3.5)), Utils.random(20, 30))
             end, math.huge)
             self.timer_set = true
         end
@@ -89,6 +92,11 @@ function you_ve_got_mail:update()
     end
 
     super:update(self)
+
+    if #self.crew_bullets > 3 then
+        local b = table.remove(self.crew_bullets, 1)
+        b:startDestruct()
+    end
 end
 
 function you_ve_got_mail:onEnd()
@@ -106,7 +114,9 @@ function you_ve_got_mail:onEnd()
         sneo.sprite:getPart("wing_r").swing_speed = 0
     end)
 
-    Game.battle.timer:tween(0.5, sneo, {y=self.org_y}, "out-cubic")
+    Game.battle.timer:tween(0.5, sneo, {y=self.org_y}, "out-cubic", function()
+        sneo.y = self.org_y
+    end)
 
     super:onEnd(self)
 end

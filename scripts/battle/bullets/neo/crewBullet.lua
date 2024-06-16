@@ -163,14 +163,18 @@ function crewBullet:onYellowShot(shot, damage)
             if self.shield then
                 self.shield:remove()
             end
-            self.physics = {}
-            self.collidable = false
-            self.sprite:stop()
-            self.graphics.grow = 0.1
-            self:fadeTo(0, 0.1, function() self:destroy() end)
+            self:startDestruct()
         end
     end
     return "c", false
+end
+
+function crewBullet:startDestruct()
+    self.physics = {}
+    self.collidable = false
+    self.sprite:stop()
+    self.graphics.grow = 0.1
+    self:fadeTo(0, 0.1, function() self:destroy() end)
 end
 
 function crewBullet:destroy(shot)
