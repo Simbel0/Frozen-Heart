@@ -154,6 +154,11 @@ function secret_battle:update()
 
             Game.battle.tension_bar:setShortVersion(true)
 
+            if self.skip_text then
+                self.skip_text:remove()
+                self.skip_text = nil
+            end
+
             Game.fader:fadeIn()
         end
     end
