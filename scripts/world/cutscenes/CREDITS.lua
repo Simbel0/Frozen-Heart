@@ -16,7 +16,7 @@ return function(cutscene)
     text.layer=WORLD_LAYERS["top"]
     Game.world:addChild(text)
 
-    wait_times={
+    local wait_times={
         3.3,
         3,
         5,
@@ -36,6 +36,21 @@ return function(cutscene)
             wait_times[i]=wait_times[i]+1
         end
     end
+
+    local speed_up = false
+    local stop_speed = false
+    cutscene:during(function()
+        if not speed_up then
+            if not stop_speed and Input.pressed("menu") then
+                speed_up = true
+            elseif stop_speed then
+                theme:setPitch(Utils.approach(theme:getPitch(), 1, 1.2*DT))
+            end
+        else
+            theme:setPitch(Utils.approach(theme:getPitch(), 6, DT))
+            cutscene.wait_timer = Utils.approach(cutscene.wait_timer, 0, 5*DT)
+        end
+    end)
 
     print("AAA")
     print(wait_times[1])
@@ -97,6 +112,11 @@ return function(cutscene)
     cutscene:wait(wait_times[3])
 
     text:setText("[color:555555]Playing this game[color:reset]\n\n"..(Game.save_name~="PLAYER" and Game.save_name or "You"))
+
+    if speed_up then
+        speed_up = false
+        stop_speed = true
+    end
 
     cutscene:wait(wait_times[6])
 
