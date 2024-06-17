@@ -58,9 +58,9 @@ return function(cutscene, user, target)
 		end
 
 		if Input.down("left") then
-			glass.x = glass.x-speed
+			glass.x = glass.x-speed*DTMULT
 		elseif Input.down("right") then
-			glass.x = glass.x+speed
+			glass.x = glass.x+speed*DTMULT
 		end
 		glass.x=Utils.clamp(glass.x, 96, 200)
 
@@ -72,7 +72,7 @@ return function(cutscene, user, target)
 		end
 
 		for i,v in ipairs(bullets) do
-			v.y = v.y+v.speed
+			v.y = v.y+v.speed*DTMULT
 
 			if count == 6 and acid1.cutout_top>0 then
 				acid1.cutout_top = 0

@@ -244,20 +244,21 @@ function AcidShield:onRemoveFromStage()
 end
 
 function AcidShield:draw()
-	self.shieldsiner = self.shieldsiner+1
-	self.y = (math.sin((self.shieldsiner/6))*0.5)
+	print(self.movecon)
+	self.shieldsiner = self.shieldsiner+DTMULT
+	self.y = (math.sin((self.shieldsiner/6))*0.5)*DTMULT
 
 	if self.shaketimer > 0 then
-		self.x = ((self.xstart - self.shaketimer) + (self.shaketimer * 2))
-		self.y = ((self.ystart - self.shaketimer) + (self.shaketimer * 2))
-		self.shaketimer = self.shaketimer - 1
+		self.x = ((self.xstart - self.shaketimer*DTMULT) + (self.shaketimer * (2*DTMULT)))
+		self.y = ((self.ystart - self.shaketimer*DTMULT) + (self.shaketimer * (2*DTMULT)))
+		self.shaketimer = self.shaketimer - DTMULT
 	end
 	if self.hurtsfxcon == 1 then
-		self.hurtsfxtimer = self.hurtsfxtimer + 1
+		self.hurtsfxtimer = self.hurtsfxtimer + DTMULT
 		if not self.swallow:isPlaying() then
 			self.swallow:play()
 		end
-		if self.hurtsfxtimer == 10 then
+		if self.hurtsfxtimer >= 10 then
 			self.hurtsfxcon = 0
 			self.hurtsfxtimer = 0
 		end
@@ -417,10 +418,10 @@ function AcidShield:draw()
 
 	if self.shieldpiece_yscale[1] > 0.1 then
 		if self.movecon == 15 and self.alpha > 0 then
-			self.alpha = self.alpha - 0.1
+			self.alpha = self.alpha - 0.1*DTMULT
 		end
 		if self.movecon ~= 15 and self.alpha < 1 then
-			self.alpha = self.alpha + 0.1
+			self.alpha = self.alpha + 0.1*DTMULT
 		end
 		local x1, y1, x2, y2
 		if self.parent.sprite.sprite == "chair" then
@@ -459,23 +460,24 @@ function AcidShield:draw()
 				love.graphics.draw(self.shield_parts_texture[ii], self.shieldpiece_x[ii], (self.shieldpiece_y[ii] + self.y), 0, self.shieldpiece_xscale[ii], self.shieldpiece_yscale[ii])
 				if self.shieldpiece_fadecon[ii] == 1 then
 					if self.shieldpiece_fadetimer[ii] < 10 then
-						self.shieldpiece_fadetimer[ii] = self.shieldpiece_fadetimer[ii] + 1
+						self.shieldpiece_fadetimer[ii] = self.shieldpiece_fadetimer[ii] + DTMULT
 					end
 					love.graphics.setColor(1, 1, 1, (self.shieldpiece_fadetimer[ii] / 10))
 					love.graphics.draw(self.shield_parts_texture_hurt[ii], self.shieldpiece_x[ii], (self.shieldpiece_y[ii] + self.y), 0, self.shieldpiece_xscale[ii], self.shieldpiece_yscale[ii])
 				end
 			end
 			if self.shieldpiece_fadecon[ii] == 2 then
-				self.shieldpiece_fadetimer[ii] = self.shieldpiece_fadetimer[ii] - 1
-				if (self.shieldpiece_fadetimer[ii] == 0) then
+				self.shieldpiece_fadetimer[ii] = self.shieldpiece_fadetimer[ii] - DTMULT
+				if (self.shieldpiece_fadetimer[ii] <= 0) then
+					self.shieldpiece_fadetimer[ii] = 0
 					self.shieldpiece_fadecon[ii] = 0
 				end
 				love.graphics.setColor(1, 1, 1, (self.shieldpiece_fadetimer[ii] / 10))
 				love.graphics.draw(self.shield_parts_texture_hurt[ii], self.shieldpiece_x[ii], (self.shieldpiece_y[ii] + self.y), 0, self.shieldpiece_xscale[ii], self.shieldpiece_yscale[ii])
 			end
 			if self.health <= 5 then
-				self.imabouttobreak_siner = self.imabouttobreak_siner + 0.5
-				self.imabouttobreak_alpha = (0.1 + (math.sin(self.imabouttobreak_siner) / 6))
+				self.imabouttobreak_siner = self.imabouttobreak_siner + 0.5*DTMULT
+				self.imabouttobreak_alpha = (0.1 + (math.sin(self.imabouttobreak_siner) / 6))*DTMULT
 				--d3d_set_fog(true, c_white, 0, 1) --Apparently, it's basically a blur effect but with colors. And it's outdated in GM2 so does it even work in Deltarune?
 				if #self.moveorder>ii then
 					love.graphics.setColor(1, 1, 1, self.imabouttobreak_alpha*Utils.clamp(self.alpha, 0, 1))
@@ -540,18 +542,18 @@ function AcidShield:draw()
 			self.shieldpiece_fadecon[self.moveorder[self.movepiece]] = 1
 		end
 		if self.movecon == 2 then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_x[self.moveorder[self.movepiece]] = Utils.ease(self.shieldpiece_x_origin[self.moveorder[self.movepiece]], (self.shieldpiece_x_origin[self.moveorder[self.movepiece]] + 15), (self.movetimer / 10), "out-quad")
 			self.shieldpiece_alpha[self.moveorder[self.movepiece]] = Utils.lerp(0, 1, (self.movetimer / 10))
-			if self.movetimer == 10 then
+			if self.movetimer >= 10 then
 				self.movetimer = 0
 				self.movecon = 3
 			end
 		end
 		if self.movecon == 3 then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_y[self.moveorder[self.movepiece]] = Utils.lerp(self.shieldpiece_y[self.moveorder[self.movepiece]], self.shieldpiece_y_origin[self.moveorder[self.movepiece]], (self.movetimer / 10))
-			if (self.movetimer == 10) then
+			if (self.movetimer >= 10) then
 				self.movetimer = 0
 				self.movecon = 4
 				self.shieldpiece_fadecon[self.moveorder[self.movepiece]] = 2
@@ -559,9 +561,9 @@ function AcidShield:draw()
 			self:event_user(2)
 		end
 		if self.movecon == 4 then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_x[self.moveorder[self.movepiece]] = Utils.ease((self.shieldpiece_x_origin[self.moveorder[self.movepiece]] + 15), self.shieldpiece_x_origin[self.moveorder[self.movepiece]], (self.movetimer / 10), "out-quad")
-			if (self.movetimer == 10) then
+			if (self.movetimer >= 10) then
 				self.movetimer = 0
 				self.movecon = 5
 			end
@@ -591,17 +593,17 @@ function AcidShield:draw()
 			self.shieldpiece_fadecon[self.moveorder[self.movepiece]] = 1
 		end
 		if (self.movecon == 11) then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_x[self.moveorder[self.movepiece]] = Utils.ease(self.shieldpiece_x_origin[self.moveorder[self.movepiece]], (self.shieldpiece_x_origin[self.moveorder[self.movepiece]] + 15), (self.movetimer / 10), "out-quad")
-			if (self.movetimer == 10) then
+			if (self.movetimer >= 10) then
 				self.movetimer = 0
 				self.movecon = 12
 			end
 		end
 		if (self.movecon == 12) then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_y[self.moveorder[self.movepiece]] = Utils.lerp(self.shieldpiece_y_origin[self.moveorder[self.movepiece]], (self.ystart + 25), (self.movetimer / 10))
-			if (self.movetimer == 10) then
+			if (self.movetimer >= 10) then
 				self.movetimer = 0
 				self.movecon = 13
 				self.shieldpiece_fadecon[self.moveorder[self.movepiece]] = 2
@@ -609,9 +611,9 @@ function AcidShield:draw()
 			self:event_user(2)
 		end
 		if (self.movecon == 13) then
-			self.movetimer = self.movetimer + 2
+			self.movetimer = self.movetimer + 2*DTMULT
 			self.shieldpiece_x[self.moveorder[self.movepiece]] = Utils.ease((self.shieldpiece_x_origin[self.moveorder[self.movepiece]] + 15), self.shieldpiece_x_origin[self.moveorder[self.movepiece]], (self.movetimer / 10), "out-quad")
-			if (self.movetimer == 10) then
+			if (self.movetimer >= 10) then
 				self.movetimer = 0
 				self.movecon = 14
 			end
@@ -627,7 +629,7 @@ function AcidShield:draw()
 		end
 		if (self.movecon == 15) then
 			if (self.movetimer < 50) then
-				self.movetimer = self.movetimer + 1
+				self.movetimer = self.movetimer + DTMULT
 			end
 			for i = 1, 12 do
 				self.shieldpiece_alpha[i] = Utils.lerp(1, 0, (self.movetimer / 50))
@@ -637,8 +639,9 @@ function AcidShield:draw()
 	until repeat_i == 5
 	if self.shieldhurt == 1 then
 	    self.shieldx = ((Utils.random(self.shieldhurttimer) - Utils.random(self.shieldhurttimer)) * 2)
-	    self.shieldhurttimer = self.shieldhurttimer - 1
+	    self.shieldhurttimer = self.shieldhurttimer - DTMULT
 	    if (self.shieldhurttimer <= 0) then
+	    	self.shieldhurttimer = 0
 	        self.shieldhurt = 0
 	    end
 	    for i = 1, 12 do
