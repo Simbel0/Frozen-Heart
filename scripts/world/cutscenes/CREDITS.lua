@@ -12,7 +12,7 @@ return function(cutscene)
 
     local text=Text("a", 0, (SCREEN_HEIGHT/2)-100, nil, nil, {style="none", skip=false, spacing=500})
     text.align="center"
-    text:setText("\n[color:yellow]FROZEN HEART[color:reset]\n\nBy\nSimbel")
+    text:setText("\n[color:yellow]FROZEN HEART[color:reset]\n\nBy\nSimbel"..(Kristal.Config["beat_once"] and "\n\n[color:#999999]Press "..Input.getText("menu").." to speed up" or ""))
     text.layer=WORLD_LAYERS["top"]
     Game.world:addChild(text)
 
@@ -39,9 +39,10 @@ return function(cutscene)
 
     local speed_up = false
     local stop_speed = false
+    local can_speed = true
     cutscene:during(function()
         if not speed_up then
-            if not stop_speed and Input.pressed("menu") then
+            if not stop_speed and can_speed and Input.pressed("menu") then
                 speed_up = true
             elseif stop_speed then
                 theme:setPitch(Utils.approach(theme:getPitch(), 1, 1.2*DT))
@@ -113,6 +114,7 @@ return function(cutscene)
 
     text:setText("[color:555555]Playing this game[color:reset]\n\n"..(Game.save_name~="PLAYER" and Game.save_name or "You"))
 
+    can_speed = false
     if speed_up then
         speed_up = false
         stop_speed = true
