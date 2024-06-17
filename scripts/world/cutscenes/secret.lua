@@ -94,17 +94,26 @@ return {
         noelle:setSprite("spell")
         local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-70, 0, 0, {
             layer = WORLD_LAYERS["below_ui"],
-            every = 0.0001,
-            amount = 4,
+            every = 0.1,
+            amount = Kristal.Config["simplifyVFX"] and 5 or 10,
             texture = "snowflake",
             scale = 1,
 
-            remove_after = 5,
+            remove_after = 2,
 
             physics = {
                 speed = 20
             },
-            angle = {math.rad(235), math.rad(295)}
+            angle = {math.rad(235), math.rad(295)},
+
+            init = function(particle)
+                particle.physics.speed = particle.physics.speed + Utils.random(-10, 10)
+            end,
+            update = function(particle)
+                if particle.y + particle.height < 0 then
+                    particle:remove()
+                end
+            end
         })
         Game.world:addChild(ice_emitter)
         cutscene:shakeCamera(5, 1, false)
@@ -143,6 +152,7 @@ return {
         cutscene:panTo(50, susie.y, 0)
         susie:setSprite("battle/defend_6")
         cutscene:wait(1.5)
+        ice_emitter.active = false
         cutscene:text("* Ugh...", "", "susie")
         --Game.world.timer:tween(0.5, wind, {volume=1})
         cutscene:wait(cutscene:fadeIn(0.5))
@@ -194,6 +204,7 @@ return {
         cutscene:text("* ...", "down_c", "queen")
         cutscene:text("* I Thought Sleeping Would Suppr This Power Of Her Deep Inside", "pout", "queen")
         queen:setSprite("walk")
+        ice_emitter.active = true
         cutscene:text("* But It Seems I Miscaculated", "sorry", "queen")
         cutscene:text("* What does that even mean??", "teeth", "susie")
 
@@ -529,19 +540,28 @@ return {
         cutscene:setTextboxTop(true)
         cutscene:text("* Here we go.", "angry_c", "susie")
         noelle:setSprite("spell")
-        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-80, 0, 0, {
+        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-70, 0, 0, {
             layer = WORLD_LAYERS["below_ui"],
-            every = 0.0001,
-            amount = 4,
+            every = 0.1,
+            amount = Kristal.Config["simplifyVFX"] and 5 or 10,
             texture = "snowflake",
             scale = 1,
 
-            remove_after = 5,
+            remove_after = 2,
 
             physics = {
                 speed = 20
             },
-            angle = {math.rad(235), math.rad(295)}
+            angle = {math.rad(235), math.rad(295)},
+
+            init = function(particle)
+                particle.physics.speed = particle.physics.speed + Utils.random(-10, 10)
+            end,
+            update = function(particle)
+                if particle.y + particle.height < 0 then
+                    particle:remove()
+                end
+            end
         })
         Game.world:addChild(ice_emitter)
         cutscene:shakeCamera(5, 1, false)
@@ -648,19 +668,28 @@ return {
         cutscene:slideTo(noelle, noelle.x+40, noelle.y, 0.5, "out-quad")
         cutscene:wait(0.7)
         noelle:setSprite("spell")
-        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-80, 0, 0, {
+        local ice_emitter = ParticleEmitter(noelle.x-30, noelle.y-70, 0, 0, {
             layer = WORLD_LAYERS["below_ui"],
-            every = 0.0001,
-            amount = 4,
+            every = 0.1,
+            amount = Kristal.Config["simplifyVFX"] and 5 or 10,
             texture = "snowflake",
             scale = 1,
 
-            remove_after = 5,
+            remove_after = 2,
 
             physics = {
                 speed = 20
             },
-            angle = {math.rad(235), math.rad(295)}
+            angle = {math.rad(235), math.rad(295)},
+
+            init = function(particle)
+                particle.physics.speed = particle.physics.speed + Utils.random(-10, 10)
+            end,
+            update = function(particle)
+                if particle.y + particle.height < 0 then
+                    particle:remove()
+                end
+            end
         })
         Game.world:addChild(ice_emitter)
         cutscene:shakeCamera(5, 1, false)
