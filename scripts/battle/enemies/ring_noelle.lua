@@ -54,20 +54,20 @@ function ring_noelle:init()
 
     self.fly_anim = true
 
-    self.af_effect = Game.battle.timer:every(0.1, function()
+    self.af_effect = Game.battle.timer:every(Kristal.Config["simplifyVFX"] and 0.5 or 0.2, function()
         Game.battle:addChild(AfterImage(self.sprite, 1))
     end)
 
     self.snow_effect = ParticleEmitter(self.sprite.width/2, self.sprite.height/2, 0, 0, {
         layer = self.layer-1,
         every = 0.1,
-        amount = 4,
+        amount = Kristal.Config["simplifyVFX"] and 2 or 4,
         texture = "lonelysnow",
         scale = 1,
 
         fade = 0.2,
         fade_after = 0.3,
-        remove_after = 3,
+        remove_after = 1,
 
         physics = {
             speed = 4
@@ -76,6 +76,19 @@ function ring_noelle:init()
     })
     print(self.snow_effect)
 end
+
+-- Used just to see something. Keeping it here in the cold if I wanna use it again later (if I remember it)
+--[[function getAllChildren(obj)
+    local count = 0
+    if not obj.children then return count end
+    for i,child in ipairs(obj.children) do
+        count = count + 1
+        if child.children then
+            count = count + getAllChildren(child)
+        end
+    end
+    return count
+end]]
 
 function ring_noelle:update()
     if self.fly_anim then

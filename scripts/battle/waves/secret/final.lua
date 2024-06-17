@@ -10,6 +10,14 @@ function Final:onStart()
 	self.timer:tween(0.5, Game.battle.arena, {width=SCREEN_WIDTH, height=SCREEN_HEIGHT, x=320, y=239})
 	self.timer:after(0.5, function()
 		Game.battle.arena.color = {0, 0, 0}
+
+		Game.battle.encounter.gradient.active = false
+		Game.battle.encounter.gradient.visible = false
+        Game.battle.encounter.snow.active = false
+        Game.battle.encounter.snow.visible = false
+        Game.battle.encounter.noelle.snow_effect:remove()
+        Game.battle.timer:cancel(Game.battle.encounter.noelle.af_effect)
+
 		self.timer:script(function(wait)
 			local first = self.timer:everyInstant(0.75, function()
 				if not self.switch then
@@ -69,9 +77,9 @@ function Final:onStart()
 			        end
 			    end
 		    end)
-		    wait(3)
-		    self.timer:cancel(first)
 		    wait(5)
+		    self.timer:cancel(first)
+		    wait(3)
 		    local delay, delay_timer = 60, 60
 		    local second2 = self.timer:during(math.huge, function()
 	    		delay_timer = delay_timer + DTMULT
@@ -207,10 +215,33 @@ function Final:onStart()
 	        self.tornado2:setLayer(BATTLE_LAYERS["top"])
 	        local final = self.timer:everyInstant(2, function()
 	        	for i=1,SCREEN_HEIGHT/10, 4 do
-	        		local bullet = self:spawnBullet("lonelySnow", self.tornado1.x, 10*i, math.rad(Utils.random(-60, 60)), 2)
-	        		bullet.remove_offscreen = false
-	        		bullet = self:spawnBullet("lonelySnow", self.tornado2.x, 10*i, math.rad(Utils.random(120, 250)), 2)
-	        		bullet.remove_offscreen = false
+	        		for j=1,2 do
+	        			local values 
+	        			if j == 2 then
+	        				values = {self.tornado2.x, 120, 250}
+	        			else
+	        				values = {self.tornado1.x, -60, 60}
+	        			end
+
+	        			local bullet = self:spawnBullet("lonelySnow", values[1], 10*i, math.rad(Utils.random(values[2], values[3])), 2)
+		        		bullet.remove_offscreen = false
+		        		bullet.remove_timer = 0
+		        		bullet.dir = j
+		        		bullet.reverse_tornado = (j == 1 and self.tornado2 or self.tornado1)
+		        		Utils.hook(bullet, "update", function(orig, self)
+		        			orig(self)
+		        			if not self.remove_timer then
+			        			self.remove_timer = self.remove_timer + DTMULT
+			        			if self.remove_timer > 60 then
+			        				self.remove_offscreen = true
+			        			end
+			        		end
+
+			        		if (self.dir == 1 and self.x > self.reverse_tornado.x) or (self.dir == 2 and self.x < self.reverse_tornado.x) then
+			        			self:remove()
+			        		end
+		        		end)
+	        		end
 	        	end
 	        end)
 	        wait(12)
@@ -222,6 +253,10 @@ function Final:onStart()
 	        Game.battle:shake(4, 0, 0)
 	        self.close_value = 0.6
 	        self.noelle:setSprite("party/noelle/dark_c/final_snowgrave_4")
+	        Game.battle.encounter.gradient.active = true
+			Game.battle.encounter.gradient.visible = true
+	        Game.battle.encounter.snow.active = true
+	        Game.battle.encounter.snow.visible = true
 	        Game.battle.encounter.gradient:setLayer(self.tornado1.layer-1)
 	        Game.battle.encounter.gradient.alpha = 0.5
 	        Game.battle.encounter.gradient:setParent(Game.battle)
@@ -240,12 +275,10 @@ function Final:onStart()
 	        self.snow:stop()
 	        Game.battle:stopShake()
 	        Game.battle.encounter.gradient:remove()
-	        Game.battle.encounter.snow:remove()
-	        Game.battle.encounter.noelle.text = {"* ..."}
-	        Game.battle.encounter.noelle.defense = -100
-	        Game.battle.encounter.noelle.attack = Game.battle.encounter.noelle.attack/2
-	        Game.battle.encounter.noelle.snow_effect:remove()
-	        Game.battle.timer:cancel(Game.battle.encounter.noelle.af_effect)
+        	Game.battle.encounter.snow:remove()
+		    Game.battle.encounter.noelle.text = {"* ..."}
+		    Game.battle.encounter.noelle.defense = -100
+		    Game.battle.encounter.noelle.attack = Game.battle.encounter.noelle.attack/2
 	        Game.battle.arena.color = {0, 0.75, 0}
 	        self.encounter.final_passed = true
 	        self.finished = true
