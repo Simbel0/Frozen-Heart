@@ -210,6 +210,20 @@ function Mod:postInit(newfile)
         return self.target
     end)
 
+    Utils.hook(ActionButton, "select", function(orig, self)
+        if Game.battle.encounter:onActionSelect(self.battler, self) then return end
+        if Kristal.callEvent("onActionSelect", self.battler, self) then return end
+        if self.type == "defend" then
+            local tp = -16
+            if Game.battle.encounter.id == "secret_battle" and Game.battle.encounter.intro then
+                tp = 0
+            end
+            Game.battle:pushAction("DEFEND", nil, {tp = tp})
+        else
+            orig(self)
+        end
+    end)
+
     Game:setFlag("altPull", Kristal.Config["altPull"])
 end
 
