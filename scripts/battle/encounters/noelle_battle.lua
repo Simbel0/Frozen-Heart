@@ -103,6 +103,7 @@ end
 
 function Noelle_Battle:beforeStateChange(old, new)
     if new=="DEFENDINGBEGIN" then
+        print("Countdown: "..self.spell_countdown)
         if self.spell_countdown<=0 and not self.noelle.killed_once then
             print(self.noelle.health>=22, self.noelle.health)
             if Game.battle.noelle_tension_bar:getTension()>=100 then
@@ -122,12 +123,23 @@ function Noelle_Battle:beforeStateChange(old, new)
                     cutscene:endCutscene()
                 end)
                 return true
-            elseif Game.battle.noelle_tension_bar:getTension()>=32 and math.random(1,self.noelle.health)<=10 then
+            elseif Game.battle.noelle_tension_bar:getTension()>=32 and love.math.random(1,self.noelle.health)<=15 then
                 print("Cast HEALTH PRAYER")
                 self.spell_countdown=2
                 Game.battle:startCutscene(function(cutscene)
                     local wait, text = cutscene:text("* Noelle casts HEALTH PRAYER!", nil, nil, {wait=false})
                     local heal_susie = Utils.random(self.noelle.mercy)>50
+                    if heal_susie then
+                        print("Heal Susie!")
+                        if Game.battle.party[1].chara:getHealth() > Game.battle.party[1].chara:getStat("health")-(Game.battle.party[1].chara:getStat("health")/4) then
+                            print("Actually no, her HPs too high")
+                            heal_susie = false
+                        end
+                        if self.noelle.health < math.ceil(55/3) then
+                            print("Actually no, my HPs too low")
+                            heal_susie = false
+                        end
+                    end
                     Game.battle.noelle_tension_bar:removeTension(32)
                     self.noelle:castHealthPrayer(heal_susie and Game.battle.party[1] or Game.battle.enemies[1])
                     cutscene:wait(wait)
@@ -137,7 +149,7 @@ function Noelle_Battle:beforeStateChange(old, new)
                 return true
             elseif self.noelle.health>=22 then
                 print("Check here")
-                if Game.battle.noelle_tension_bar:getTension()>=32 and math.random(1,10)==1 then
+                if Game.battle.noelle_tension_bar:getTension()>=32 and love.math.random(1,10)==1 then
                     print("Cast SLEEP MIST")
                     self.spell_countdown=2
                     Game.battle:startCutscene(function(cutscene)
@@ -150,15 +162,15 @@ function Noelle_Battle:beforeStateChange(old, new)
                         cutscene:endCutscene()
                     end)
                     return true
-                elseif Game.battle.noelle_tension_bar:getTension()>=8 and math.random(1,10)>=7 then
+                elseif Game.battle.noelle_tension_bar:getTension()>=8 and love.math.random(1,10)>=7 then
                     print("Cast ICESHOCK")
                     if self.noelle.confused then
-                        if math.random(1,10)<=7 then
+                        if love.math.random(1,10)<=7 then
                             print("Or not!")
                             return false
                         end
                     end
-                    self.spell_countdown=2
+                    self.spell_countdown=3
                     self.spell_cast = "Ice Shock"
                     Game.battle:startCutscene(function(cutscene)
                         cutscene:text("* Noelle casts Ice Shock!", nil, nil, {wait=false, skip=false})
