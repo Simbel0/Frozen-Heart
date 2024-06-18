@@ -1,6 +1,45 @@
 return function(cutscene)
     print("Spamton Fight: "..tostring(Game:getFlag("spamton_boss", false)))
     print("Secret Fight: "..tostring(Game:getFlag("secret_unlocked", false)))
+
+    local yellow_text = "Can someone hear me?"
+    if Spamton then
+        if not Kristal.Config["canAccessSecret"] then
+            Kristal.Config["canAccessSecret"] = true
+            Kristal.Config["secret_unlocked"] = true
+            Mod.registerSecret = true
+            local data
+            if Kristal.hasSaveFile() then
+                -- Use the unchanged save data to add the secret file variable without actually saving the game
+                data = Kristal.getSaveFile()
+                data["is_secret_file"] = true
+                Kristal.saveGame(Game.save_id, data)
+            else
+                -- If the player never saved, the game will automatically save but put them in the Rooftop instead of the computer lab
+                data = Game:save()
+                data.room_name = "Queen's mansion - Rooftop"
+                data.room_id = "mansion_queen_prefountain"
+                data.playtime = Game.playtime
+                data["is_secret_file"] = true
+                Kristal.Config["secret_file_data"] = data
+                Kristal.Config["secret_file_data"].id = Game.save_id
+                --Kristal.saveGame(Game.save_id, data)
+            end
+            yellow_text = "You have unlocked\nan alternative fight!"
+        else
+            yellow_text = "An alternative awaits you!"
+        end
+    else
+        if Game:getFlag("noelle_battle_status") ~= "no_trance" then
+            yellow_text = "But can you save Noelle\nas fast as possible?"
+        else
+            yellow_text = "But can you win by doing\nas few turns as possible??"
+        end
+    end
+    Kristal.Config["beat_once"] = true
+
+    Kristal.saveConfig()
+
     cutscene:fadeOut(0)
     cutscene:wait(2)
 
@@ -127,34 +166,6 @@ return function(cutscene)
     text.color={1, 1, 0}
     text:addFX(fx)
     text.y=(SCREEN_HEIGHT/2)-50
-    local yellow_text = "Can someone hear me?"
-    if Spamton then
-        if not Kristal.Config["canAccessSecret"] then
-            Kristal.Config["canAccessSecret"] = true
-            Kristal.Config["secret_unlocked"] = true
-            Mod.registerSecret = true
-            local data
-            if Kristal.hasSaveFile() then
-                -- Use the unchanged save data to add the secret file variable without actually saving the game
-                data = Kristal.getSaveFile()
-                data["is_secret_file"] = true
-                Kristal.saveGame(Game.save_id, data)
-            else
-                -- If the player never saved, the game will automatically save but put them in the Rooftop instead of the computer lab
-                data = Game:save()
-                data.room_name = ""
-                data.playtime = nil
-                data["is_secret_file"] = true
-                Kristal.Config["secret_file_data"] = data
-                Kristal.Config["secret_file_data"].id = Game.save_id
-            end
-            yellow_text = "You have unlocked\nan alternative fight!"
-        else
-            yellow_text = "An alternative awaits you!"
-        end
-    else
-        yellow_text = "But can you win by doing\nas few turns as possible??"
-    end
     text:setText(yellow_text)
     Game.world.timer:tween(3, fx, {alpha=1})
     cutscene:wait(6)
@@ -166,11 +177,11 @@ return function(cutscene)
     cutscene:wait(function()
         return not theme:isPlaying()
     end)
-
-    Kristal.Config["beat_once"] = true
-    Kristal.saveConfig()
     
-    Kristal:returnToMenu()
+    -- Why the fuck do I need to use cutscene:after() now??
+    cutscene:after(function()
+        Kristal.returnToMenu()
+    end, true)
 end
 
 --FROZEN HEART by Simbel

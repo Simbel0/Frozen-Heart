@@ -302,6 +302,16 @@ return {
         cutscene:wait(2.5)
         Game.world.timer:tween(6, soul, {y=150})
         cutscene:wait(7)
+        local skip = false
+        if Kristal.Config["beat_once"] then
+            cutscene:during(function()
+                if Input.pressed("confirm") and Input.pressed("cancel") then
+                    Assets.playSound("noise")
+                    skip = true
+                    return false
+                end
+            end)
+        end
         Assets.playSound("snd_revival")
         Game.world.timer:everyInstant(0.1, function()
             local image=AfterImage(soul, 0.5)
@@ -315,7 +325,7 @@ return {
             s.color={1-0.1*i, 1-0.1*i, 1-0.1*i}
             s.layer=soul.layer-(1+i)
             s.graphics.grow=7+4*i
-            tab[i+1]=s
+            table.insert(tab, s)
             Game.world:addChild(s)
         end
         cutscene:wait(2)
@@ -323,15 +333,23 @@ return {
             soul:remove()
         end)
         cutscene:wait(3)
-        for i=1, 3 do
+        for i=1, #tab do
             Game.world.timer:tween(1, tab[i], {alpha=0}, "linear", function()
                 tab[i]:remove()
             end)
         end
         cutscene:wait(2)
-        Kristal.showBorder(1)
-        cutscene:fadeIn(1)
-        cutscene:mapTransition("computer_lab")
+        if skip then
+            cutscene:fadeOut(0, {color={0, 0, 0}})
+            for i=1,#tab do
+                tab[i]:remove()
+            end
+            cutscene:gotoCutscene("CREDITS")
+        else
+            Kristal.showBorder(1)
+            cutscene:fadeIn(1)
+            cutscene:mapTransition("computer_lab")
+        end
         cutscene:endCutscene()
     end,
     killkill=function(cutscene)
