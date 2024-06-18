@@ -123,7 +123,7 @@ function Noelle_Battle:beforeStateChange(old, new)
                     cutscene:endCutscene()
                 end)
                 return true
-            elseif Game.battle.noelle_tension_bar:getTension()>=32 and love.math.random(1,self.noelle.health)<=15 then
+            elseif Game.battle.noelle_tension_bar:getTension()>=32 and love.math.random(1,self.noelle.health)<=10 then
                 print("Cast HEALTH PRAYER")
                 self.spell_countdown=2
                 Game.battle:startCutscene(function(cutscene)
