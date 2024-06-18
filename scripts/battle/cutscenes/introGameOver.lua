@@ -123,7 +123,7 @@ return function(cutscene)
     dialogue.alpha=1
     dialogue:setText({
         "[voice:susie]NO!",
-        "[voice:susie]No way I'm letting this\nhappening!",
+        "[voice:susie]No way I'm letting this\nhappen!",
         "[voice:susie]I ain't giving up now!"
     })
     Game.battle.timer:tween(2, CONTINUE, {alpha=0}, "linear", function() CONTINUE:remove() end)

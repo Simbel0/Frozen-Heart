@@ -124,10 +124,10 @@ function Noelle_Battle:beforeStateChange(old, new)
                 end)
                 return true
             elseif Game.battle.noelle_tension_bar:getTension()>=32 and love.math.random(1,self.noelle.health)<=10 then
-                print("Cast HEALTH PRAYER")
+                print("Cast HEAL PRAYER")
                 self.spell_countdown=2
                 Game.battle:startCutscene(function(cutscene)
-                    local wait, text = cutscene:text("* Noelle casts HEALTH PRAYER!", nil, nil, {wait=false})
+                    local wait, text = cutscene:text("* Noelle casts HEAL PRAYER!", nil, nil, {wait=false})
                     local heal_susie = Utils.random(self.noelle.mercy)>50
                     if heal_susie then
                         print("Heal Susie!")
