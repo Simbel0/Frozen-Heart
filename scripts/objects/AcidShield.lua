@@ -101,7 +101,7 @@ function AcidShield:init(size, parent)
 
 	--Toby hard-coded the order the shield parts move. Thanks Toby. I won't have to deal with converting a GML formula to Lua (for now)
 	if size==7 then
-		self.health = 200
+		self.health = 100
 		self.moveorder = {
 			5,
 			4,
@@ -130,7 +130,7 @@ function AcidShield:init(size, parent)
 			self.shield_bottom_hurt
 		}
 	elseif size==10 then
-		self.health = 300
+		self.health = 150
 		self.moveorder = {
 			5,
 			4,
@@ -168,7 +168,7 @@ function AcidShield:init(size, parent)
 			self.shield_bottom_hurt
 		}
 	elseif size==12 then
-		self.health = 400
+		self.health = 200
 		self.moveorder = {
 			5,
 			4,
