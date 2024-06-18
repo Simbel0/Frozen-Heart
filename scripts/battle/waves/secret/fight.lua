@@ -56,7 +56,10 @@ function Fight:onStart()
                         self.timer:after(0.25, function()
                             local start_rot = Utils.random(380)
                             for i=0,(self.double and 4 or 7) do
-                                self:spawnBullet("secret/slap", x, y, math.rad(start_rot+(i*(self.double and 91 or 45))), 5)
+                                local b = self:spawnBullet("secret/slap", x, y, math.rad(start_rot+(i*(self.double and 91 or 45))), 5)
+                                if self.double then
+                                    b:setScale(b.scale_x/2)
+                                end
                             end
                         end)
                     end)

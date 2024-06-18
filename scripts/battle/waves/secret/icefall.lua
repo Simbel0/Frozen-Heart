@@ -18,7 +18,7 @@ function IceFall:onStart()
             x, y, angle = SCREEN_WIDTH, 0, math.rad(math.random(145, 165))
         end
 
-        local bullet = self:spawnBullet("snowflakeBullet", x, y, angle, 16, true, nil, nil, true)
+        local bullet = self:spawnBullet("snowflakeBullet", x, y, angle, self.double and 10 or 16, true, nil, nil, true)
     end)
 end
 
