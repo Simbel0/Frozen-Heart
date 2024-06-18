@@ -296,7 +296,7 @@ function Memories:onAct(battler, name)
                     return wait()
                 end)
                 self:setSprite("dess")
-                cutscene:text("* [speed:0.1]Maybe...[wait:5]\n* Maybe everything is going to be okay.", {advance=false, wait=false, skip=false})
+                cutscene:text("* [speed:0.1]Maybe...[wait:5]\n* Maybe everything is going to be alright.", {advance=false, wait=false, skip=false})
                 cutscene:wait(function()
                     return self.encounter.alpha_fx.alpha <= 0.1
                 end)

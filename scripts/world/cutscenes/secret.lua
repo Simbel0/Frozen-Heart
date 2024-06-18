@@ -891,7 +891,7 @@ return {
 
         cutscene:text("* ...", "surprise_smile", "ralsei")
         cutscene:text("* Well that's, uhm...", "surprise_neutral_side", "ralsei")
-        cutscene:text("* Weird.", "small_smile_side", "ralsei")
+        cutscene:text("* Odd.", "small_smile_side", "ralsei")
         cutscene:text("* Ralsei..? You're sure everything's fine?", "nervous", "susie")
         cutscene:text("* Of course... Let me try again.", "pleased", "ralsei")
 
