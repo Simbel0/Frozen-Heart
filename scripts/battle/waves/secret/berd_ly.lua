@@ -16,13 +16,29 @@ function actuallyHim:onStart()
         --end
         for i=1,4 do
             local x = Game.battle.arena.right+30
+            -- Account for the offset in stallattack that cause the tornado to spawn in the wrong places (and cause a crash)
+            local is_stallattack = false
+            for i,v in ipairs(Game.battle.waves) do
+                if v.id == "secret/stallattack" then
+                    is_stallattack = true
+                    break
+                end
+            end
+            if self.double and is_stallattack then
+                x = x + 100
+            end
 
             local y = (Game.battle.arena.top-40)+45*i
 
             local bullet = self:spawnBullet("secret/tornado", x, y, math.rad(180), 0)
             bullet.alpha=0
+            bullet.destroy_on_hit = false
+            bullet.damage = 0
             bullet.wave = self.wave
-            self.timer:tween(0.25, bullet, {alpha=1})
+            self.timer:tween(0.25, bullet, {alpha=1}, nil, function()
+                bullet.destroy_on_hit = true
+                bullet.damage = nil
+            end)
         end
         self.timer:after(0.5, function()
             --1: two-by-two, 2:up-to-down, 3:down-to-up
