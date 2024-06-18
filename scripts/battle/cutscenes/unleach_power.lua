@@ -92,7 +92,7 @@ return function(cutscene, battler, sneo)
 
     end)
 
-    cutscene:text("* Kris unleaches the power of your SOUL!", {skip=false})
+    cutscene:text("* Kris unleashes the power of your SOUL!", {skip=false})
     Assets.playSound("noise")
     susie.should_darken = true
     susie.darken_timer = 15

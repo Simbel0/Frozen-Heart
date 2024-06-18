@@ -36,7 +36,7 @@ function spell:onCast(user, target)
                     damage = damage + 30
                     Assets.playSound("scytheburst")
                 end
-                if target.id == "ring_noelle" then
+                if target.id == "ring_noelle" or target.id == "lost_soul_s" then
                     if not Game.battle.encounter.last_section then
                         damage = love.math.random(2, 5)+(pressed and 2 or 0)
                     end
