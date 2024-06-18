@@ -47,8 +47,6 @@ function ring_noelle:init()
     }
 
     self:registerAct("Call out", "Calls\nNoelle")
-    self:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
-    self:registerAct("Dual Heal", "Heals\neveryone", {"ralsei"}, 50)
 
     self.first_shield = true
 

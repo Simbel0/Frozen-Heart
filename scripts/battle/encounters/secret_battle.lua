@@ -108,6 +108,8 @@ function secret_battle:update()
             end
 
             self.noelle.sprite.alpha = 1
+            self.noelle:registerAct("Red Buster", "Red\nDamages", {"susie"}, 60)
+            self.noelle:registerAct("Dual Heal", "Heals\neveryone", {"ralsei"}, 50)
             self.noelle:registerAct("Shield", "Raise Acid\nShield", {"kris"}, 96, nil, {"queen-icon"})
             self.noelle.waves = {
                 "secret/snowfall2",
