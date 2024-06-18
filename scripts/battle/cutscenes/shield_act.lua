@@ -3,6 +3,12 @@ return function(cutscene, user, target)
 		target.first_shield = false
 		cutscene:text("* Make A Shield?", "surprise", "queen")
 		cutscene:text("* Kris I Like Your Way Of Thinking.", "smirk", "queen")
+	elseif Game.battle.encounter.queen.shield then
+		cutscene:text("* Kris I Can't Hold Two Glasses Of Wine In The Same Hand", "sorry", "queen")
+		cutscene:text("* Please Get Worse At Dodging If You Want More Of My Battery Acid", "smile_side_r", "queen")
+		Game:giveTension(96/2) --You're stoopid but here
+		cutscene:endCutscene()
+		return
 	else
 		cutscene:wait(0.5)
 	end
