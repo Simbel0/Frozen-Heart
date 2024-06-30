@@ -2,6 +2,9 @@ return function(cutscene)
     print("Spamton Fight: "..tostring(Game:getFlag("spamton_boss", false)))
     print("Secret Fight: "..tostring(Game:getFlag("secret_unlocked", false)))
 
+    local Spamton = Game:getFlag("spamton_boss", false)
+    local Astrogirl = Utils.random(0, 100)<10
+
     local yellow_text = "Can someone hear me?"
     if Spamton then
         if not Kristal.Config["canAccessSecret"] then
@@ -20,11 +23,12 @@ return function(cutscene)
                 data.room_name = "Queen's mansion - Rooftop"
                 data.room_id = "mansion_queen_prefountain"
                 data.playtime = Game.playtime
+                data.light = false
                 data["is_secret_file"] = true
-                Kristal.Config["secret_file_data"] = data
-                Kristal.Config["secret_file_data"].id = Game.save_id
-                --Kristal.saveGame(Game.save_id, data)
+                Kristal.saveGame(Game.save_id, data)
             end
+            Kristal.Config["secret_file_data"] = data
+            Kristal.Config["secret_file_data"].id = Game.save_id
             yellow_text = "You have unlocked\nan alternative fight!"
         else
             yellow_text = "An alternative awaits you!"
@@ -44,8 +48,6 @@ return function(cutscene)
     cutscene:wait(2)
 
     Kristal.hideBorder(1)
-    Spamton = Game:getFlag("spamton_boss", false)
-    Astrogirl = Utils.random(0, 100)<10
     local theme = Music(Astrogirl and "Beeg" or "ch2_credits")
     theme.source:setLooping(false)
 
@@ -134,7 +136,7 @@ return function(cutscene)
 
     cutscene:wait(wait_times[3])
 
-    local lib_credits = "Queen actor, Hangplugs - Nyako\n"
+    local lib_credits = "Queen actor, Hangplugs - Sylvi\n"
     if Spamton then
         lib_credits = lib_credits.."Yellow Soul, Spamton NEO actor, Particle System - vitellary"
     end

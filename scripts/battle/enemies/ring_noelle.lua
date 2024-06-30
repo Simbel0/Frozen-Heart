@@ -208,9 +208,9 @@ function ring_noelle:onAct(battler, name)
         return
     elseif name == "Standard" then
         if battler.chara.id == "susie" then
-            return "* Susie tries to talk Noelle out of this.\n* Noelle do not listen."
+            return "* Susie tries to talk Noelle out of this.\n* Noelle doesn't listen."
         elseif battler.chara.id == "ralsei" then
-            return "* Ralsei tries to calm Noelle down.\n* Noelle do not listen."
+            return "* Ralsei tries to calm Noelle down.\n* Noelle doesn't listen."
         end
     end
 
