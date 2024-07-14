@@ -37,7 +37,7 @@ return function(cutscene)
 		Game.battle.timer:tween(0.5, data["barEnemy"], {alpha=1})
 		Game.battle:addChild(data["barEnemy"])
 
-		data["text"]=Text("Press "..Input.getText("confirm").." repeatly!", 205, 40, {style = "none"})
+		data["text"]=Text("Press "..Input.getText("confirm").." repeatedly!", 205, 40, {style = "none"})
 		data["text"].layer=BATTLE_LAYERS["top"]+14
 		Game.battle:addChild(data["text"])
 

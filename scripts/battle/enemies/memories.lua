@@ -110,7 +110,7 @@ function Memories:onAct(battler, name)
         if self.remember == 1 then
             self.wave_override = path.."spamton_1"
             Game.battle:startActCutscene(function(cutscene)
-                cutscene:text("* Noelle closes her eyes,[wait:5] and start to think of something among her memories.")
+                cutscene:text("* Noelle closes her eyes,[wait:5] and starts to think of something among her memories.")
                 cutscene:text("* [speed:0.1]...")
                 self:setSprite("spamton")
                 cutscene:text("* Suddenly,[wait:5] she remembers a scammer willing to help her.")
@@ -206,7 +206,7 @@ function Memories:onAct(battler, name)
         elseif self.remember == 14 then
             self.wave_override = path.."queen_2"
             return {
-                "* Noelle asks the ruler for why she did all of that.",
+                "* Noelle asks the ruler why she did all of that.",
                 "* Her respose is unclear,[wait:2] but Noelle feels that she had good intentions."
             }
         elseif self.remember == 15 then
@@ -270,7 +270,7 @@ function Memories:onAct(battler, name)
         elseif self.remember == 23 then
             self.wave_override = path.."susie_3"
             return {
-                "* Noelle asks the bully if she want to go on the ferris wheel with her.",
+                "* Noelle asks the bully if she wants to ride the ferris wheel with her.",
                 "* To Noelle's joy,[wait:2] the bully answers positively."
             }
         elseif self.remember == 24 then

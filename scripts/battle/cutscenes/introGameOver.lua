@@ -217,7 +217,7 @@ return function(cutscene)
     Game.battle.party[1]:resetSprite()
     cutscene:wait(0.75)
     local dialogue = DialogueText({
-        "Susie's strength has greatly\nincreased!",
+        "Susie's strength greatly\nincreases!",
         "She can now cast TENSION ABSORB!"
     }, 70, (SCREEN_HEIGHT/2)-30, {style = "none", color=COLORS["black"]})
     dialogue:setLayer(100010)
@@ -229,7 +229,7 @@ return function(cutscene)
     noelle.x=noelle.x-20
     Game.battle.timer:tween(0.6, hider, {alpha=0}, "linear", function() hider:remove() end)
     cutscene:wait(1.5)
-    cutscene:text("* Heh.[wait:1] Didja really thought a little cold could beat me?", "closed_grin", "susie")
+    cutscene:text("* Heh.[wait:1] Didja really think a little cold could beat me?", "closed_grin", "susie")
     cutscene:text("* Nobody will freeze me to death anytime soon!", "teeth_smile", "susie")
     cutscene:text("* ...", "blush_surprise", "noelle")
     cutscene:setAnimation(noelle, {"battle/idle", 0.2, true})

@@ -1,5 +1,11 @@
 local spell, super = Class("red_buster", true)
 
+function spell:init()
+    super:init(self)
+
+    self.effect = "Red\nDamage"
+end
+
 function spell:getCastMessage(user, target)
     local message = super:getCastMessage(self, user, target)
     if (Game.battle.encounter.id == "secret_battle" and Game.battle.encounter.intro) then

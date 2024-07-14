@@ -622,7 +622,7 @@ return {
         cutscene:text("* ...Well I sure hope not.", "", "susie")
         cutscene:text("* 'cause it kinda felt like...", "", "susie")
         CutMusic:stop()
-        cutscene:text("[speed:0.75]* My choices had stop mattering.", "", "susie")
+        cutscene:text("[speed:0.75]* My choices ceased to matter.", "", "susie")
 
         Assets.playSound("snd_dooropen")
 

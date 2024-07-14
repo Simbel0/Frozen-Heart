@@ -149,7 +149,7 @@ return function(cutscene)
 
     cutscene:wait(wait_times[5])
 
-    text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server\nfor their help and feedbacks")
+    text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server\nfor their help and feedbacks\n\nZemete and Reaper\nfor fixing many typos")
 
     cutscene:wait(wait_times[3])
 

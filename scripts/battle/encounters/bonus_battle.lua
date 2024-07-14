@@ -321,7 +321,7 @@ function Bonus_Battle:getDialogueCutscene()
         self.sneo.text={
             "* Spamton NEO smiles victoriously.",
             "* Spamton waits for you to take the deal.",
-            "* Susie tries to tell you something, but Spamton threaten to fire a pipis at her."
+            "* Susie tries to tell you something, but Spamton threatens to fire a pipis at her."
         }
         self.sneo.acts={}
         self.sneo.waves={
@@ -332,8 +332,8 @@ function Bonus_Battle:getDialogueCutscene()
             "WHAT ARE YOU WAITING FOR??",
             "[Please Press][De4l][To Continue]"
         }
-        self.sneo:registerAct("Deal", "Negociate\nthe deal")
-        self.sneo:registerAct("HealDeal", "Negociate\nand heal", nil, 10)
+        self.sneo:registerAct("Deal", "Negotiate\nthe deal")
+        self.sneo:registerAct("HealDeal", "Negotiate\nand heal", nil, 10)
         Game.battle.music:fade(0, 1.5)
         return function(c)
             c:wait(2.5)

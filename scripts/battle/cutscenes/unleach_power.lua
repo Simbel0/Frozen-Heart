@@ -329,7 +329,7 @@ return function(cutscene, battler, sneo)
     cutscene:text("* ...", "nervous", "susie")
     cutscene:text("* Kris,[wait:2] I dunno how you're doing that...", "nervous", "susie")
     cutscene:text("* But damn that's cool.", "smile", "susie")
-    cutscene:text("* But don't you THINK I'm gonna let you do the whole job yourself!", "closed_grin", "susie")
+    cutscene:text("* But don't think I'm gonna let you do the whole job yourself!", "closed_grin", "susie")
     cutscene:text("[noskip]* The TENSION is at its fullest![func:tp_up]", nil, nil, {functions={
         tp_up = function()
             Game.tension = 200

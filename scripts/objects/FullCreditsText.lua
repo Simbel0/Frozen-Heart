@@ -64,6 +64,7 @@ function FullCredits:init(logo)
 		"RhenaudTheLukark for creating Create Your Frisk and Create Your Kris,",
 		"the engine first used for Frozen Heart.",
 		"The people who waited for Frozen Heart for 2 years.",
+		"Zemete and Reaper, for fixing many typos in the dialogues.",
 		"You. For playing my small fangame.",
 
 		"",
@@ -72,7 +73,7 @@ function FullCredits:init(logo)
 
 		"Thank you for playing Frozen Heart.",
 		"Thank you if you have supported Frozen Heart",
-		"during its two years of devlopment.",
+		"during its two years of development.",
 		"I still think it's way too long for a small fangame like this one.",
 		"But you have continued to show support nonetheless",
 		"and for this alone, thank you.",

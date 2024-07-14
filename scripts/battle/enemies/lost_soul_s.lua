@@ -68,7 +68,7 @@ function Lost_Soul_S:init()
     }
 
     -- Check text (automatically has "ENEMY NAME - " at the start)
-    self.check = {"Controlled by ice, this lost soul reminds you of someone...", "Without their strings,[wait:3] only ice prevents them to fall."}
+    self.check = {"Controlled by ice, this lost soul reminds you of someone...", "Without their strings,[wait:3] only ice prevents them from falling."}
 
     -- Text randomly displayed at the bottom of the screen each turn
     self.text = {

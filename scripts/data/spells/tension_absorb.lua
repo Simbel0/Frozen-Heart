@@ -11,7 +11,7 @@ function spell:init()
     -- Battle description
     self.effect = "Calm the\nTENSION"
     -- Menu description
-    self.description = "Absorb the TP of one enemy to prevent it to cast spells."
+    self.description = "Absorb the TP of one enemy to prevent them from casting spells."
 
     -- TP cost
     self.cost = 30
