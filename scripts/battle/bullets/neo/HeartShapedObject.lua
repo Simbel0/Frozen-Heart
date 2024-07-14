@@ -1,7 +1,7 @@
 --Heartheartheartheartheartheart33333333
 local HeartShapedObject, super = Class(Bullet)
 
-function HeartShapedObject:init(x, y, speed_x, speed_y)
+function HeartShapedObject:init(x, y)
     -- Last argument = sprite path
     super:init(self, x, y, "bullets/neo/heart")
 
@@ -26,10 +26,13 @@ function HeartShapedObject:init(x, y, speed_x, speed_y)
 end
 
 function HeartShapedObject:onWaveSpawn(wave)
+    self.wires_spawn_timer = {}
     for i=0,2 do
-        wave.timer:after(0.7+(0.5*i), function()
+        local timer = wave.timer:after(0.7+(0.5*i), function()
             self.wires[i+1] = wave:spawnBullet("neo/heart_wire", self.init_x, self.init_y, self.start_physics)
+            Utils.removeFromTable(self.wires_spawn_timer, timer)
         end)
+        table.insert(self.wires_spawn_timer, timer)
     end
 end
 
@@ -37,6 +40,9 @@ function HeartShapedObject:update()
     -- For more complicated bullet behaviours, code here gets called every update
     
     if self.y + self.height >= Game.battle.arena.bottom and self.x > Game.battle.arena.left then
+        if self.physics.speed_y == nil then --???
+            self.physics.speed_y = -love.math.random(1, 10)
+        end
         self.physics.speed_y = -self.physics.speed_y + 0.6
         --[[for i=1,2 do
             local bullet = self.wave:spawnBullet("smallbullet", self.x, self.y, math.rad(i==1 and 265 or 285), 10)
@@ -86,6 +92,12 @@ function HeartShapedObject:onRemove()
     for i,wire in ipairs(self.wires) do
         wire:remove()
     end
+    local delay = 0
+    for i,timer in ipairs(self.wires_spawn_timer) do
+        self.wave.timer:cancel(timer)
+        delay = delay + 0.3
+    end
+    self.wave.heart_timer.time = self.wave.heart_timer.time + delay
 end
 
 return HeartShapedObject
