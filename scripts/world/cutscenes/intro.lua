@@ -415,11 +415,6 @@ return {
             return false
         end
 
-        local presence = Kristal.getPresence()
-        presence.state = Kristal.callEvent("getPresenceState") or ("Playing " .. (Kristal.getModOption("name") or "a mod"))
-        presence.details = Kristal.callEvent("getPresenceDetails")
-        Kristal.setPresence(presence)
-
         cutscene:fadeOut(0.1)
         cutscene:detachCamera()
         local susie=cutscene:getCharacter("susie")
@@ -429,6 +424,13 @@ return {
             noelle.visible=false
             cutscene:endCutscene()
         end
+        
+        local presence = Kristal.getPresence()
+        presence.state = Kristal.callEvent("getPresenceState") or ("Playing " .. (Kristal.getModOption("name") or "a mod"))
+        presence.details = Kristal.callEvent("getPresenceDetails")
+        Kristal.setPresence(presence)
+
+        Kristal.showBorder(1)
 
         susie.y=320
         cutscene:panTo(635, susie.y, 0)
