@@ -123,7 +123,7 @@ function Noelle:onAct(battler, name)
                 cutscene:during(function()
                     if walkSusie then
                         if susie.x<=noelle.x-80 then
-                            susie.x=susie.x+0.35
+                            susie.x=susie.x+0.35*DTMULT
                         else
                             cutscene:setSprite(susie, "walk")
                             susie.sprite:setFacing("right")
