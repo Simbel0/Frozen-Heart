@@ -52,7 +52,7 @@ function Bonus_Battle:update()
             angle = {math.rad(285), math.rad(350)}
         })
         head:addChild(self.sneo.smoke_emitter)
-        Game.battle.timer:tween(0.2, head.sprite, {color={1, 0, 0}})
+        Game.battle.timer:tween(0.2, head.sprite, {color={1, 0, 0}}, nil, function() self.cheater_color_transition_done = true end)
         Assets.playSound("snd_carhonk")
         Game.battle.timer:everyInstant(0.6, function()
             Game.battle.timer:tween(0.25, head.sprite, {scale_x=2, scale_y=2}, "linear", function()
@@ -61,7 +61,15 @@ function Bonus_Battle:update()
         end, 2)
     end
 
-    self.sneo.attack = Utils.clamp(13 + 0.25*self.funnycheat, 13, 26)
+    if self.cheater then
+        self.sneo.attack = Utils.clamp(13 + 0.25*self.funnycheat, 13, 26)
+        if self.cheater_color_transition_done then
+            local head = self.sneo.sprite:getPart("head")
+            if head.sprite.color[2] ~= 0 then
+                head.sprite.color = {1, 0, 0}
+            end
+        end
+    end
 end
 
 function Bonus_Battle:onBattleStart()
