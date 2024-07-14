@@ -125,8 +125,7 @@ function Noelle:onAct(battler, name)
                         if susie.x<=noelle.x-80 then
                             susie.x=susie.x+0.35*DTMULT
                         else
-                            cutscene:setSprite(susie, "walk")
-                            susie.sprite:setFacing("right")
+                            cutscene:setSprite(susie, "walk/right_1")
                         end
                     else
                         if cur_x then
