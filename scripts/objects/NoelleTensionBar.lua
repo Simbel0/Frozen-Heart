@@ -69,6 +69,9 @@ end
 
 function NoelleTensionBar:giveTension(amount, dont_clamp)
     self.nTension = self.nTension+(dont_clamp and amount or Utils.clamp(amount, 0, self.nMaxtension))
+    if self.nTension > self.nMaxtension then
+        self.nTension = self.nMaxtension
+    end
 end
 
 function NoelleTensionBar:removeTension(amount)
