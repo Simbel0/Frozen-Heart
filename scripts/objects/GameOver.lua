@@ -7,6 +7,11 @@ function GameOver:init(x, y)
     if Game:getFlag("plot", 0)<=3 and Game:getFlag("plot", 0)~=0 then
         self.soul.rotation = math.rad(180)
     end
+
+    if Game:getFlag("noelle_battle_status", "") == "snowgrave" then
+        self.soul.rotation = 0
+        self.soul.color = {1, 0, 0}
+    end
 end
 
 function GameOver:update()
