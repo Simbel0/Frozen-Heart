@@ -350,11 +350,18 @@ return {
             for i=1,#tab do
                 tab[i]:remove()
             end
-            cutscene:gotoCutscene("CREDITS")
+            if Game:getFlag("noelle_battle_status", "no_trance") == "snowgrave" then
+                Game:setLight(true)
+                Game:gameOver(SCREEN_WIDTH/2, SCREEN_HEIGHT/2)
+                cutscene:endCutscene()
+                return
+            else
+                cutscene:gotoCutscene("CREDITS")
+            end
         else
+            cutscene:mapTransition("computer_lab")
             Kristal.showBorder(1)
             cutscene:fadeIn(1)
-            cutscene:mapTransition("computer_lab")
         end
         cutscene:endCutscene()
     end,
