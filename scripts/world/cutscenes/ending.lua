@@ -134,15 +134,15 @@ return {
                     loop = loop+0.05
                     delay = 0.5+loop
                 end
-                return delay >= 3.075
+                return delay >= 2.075
             end)
             local i = 0
             Game.world.timer:everyInstant(1/14, function()
                 Assets.stopAndPlaySound("damage")
                 statusMessage({0.5, 1, 1}, i, love.math.random(0, 3))
                 i=i+1
-            end, 50)
-            cutscene:wait(((1/12)*50))
+            end, 30)
+            cutscene:wait(((1/12)*30))
         end
         cutscene:wait(2.5)
 
