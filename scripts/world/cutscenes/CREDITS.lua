@@ -7,38 +7,43 @@ return function(cutscene)
 
     local yellow_text = "Can someone hear me?"
     if Spamton then
+        local data
+        if Kristal.hasSaveFile() then
+            data = Kristal.getSaveFile()
+        else
+            data = Game:save()
+            data.room_name = "Queen's mansion - Rooftop"
+            data.room_id = "mansion_queen_prefountain"
+            data.party = {"susie", "noelle"}
+            data.party_data = Mod.save_party_data or data.party_data
+            data.inventory = Mod.save_inventory or data.inventory
+            data.flags["plot"] = 3
+            data.flags["#mansion_queen_prefountain#26:used_once"] = nil
+            data.playtime = Game.playtime
+            data.light = false
+        end
         if not Kristal.Config["canAccessSecret"] then
             Kristal.Config["canAccessSecret"] = true
             Kristal.Config["secret_unlocked"] = true
-            Mod.registerSecret = true
-            local data
-            if Kristal.hasSaveFile() then
-                -- Use the unchanged save data to add the secret file variable without actually saving the game
-                data = Kristal.getSaveFile()
-                data["is_secret_file"] = true
-                Kristal.saveGame(Game.save_id, data)
-            else
-                -- If the player never saved, the game will automatically save but put them in the Rooftop instead of the computer lab
-                data = Game:save()
-                data.room_name = "Queen's mansion - Rooftop"
-                data.room_id = "mansion_queen_prefountain"
-                data.playtime = Game.playtime
-                data.light = false
-                data["is_secret_file"] = true
-                Kristal.saveGame(Game.save_id, data)
-            end
+            data["is_secret_file"] = true
+            --Mod.registerSecret = true
+            data.room_name = ""
             Kristal.Config["secret_file_data"] = data
             Kristal.Config["secret_file_data"].id = Game.save_id
             yellow_text = "You have unlocked\nan alternative fight!"
         else
             yellow_text = "An alternative awaits you!"
         end
+        Kristal.saveGame(Game.save_id, data)
     else
         if Game:getFlag("noelle_battle_status") ~= "no_trance" then
             yellow_text = "But can you save Noelle\nas fast as possible?"
         else
             yellow_text = "But can you win by doing\nas few turns as possible??"
         end
+    end
+    if Kristal.Config["allclear_scene"] then
+        yellow_text = "Thank you for playing!"
     end
     Kristal.Config["beat_once"] = true
 

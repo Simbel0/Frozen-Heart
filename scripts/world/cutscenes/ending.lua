@@ -149,6 +149,12 @@ return {
         if spamton_boss and ending == "no_trance" then
             Game:setFlag("plot", 4)
 
+            Mod.save_party_data = {}
+            for k,v in pairs(Game.party_data) do
+                Mod.save_party_data[k] = v:save()
+            end
+            Mod.save_inventory = Game.inventory:save()
+
             Game:addPartyMember("kris")
             Game:movePartyMember("kris", 1)
 
