@@ -338,6 +338,7 @@ return {
         Game:addPartyMember("ralsei", 3)
 
         cutscene:loadMap("fountain_room")
+        Game:setBorder("simple")
 
         cutscene:detachFollowers()
         cutscene:detachCamera()
@@ -617,6 +618,7 @@ return {
         cutscene:gotoCutscene("secret.ending")
     end,
     quickstart = function(cutscene)
+        Game:setBorder("simple")
         Game.world.camera.keep_in_bounds = false
         Game.world.fader.alpha = 1
         cutscene:panTo(-25, Game.world.camera.y, 0)
