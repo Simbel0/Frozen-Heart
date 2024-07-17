@@ -798,7 +798,7 @@ function secret_battle:getDialogueCutscene()
                 self.noelle:flash()
                 Assets.playSound("bump")
                 Assets.playSound("break2")
-                wait_value = wait_value - 0.1*DTMULT
+                wait_value = wait_value - 0.1
             end
             Assets.playSound("break2")
             Assets.playSound("break2", 1, 1.5)
