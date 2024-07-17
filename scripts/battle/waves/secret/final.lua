@@ -22,7 +22,7 @@ function Final:onStart()
 			local first = self.timer:everyInstant(0.75, function()
 				if not self.switch then
 			        local x, y = Utils.pick({5, SCREEN_WIDTH+5}), Utils.random(5, SCREEN_HEIGHT-5)
-			        print(x, y)
+			        --[[print(x, y)
 			        if self.prev_y then
 			            local ok
 			            while true do
@@ -40,7 +40,7 @@ function Final:onStart()
 			            end
 			        end
 			        print("pass")
-			        self.prev_y = y
+			        self.prev_y = y]]
 
 			        local rect = Rectangle(SCREEN_WIDTH/2, y, SCREEN_WIDTH, 1)
 			        rect:setOrigin(0.5)
@@ -59,8 +59,25 @@ function Final:onStart()
 			        end)
 			    else
 			    	local x, y
-			        x = Utils.random(30, SCREEN_WIDTH-30)
-			        y = Utils.random(30, SCREEN_HEIGHT-30)
+
+			    	local limit = 0
+			        while true do
+			        	print(limit)
+			        	x = Utils.random(30, SCREEN_WIDTH-30)
+			        	y = Utils.random(30, SCREEN_HEIGHT-30)
+
+			        	if limit > 25 then -- Prevent an infinite loop by just giving up if it's taking too long
+			        		break
+			        	end
+
+			        	--print("dist = "..Utils.dist(x, y, Game.battle.soul.x, Game.battle.soul.y))
+			        	if Utils.dist(x, y, Game.battle.soul.x, Game.battle.soul.y) > 100 then
+			        		print("Accepted")
+			        		break
+			        	end
+			        	print("Unaccepted")
+			        	limit = limit + 1
+			        end
 
 			        -- Spawn smallbullet going left with speed 8 (see scripts/battle/bullets/smallbullet.lua)
 			        local bullet = self:spawnBullet("secret/iceshock", x, y)
