@@ -10,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 11,
-  nextobjectid = 46,
+  nextobjectid = 48,
   backgroundcolor = { 27, 27, 42 },
   properties = {},
   tilesets = {
@@ -324,7 +324,9 @@ return {
           visible = true,
           properties = {
             ["cutscene"] = "interactable_noelle_room",
-            ["id"] = 7
+            ["id"] = 7,
+            ["solid"] = true,
+            ["spriteObj"] = { id = 46 }
           }
         },
         {
@@ -341,7 +343,42 @@ return {
           properties = {
             ["cutscene"] = "interactable_noelle_room",
             ["id"] = 8,
-            ["solid"] = true
+            ["solid"] = true,
+            ["spriteObj"] = { id = 47 }
+          }
+        },
+        {
+          id = 46,
+          name = "sprite",
+          type = "",
+          shape = "point",
+          x = 410,
+          y = 270,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["originx"] = 0.5,
+            ["originy"] = 1,
+            ["texture"] = "icee_cushion"
+          }
+        },
+        {
+          id = 47,
+          name = "sprite",
+          type = "",
+          shape = "point",
+          x = 175,
+          y = 280,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["originx"] = 0.5,
+            ["originy"] = 1,
+            ["texture"] = "susie_statue"
           }
         }
       }

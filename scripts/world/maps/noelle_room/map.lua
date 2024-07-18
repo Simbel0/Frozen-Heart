@@ -19,6 +19,17 @@ function her_room:onEnter()
 			Game.world:addChild(noelle_head)
 		end
 	end
+
+	if Game:getFlag("interacted-7", false) then
+		local event = Game.world:getEvent(30)
+		Game.world:getEvent(event.data.properties["spriteObj"].id):remove()
+		event:remove()
+	end
+	if Game:getFlag("interacted-8", false) then
+		local event = Game.world:getEvent(31)
+		Game.world:getEvent(event.data.properties["spriteObj"].id):remove()
+		event:remove()
+	end
 end
 
 function her_room:update()
