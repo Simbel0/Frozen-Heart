@@ -44,6 +44,7 @@ function FullCredits:init(logo)
 		"Frozen Heart Logo - Soup Taels",
 
 		"Libraries",
+		"Wobblythings - Nyakorita",
 		"Queen Library - Sylvi, Vitellary",
 		"Hangplug Library - Sylvi",
 		"Spamton NEO Library - Vitellary",
@@ -112,7 +113,7 @@ function FullCredits:draw()
 	self.full_mode = false
 	love.graphics.setFont(self.font)
 
-	if self.text_y > -2026 then
+	if self.text_y > -2086 then
 		self.logo.y = self.logo.y - DTMULT
 		self.text_y = self.text_y - DTMULT
 	else

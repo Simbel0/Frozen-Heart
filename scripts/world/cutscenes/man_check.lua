@@ -1,9 +1,9 @@
 return function(cutscene)
-	if not Game:getFlag("man_room", false) and Game:getFlag("noelle_battle_status", "killspare")=="no_trance" then
+	if not (Game:getFlag("wobbly", false) and Game:getFlag("man_room", false)) and Game:getFlag("noelle_battle_status", "killspare")=="no_trance" then
 		if love.math.random(0, 50)==27 then
 			print("egg man")
+			cutscene:wait(cutscene:mapTransition("redemption_egg", "entry"))
 			Game:setFlag("man_room", true)
-			cutscene:mapTransition("redemption_egg", "entry")
 		else
 			print("no egg")
 			cutscene:mapTransition("queen_mansion_4f_d", "entry_l")

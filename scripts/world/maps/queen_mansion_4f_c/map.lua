@@ -1,7 +1,7 @@
 local map, super = Class(Map)
 
 function map:onEnter()
-	if not Game:getFlag("man_room", false) and Game:getFlag("noelle_battle_status", "") == "no_trance" then
+	if not (Game:getFlag("wobbly", false) and Game:getFlag("man_room", false)) and Game:getFlag("noelle_battle_status", "") == "no_trance" then
 		self.egg_hint = Game.world.timer:everyInstant(60, function()
 			print("hint")
 			local sprite = Sprite("world/events/blocktree/block", 2520, 220)

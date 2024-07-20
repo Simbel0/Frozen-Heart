@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.4",
+  tiledversion = "1.10.0",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 51,
@@ -9,7 +10,7 @@ return {
   tilewidth = 40,
   tileheight = 40,
   nextlayerid = 6,
-  nextobjectid = 24,
+  nextobjectid = 25,
   properties = {
     ["music"] = "man"
   },
@@ -34,6 +35,7 @@ return {
       height = 12,
       id = 2,
       name = "Calque de Tuiles 2",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -65,6 +67,7 @@ return {
       height = 12,
       id = 1,
       name = "Calque de Tuiles 1",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -93,6 +96,7 @@ return {
       draworder = "topdown",
       id = 3,
       name = "collisions",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -316,6 +320,7 @@ return {
       draworder = "topdown",
       id = 4,
       name = "objects",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -335,7 +340,9 @@ return {
           height = 40,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["flagcheck"] = "!man_room"
+          }
         },
         {
           id = 22,
@@ -349,7 +356,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["cutscene"] = "overworld.man"
+            ["cutscene"] = "overworld.man",
+            ["flagcheck"] = "!man_room"
           }
         },
         {
@@ -367,6 +375,22 @@ return {
             ["map"] = "queen_mansion_4f_d",
             ["marker"] = "entry_l"
           }
+        },
+        {
+          id = 24,
+          name = "script",
+          type = "",
+          shape = "rectangle",
+          x = 1560,
+          y = 240,
+          width = 40,
+          height = 120,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["cutscene"] = "wobblything",
+            ["flagcheck"] = "man_room"
+          }
         }
       }
     },
@@ -375,6 +399,7 @@ return {
       draworder = "topdown",
       id = 5,
       name = "markers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,

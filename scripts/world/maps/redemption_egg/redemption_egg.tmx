@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.8" tiledversion="1.8.4" orientation="orthogonal" renderorder="right-down" width="51" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="6" nextobjectid="24">
+<map version="1.10" tiledversion="1.10.0" orientation="orthogonal" renderorder="right-down" width="51" height="12" tilewidth="40" tileheight="40" infinite="0" nextlayerid="6" nextobjectid="25">
  <editorsettings>
-  <export target="../redemption_egg.lua" format="lua"/>
+  <export target="data.lua" format="lua"/>
  </editorsettings>
  <properties>
   <property name="music" value="man"/>
@@ -59,16 +59,27 @@
   <object id="17" x="-40" y="480" width="120" height="48"/>
  </objectgroup>
  <objectgroup id="4" name="objects">
-  <object id="18" name="blocktree" x="1720" y="280" width="40" height="40"/>
+  <object id="18" name="blocktree" x="1720" y="280" width="40" height="40">
+   <properties>
+    <property name="flagcheck" value="!man_room"/>
+   </properties>
+  </object>
   <object id="22" name="interactable" x="1746.67" y="251.333" width="17.3333" height="25.6667">
    <properties>
     <property name="cutscene" value="overworld.man"/>
+    <property name="flagcheck" value="!man_room"/>
    </properties>
   </object>
   <object id="23" name="transition" x="80" y="480" width="120" height="40">
    <properties>
     <property name="map" value="queen_mansion_4f_d"/>
     <property name="marker" value="entry_l"/>
+   </properties>
+  </object>
+  <object id="24" name="script" x="1560" y="240" width="40" height="120">
+   <properties>
+    <property name="cutscene" value="wobblything"/>
+    <property name="flagcheck" value="man_room"/>
    </properties>
   </object>
  </objectgroup>
