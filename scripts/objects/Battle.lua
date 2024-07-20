@@ -200,6 +200,18 @@ function Battle:updateTransition()
         for _,layer in ipairs(map) do
             layer.y = Utils.lerp(0, -30, self.transition_timer / 10)
         end
+
+        local events = Game.world.map:getEvents(name)
+        if not self.noelle_events_starting_y then
+            self.noelle_events_starting_y = {}
+            for i,event in ipairs(events) do
+                table.insert(self.noelle_events_starting_y, event.y)
+            end
+        end
+
+        for i,event in ipairs(events) do
+            event.y = Utils.lerp(self.noelle_events_starting_y[i], self.noelle_events_starting_y[i]-30, self.transition_timer / 10)
+        end
     end
 end
 
@@ -228,6 +240,10 @@ function Battle:updateTransitionOut()
         local map={Game.world.map:getImageLayer("room"), Game.world.map:getImageLayer("moon"), Game.world.map:getImageLayer("ferris_wheel")}
         for _,layer in ipairs(map) do
             layer.y = Utils.lerp(0, -30, -(self.transition_timer / 10))
+        end
+
+        for i,event in ipairs(Game.world.map:getEvents()) do
+            event.y = Utils.lerp(self.noelle_events_starting_y[i], self.noelle_events_starting_y[i]-30, -(self.transition_timer / 10))
         end
     end
 
