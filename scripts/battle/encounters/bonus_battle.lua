@@ -73,11 +73,7 @@ function Bonus_Battle:update()
 end
 
 function Bonus_Battle:onBattleStart()
-    if spamtonMusic and spamtonMusic:isPlaying() then
-        Game.battle.music=spamtonMusic
-    else
-        Game.battle.music:play("SnowGrave NEO", 0.5, 1)
-    end
+    Game.battle.music:play("snowgraveNEO", 0.5, 1)
     Game.world:getEvent(2).adjust=3
 
     Game.battle.party[2].chara.stats["health"]=190

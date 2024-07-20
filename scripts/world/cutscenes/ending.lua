@@ -210,7 +210,8 @@ return {
             end)
             cutscene:wait(0.5)
             if not quick_start then
-                spamtonMusic=Music("SnowGrave NEO")
+                local spamtonMusic=Music("snowgraveNEO_intro")
+                spamtonMusic.source:setLooping(false)
                 Game:setBorder("simple")
                 Kristal.showBorder(1)
                 cutscene:wait(function()

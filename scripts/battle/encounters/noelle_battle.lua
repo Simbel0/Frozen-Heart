@@ -358,7 +358,7 @@ function Noelle_Battle:quickBattle(debug)
             Game:setFlag("plot", 2)
         end
     end
-    Game.battle.music:play("SnowGrave")
+    Game.battle.music:play("snowgrave")
     Game.battle.noelle_tension_bar:show()
     self.noelle.waves={
         "snowfall",

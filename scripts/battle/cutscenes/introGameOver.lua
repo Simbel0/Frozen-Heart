@@ -248,7 +248,7 @@ return function(cutscene)
     Game.battle.timer:tween(3, eyeL, {alpha=0}, "linear", function() eyeL:remove() end)
     Game.battle.timer:tween(3, eyeR, {alpha=0}, "linear", function()
         eyeR:remove()
-        Game.battle.music:play("SnowGrave")
+        Game.battle.music:play("snowgrave")
         cutscene:setAnimation(noelle, {"battle/trancesition", 0.2, false, next="battle/idleTrance"})
         noelle.actor.animations["battle/idle"]=noelle.actor.animations["battle/idleTrance"]
         noelle.x=noelle.x+6
