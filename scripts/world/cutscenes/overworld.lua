@@ -625,7 +625,7 @@ return {
 		cutscene:fadeOut(1)
 		cutscene:wait(1.5)
 		cutscene:mapTransition("fountain_room")
-		cutscene:gotoCutscene("ending.killing_spamton")
+		cutscene:gotoCutscene("ending.killing_spamton", Game:getFlag("spamton_quick", false))
 	end,
 	man=function(cutscene)
 		if not Game.inventory:hasItem("egg") then

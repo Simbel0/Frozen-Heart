@@ -148,6 +148,9 @@ return {
 
         if spamton_boss and ending == "no_trance" then
             Game:setFlag("plot", 4)
+            
+            Game.quick_save = Kristal.getSaveFile()
+            Game.quick_save.flags["spamton_quick"] = true
 
             Mod.save_party_data = {}
             for k,v in pairs(Game.party_data) do
@@ -205,8 +208,8 @@ return {
             cutscene:wait(function()
                 return not laugh:isPlaying()
             end)
+            cutscene:wait(0.5)
             if not quick_start then
-                cutscene:wait(0.5)
                 spamtonMusic=Music("SnowGrave NEO")
                 Game:setBorder("simple")
                 Kristal.showBorder(1)

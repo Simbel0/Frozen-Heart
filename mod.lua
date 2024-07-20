@@ -238,6 +238,15 @@ end
     return data
 end]]
 
+function Mod:save(data)
+    if data.flags["spamton_quick"] ~= nil then
+        print("Remove spamton_quick flag")
+        data.flags["spamton_quick"] = nil   -- Prevent the flag to be saved
+        Game:setFlag("spamton_quick", true) -- But restore the flag for the current game
+    end
+    return data
+end
+
 function Mod:load(data, newfile, index)
     --if not newfile and Game:getFlag("plot") == 3 then
     --    print("what")
