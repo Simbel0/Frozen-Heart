@@ -144,28 +144,38 @@ return function(cutscene, event)
 			cutscene:text("* Then you won't mind if I take this for Kris's room, right?", "smile", "susie")
 			cutscene:text("* Huh? What...?", "surprise_frown", "noelle")
 			cutscene:text("* (Susie scavenged the ICE-E statue.)")
+			local spr = cutscene:getEvent(event.data.properties["spriteObj"].id)
+			spr:remove()
+			event:remove()
 		else
-			cutscene:text("* I should take this for Kris's room.", "smile", "susie")
-			cutscene:text("* (Susie stole the ICE-E statue.)")
+			if not interacted then
+				cutscene:text("* That thing looks awful. Why does Noelle even have that?", "nervous_side", "susie")
+			else
+				cutscene:text("* What? Did you expect something else?", "neutral", "susie")
+				cutscene:text("* WE have better things to do than look at whatever that is.", "closed_grin", "susie")
+			end
 		end
-		local spr = cutscene:getEvent(event.data.properties["spriteObj"].id)
-		spr:remove()
-		event:remove()
 	elseif id == 8 then
-		cutscene:text("* Yo, this statue is sick!", "surprise_smile", "susie")
 		if noelle then
+			cutscene:text("* Yo, this statue is sick!", "surprise_smile", "susie")
 			cutscene:text("* A-Ah! Susie, I can explain, you know!", "blush_surprise_smile", "noelle")
 			cutscene:text("* Huh? Explain what?", "neutral_side", "susie")
 			cutscene:text("* You... don't see the resemblance to someone?", "confused_surprise_b", "noelle")
 			cutscene:text("* Huh? No, I don't.", "nervous_side", "susie")
 			cutscene:text("* ...", "what", "noelle")
 			cutscene:text("* Well anyway, don't mind if I do!", "sincere_smile", "susie")
+
+			cutscene:text("* (Susie stole the Susie-like statue.)")
+			local spr = cutscene:getEvent(event.data.properties["spriteObj"].id)
+			spr:remove()
+			event:remove()
 		else
-			cutscene:text("* Maybe I can take this for my room.", "smirk", "susie")
+			if not interacted then
+				cutscene:text("* Damn, that's a cool statue.", "smirk", "susie")
+			else
+				cutscene:text("* What? Did you expect something else?", "neutral", "susie")
+				cutscene:text("* WE have better things to do than look at statues.", "closed_grin", "susie")
+			end
 		end
-		cutscene:text("* (Susie stole the Susie-like statue.)")
-		local spr = cutscene:getEvent(event.data.properties["spriteObj"].id)
-		spr:remove()
-		event:remove()
 	end
 end
