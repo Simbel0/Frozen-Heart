@@ -150,6 +150,9 @@ return function(cutscene)
     for _,layer in ipairs(map) do
         Game.battle.timer:tween(0.5, layer, {x=layer.x-50}, "out-cubic")
     end
+    for i,event in ipairs(Game.world.map:getEvents()) do
+    	Game.battle.timer:tween(0.5, event, {x=event.x-50}, "out-cubic")
+    end
     local orig_susie, orig_noelle=susie.x, noelle.x
     cutscene:slideTo(susie, 305, susie.y, 0.3, "out-cubic")
     cutscene:slideTo(noelle, 346, noelle.y, 0.3, "out-cubic")
@@ -255,6 +258,9 @@ return function(cutscene)
     cutscene:slideTo(noelle, orig_noelle, noelle.y, 0.3, "out-cubic")
     for _,layer in ipairs(map) do
         Game.battle.timer:tween(0.5, layer, {x=layer.x+50}, "out-cubic")
+    end
+    for i,event in ipairs(Game.world.map:getEvents()) do
+    	Game.battle.timer:tween(0.5, event, {x=event.x+50}, "out-cubic")
     end
     cutscene:wait(0.5)
     if forcePull["value"]>0 then
