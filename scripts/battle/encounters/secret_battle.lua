@@ -32,7 +32,7 @@ function secret_battle:init()
 
     Utils.hook(Bullet, "getDamage", function(orig, og_self, soul)
         local damage = orig(og_self, soul)
-        if self.last_section and damage<=0 then
+        if self.last_section and damage<=0 and og_self.alpha == 1 then
             return love.math.random(26, 28)*1.5
         end
         return damage
