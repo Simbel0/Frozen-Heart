@@ -334,4 +334,10 @@ function Final:update()
     end
 end
 
+function Final:onEnd(death)
+	if death and self.snow then
+		self.snow:stop()
+	end
+end
+
 return Final
