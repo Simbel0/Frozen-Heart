@@ -149,7 +149,11 @@ return {
         if spamton_boss and ending == "no_trance" then
             Game:setFlag("plot", 4)
             
-            Game.quick_save = Kristal.getSaveFile()
+            if Kristal.hasSaveFile() then
+                Game.quick_save = Kristal.getSaveFile()
+            else
+                Game:saveQuick()
+            end
             Game.quick_save.flags["spamton_quick"] = true
 
             Mod.save_party_data = {}
