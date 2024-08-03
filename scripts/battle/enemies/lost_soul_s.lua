@@ -4,7 +4,7 @@ function Lost_Soul_S:init()
     super:init(self)
 
     -- Enemy name
-    self.name = "Lost Soul"
+    self.name = localize("lost_soul_s_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("spamtonneo")
     self.actor.path = "enemies/spamton_neo/lost_soul"

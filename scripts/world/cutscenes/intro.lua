@@ -100,10 +100,10 @@ return {
             return choice
         end
 
-        gonerText("WELCOME AGAIN.")
-        gonerText("IT SEEMS YOU ARE\nSEEKING FOR...\n[wait:20]MORE SECRETS.")
-        gonerText("SECRETS THAT\nSHOULD NOT\nEXIST.")
-        gonerText("INTERESTING.[wait:20]\nTRULY[wait:10]\nINTERESTING.")
+        gonerText(localize("intro_text1"))
+        gonerText(localize("intro_text2"))
+        gonerText(localize("intro_text3"))
+        gonerText(localize("intro_text4"))
         
         cutscene:wait(0.8)
 
@@ -116,14 +116,14 @@ return {
         background.layer = WORLD_LAYERS["top"]
         Game.world:addChild(background)
 
-        gonerText("I THINK...[wait:20]\nWE CAN FIND AN\nARRANGEMENT.")
-        gonerText("YES...[wait:40]\nI AM SURE WE CAN.")
-        gonerText("AS YOU MAY KNOW, OUR EXPERIENCE'S CURRENT\nRESULTS ARE...")
-        gonerText("EXCELLENT.[wait:20]\nVERY INTERESTING,[wait:10]\nEVEN.")
-        gonerText("USING SOMEONE ELSE'S\nCHOICES TO CHANGE THE\nNATURAL TRACK OF\nTHIS WORLD IS\nFASCINATING.")
-        gonerText("BUT I HOPE YOU'LL\nALSO ACKNOWLEDGE\nCONSEQUENCES.")
-        gonerText("CONSEQUENCES[wait:20]\nJUST[wait:20]\nFOR[wait:20]\nYOU.[wait:20]")
-        gonerText("BUT I ASSUME YOU ARE\nAWARE OF THIS PART.")
+        gonerText(localize("intro_text5"))
+        gonerText(localize("intro_text6"))
+        gonerText(localize("intro_text7"))
+        gonerText(localize("intro_text8"))
+        gonerText(localize("intro_text9"))
+        gonerText(localize("intro_text10"))
+        gonerText(localize("intro_text11"))
+        gonerText(localize("intro_text12"))
         local starShow=math.random()>=0.8
         local starIsBeegBrain=starShow and math.random()>=0.8
         local fx=ColorMaskFX({0, 0, 0})
@@ -180,34 +180,34 @@ return {
         Game.world.timer:tween(1, berdly, {alpha = 1})
         Game.world.timer:tween(1, lancer, {alpha = 1})
         Game.world.timer:tween(20, gFx, {color = {1, 0.5, 0.5}})
-        gonerText("YOUR CHOICES WILL\nAFFECT EVERYONE\nAROUND YOU.")
+        gonerText(localize("intro_text13"))
         Game.world.timer:tween(2, lancer, {alpha = 0})
-        gonerText("SOME WILL STAY IN\nBLISSFUL IGNORANCE.")
+        gonerText(localize("intro_text14"))
         Game.world.timer:tween(2, ralsei, {alpha = 0})
         if starIsBeegBrain then
             Game.world.timer:tween(2, starwalker, {alpha = 0})
         end
-        gonerText("SOME MAY KNOW MORE\nTHAN THEY LET IT BE.")
+        gonerText(localize("intro_text15"))
         Game.world.timer:tween(2, berdly, {alpha = 0})
-        gonerText("SOME WILL PAY THE\nPRICE FOR FACING\nAN UNKNOWN FORCE.")
+        gonerText(localize("intro_text16"))
         Game.world.timer:tween(2, kris, {alpha = 0})
-        gonerText("SOME ARE THE DIRECT\nVICTIM OF THIS\nFORCE.")
+        gonerText(localize("intro_text17"))
         if starShow and not starIsBeegBrain then
             Game.world.timer:tween(2, starwalker, {alpha = 0})
-            gonerText("SOME...[wait:10]\nARE JUST THERE.")
+            gonerText(localize("intro_text18"))
         end
         Game.world.timer:tween(4, susie, {x = 240}, "out-cubic")
         Game.world.timer:tween(4, noelle, {x = 370}, "out-cubic")
-        gonerText("AND THE LAST TWO...")
-        gonerText("ONE IS A VICTIM,[wait:20]\nONE IS IGNORANT.")
-        gonerText("ONE IS OBEDIENT,[wait:20]\nONE IS REBELLIOUS.")
-        gonerText("SO DIFFERENT\nAND YET...[wait:20]\nSO CLOSE.")
-        gonerText("HOW MUCH CAN\nTHOSE TWO INFLUENCE[wait:10]\nFATE?")
-        gonerText("DOESN'T IT SOUND[wait:20]\nINTRIGUING?")
-        gonerText("DOESN'T IT SOUND[wait:20]\nFASCINATING?")
+        gonerText(localize("intro_text19"))
+        gonerText(localize("intro_text20"))
+        gonerText(localize("intro_text21"))
+        gonerText(localize("intro_text22"))
+        gonerText(localize("intro_text23"))
+        gonerText(localize("intro_text24"))
+        gonerText(localize("intro_text25"))
         Game.world.timer:tween(2, gFx, {color = {1, 1, 1}})
-        gonerText("...")
-        gonerText("\""..string.upper(Game.save_name)..",\"")
+        gonerText(localize("intro_text26"))
+        gonerText(localize("intro_text27")"..string.upper(Game.save_name)..",\"")
         susie:remove()
         noelle:remove()
         background.music:stop()
@@ -225,7 +225,7 @@ return {
         Game.world:addChild(text)
 
         cutscene:wait(function() return text.done end)
-        text:setText("[speed:0.1]Because\nsomeone\nsure\nwon't.")
+        text:setText(localize("intro_text28"))
         text.state["typing_sound"]=nil
         text.state["noskip"]=true
         local hider=Rectangle(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
@@ -259,9 +259,9 @@ return {
         end
 
         cutscene:wait(1)
-        gonerText("AH OF COURSE.")
-        gonerText("YOU HAVE SEEN\nTHIS ALREADY,\nHAVEN'T YOU?")
-        gonerText("WELL THEN.\nI SHALL BID YOU\nFAREWELL.")
+        gonerText(localize("intro_text29"))
+        gonerText(localize("intro_text30"))
+        gonerText(localize("intro_text31"))
         local text = DialogueText("[speed:0.1][spacing:6][style:GONER][voice:none]\""..string.upper(Game.save_name)..",\"", 80 * 2, 50 * 2, 640, 480, {auto_size = true})
         text.layer = WORLD_LAYERS["top"] + 100
         text.skip_speed = true

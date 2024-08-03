@@ -4,7 +4,7 @@ function actor:init()
     super:init(self)
 
     -- Display name (optional)
-    self.name = "Spamton NEO"
+    self.name = localize("spamton_NEO_text1")
 
     -- Width and height for this actor, used to determine its center
     self.width = 82

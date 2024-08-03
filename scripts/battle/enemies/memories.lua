@@ -6,7 +6,7 @@ function Memories:init()
     self.music = Music()
 
     -- Enemy name
-    self.name = ""
+    self.name = localize("memories_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("dummy")
     self.actor.path = "enemies/memories"
@@ -301,7 +301,7 @@ function Memories:onAct(battler, name)
                     return self.encounter.alpha_fx.alpha <= 0.1
                 end)
                 cutscene:wait(2)
-                Game.battle.battle_ui.encounter_text.text:setText("")
+                Game.battle.battle_ui.encounter_text.text:setText(localize("memories_text2"))
                 self:setSprite("dummy")
                 cutscene:wait(cutscene:fadeOut(5, {color={0, 0, 0}}))
                 cutscene:wait(3)

@@ -5,9 +5,9 @@ function item:init()
     super:init(self)
 
     -- Display name
-    self.name = "CandyCone"
+    self.name = localize("candy_cone_text1")
     -- Name displayed when used in battle (optional)
-    self.use_name = "Cotton Candy Cone"
+    self.use_name = localize("candy_cone_text2")
 
     -- Item type (item, key, weapon, armor)
     self.type = "item"
@@ -15,11 +15,11 @@ function item:init()
     self.icon = nil
 
     -- Battle description
-    self.effect = "Healing\nvaries"
+    self.effect = localize("candy_cone_text3")
     -- Shop description
-    self.shop = "The cone of a cotton candy"
+    self.shop = localize("candy_cone_text4")
     -- Menu description
-    self.description = "The logical remain of a cotton candy.\nWho could eat that? +??HP"
+    self.description = localize("candy_cone_text5")
 
     -- Amount healed (HealItem variable)
     self.heal_amount = 1

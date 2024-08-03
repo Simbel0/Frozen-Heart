@@ -3,7 +3,7 @@ local Ach, super = Class(Achievement)
 function Ach:init()
     super:init(self)
     
-    self.name = "May I give you an egg in those trying time?" -- Display name
+    self.name = localize("egg_text1") -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
     self.icon = "achievements/egg" -- Normal icon

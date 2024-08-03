@@ -54,7 +54,7 @@ return function(cutscene)
 				end
 			end]]
 			data["choosen_key"] = Utils.pick(data["keys"])
-			data["text"]:setText("Press "..Input.getText(data["choosen_key"]).."!")
+			data["text"]:setText(localize("forcePull_text1")..Input.getText(data["choosen_key"]).."!")
 
 			data["key_timer"] = 0
 			data["key_timer_rect"] = Rectangle(93, 90, (430+15)*(1-data["key_timer"]/100), 7.5)
@@ -94,12 +94,12 @@ return function(cutscene)
 		Game.battle.timer:tween(2, hider, {alpha=0.5})
 		cutscene:wait(2.5)
 
-		gonerText("IT SEEMS[wait:5] YOU HAVE[wait:5]\nSOME DIFFICULTIES.")
-		gonerText("PERHAPS YOU ARE\nUNABLE TO PRESS\nTHE KEY FAST\nENOUGH TO\nKEEP UP?")
-		gonerText("THAT IS UNFORTUNATE.")
-		gonerText("WOULD YOU LIKE\nTO USE AN\nALTERNATIVE\nGAMEPLAY?")
-		gonerText("YOU'LL HAVE MORE\nTIME TO PRESS\nA KEY BUT MORE\nKEYS TO PRESS.")
-		local text = gonerText("DO YOU AGREE?", false)
+		gonerText(localize("forcePull_text2"))
+		gonerText(localize("forcePull_text3"))
+		gonerText(localize("forcePull_text4"))
+		gonerText(localize("forcePull_text5"))
+		gonerText(localize("forcePull_text6"))
+		local text = gonerText(localize("forcePull_text7"), false)
 		local chosen = nil
         local choicer = GonerChoice(220, 360, {
             { { "YES", 0, 0 }, { "<<" }, { ">>" }, { "NO", 160, 0 } }
@@ -119,14 +119,14 @@ return function(cutscene)
 
 	    if chosen == "YES" then
 	    	Game:setFlag("altPull", true)
-	    	gonerText("IT IS DONE.")
+	    	gonerText(localize("forcePull_text8"))
 	    else
 	    	Game:setFlag("altPull", false)
-	    	gonerText("UNDERSTOOD.")
+	    	gonerText(localize("forcePull_text9"))
 	    end
 	    Kristal.Config["altPull"] = Game:getFlag("altPull")
 	    Kristal:saveConfig()
-	    gonerText("GOOD LUCK.")
+	    gonerText(localize("forcePull_text10"))
 
 	    Game.battle.timer:tween(1, hider, {alpha=0})
 		cutscene:wait(1.5)
@@ -182,7 +182,7 @@ return function(cutscene)
 	    		if forcePull["key_timer"] >= 25+Game.battle.enemies[1].mercy then
 	    			Assets.stopAndPlaySound("damage")
 	    			forcePull["choosen_key"] = Utils.pick(forcePull["keys"])
-    				forcePull["text"]:setText("Press "..Input.getText(forcePull["choosen_key"]).."!")
+    				forcePull["text"]:setText(localize("forcePull_text11")..Input.getText(forcePull["choosen_key"]).."!")
 	    			forcePull["key_timer"] = 0
 	    			forcePull["value"]=forcePull["value"]-forcePull["decrease"]*DTMULT*2
 	    		end
@@ -228,14 +228,14 @@ return function(cutscene)
     		forcePull["value"]=forcePull["value"]+value
     		if Game:getFlag("altPull") then
     			forcePull["choosen_key"] = Utils.pick(forcePull["keys"])
-    			forcePull["text"]:setText("Press "..Input.getText(forcePull["choosen_key"]).."!")
+    			forcePull["text"]:setText(localize("forcePull_text12")..Input.getText(forcePull["choosen_key"]).."!")
     			forcePull["key_timer"] = 0
     		end
     	end
     	if Game:getFlag("altPull") and time_succ == false then
     		Assets.stopAndPlaySound("damage")
 			forcePull["choosen_key"] = Utils.pick(forcePull["keys"])
-			forcePull["text"]:setText("Press "..Input.getText(forcePull["choosen_key"]).."!")
+			forcePull["text"]:setText(localize("forcePull_text13")..Input.getText(forcePull["choosen_key"]).."!")
 			forcePull["key_timer"] = 0
 			forcePull["value"]=forcePull["value"]-forcePull["decrease"]*DTMULT*2
 		end

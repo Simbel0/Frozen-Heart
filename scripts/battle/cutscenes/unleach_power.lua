@@ -207,7 +207,7 @@ return function(cutscene, battler, sneo)
         soul.charge_sfx:stop()
         soul.charge_sfx = nil
     end
-    Game.battle.battle_ui.encounter_text:setText("")
+    Game.battle.battle_ui.encounter_text:setText(localize("unleach_power_text1"))
     health_limit = 3
     soul.start_shoot = false
     continue_cutscene = true
@@ -417,7 +417,7 @@ return function(cutscene, battler, sneo)
     for i,v in ipairs(strings) do
         v:remove()
     end
-    Game.battle.battle_ui.encounter_text:setText("")
+    Game.battle.battle_ui.encounter_text:setText(localize("unleach_power_text2"))
     sneo.sprite:setStringCount(6)
     for i,v in ipairs(sneo.sprite.bg_strings) do
         v.visible = false

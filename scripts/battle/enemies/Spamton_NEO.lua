@@ -4,7 +4,7 @@ function Spamton_NEO:init()
     super:init(self)
 
     -- Enemy name
-    self.name = "Spamton NEO"
+    self.name = localize("Spamton_NEO_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("spamtonneo")
     self.sprite:setStringCount(6)

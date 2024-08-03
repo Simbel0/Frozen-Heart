@@ -7,7 +7,7 @@ function ring_noelle:init()
     self.intend_y = 200
 
     -- Enemy name
-    self.name = "???"
+    self.name = localize("ring_noelle_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("noelle")
     self.actor.path = "party/noelle/dark_c"

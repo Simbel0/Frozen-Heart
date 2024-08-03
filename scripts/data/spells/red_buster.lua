@@ -3,7 +3,7 @@ local spell, super = Class("red_buster", true)
 function spell:init()
     super:init(self)
 
-    self.effect = "Red\nDamage"
+    self.effect = localize("red_buster_text1")
 end
 
 function spell:getCastMessage(user, target)

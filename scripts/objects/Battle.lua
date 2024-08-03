@@ -140,7 +140,7 @@ function Battle:onStateChange(old,new)
             self.encounter:onStateChange(old,new)
         end
     elseif new == "ALLSELECT" then
-        self.battle_ui.encounter_text:setText("")
+        self.battle_ui.encounter_text:setText(localize("Battle_text1"))
         self.current_menu_y = 1
     else
         super:onStateChange(self, old, new)
@@ -405,7 +405,7 @@ function Battle:nextParty()
     else
         if self:getState() ~= "ACTIONSELECT" then
             self:setState("ACTIONSELECT")
-            self.battle_ui.encounter_text:setText("[instant]" .. self.battle_ui.current_encounter_text)
+            self.battle_ui.encounter_text:setText(localize("Battle_text2") .. self.battle_ui.current_encounter_text)
         else
             party.chara:onActionSelect(party, false)
         end
@@ -751,9 +751,9 @@ function Battle:onKeyPressed(key)
             if (not self.battle_ui.short_act_text_1:isTyping()) and
                (not self.battle_ui.short_act_text_2:isTyping()) and
                (not self.battle_ui.short_act_text_3:isTyping()) then
-                self.battle_ui.short_act_text_1:setText("")
-                self.battle_ui.short_act_text_2:setText("")
-                self.battle_ui.short_act_text_3:setText("")
+                self.battle_ui.short_act_text_1:setText(localize("Battle_text3"))
+                self.battle_ui.short_act_text_2:setText(localize("Battle_text4"))
+                self.battle_ui.short_act_text_3:setText(localize("Battle_text5"))
                 for _,iaction in ipairs(self.short_actions) do
                     self:finishAction(iaction)
                 end

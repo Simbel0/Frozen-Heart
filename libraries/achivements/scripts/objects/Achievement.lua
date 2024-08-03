@@ -3,7 +3,7 @@ local Achievement, super = Class(Object)
 function Achievement:init()
     super:init(self)
     
-    self.name = "example" -- Display name
+    self.name = localize("Achievement_text1") -- Display name
 
     self.icon = "path" -- Normal icon
     self.menuicon = nil -- Optional, icon used for the acheivements menu

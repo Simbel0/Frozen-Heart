@@ -4,7 +4,7 @@ function Noelle:init()
     super:init(self)
 
     -- Enemy name
-    self.name = "Noelle"
+    self.name = localize("noelle_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("noelle")
 

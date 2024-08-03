@@ -4,7 +4,7 @@ function actor:init()
     super:init(self)
 
     -- Display name (optional)
-    self.name = "Starwalker"
+    self.name = localize("starwalker_text1")
 
     -- Width and height for this actor, used to determine its center
     self.width = 37

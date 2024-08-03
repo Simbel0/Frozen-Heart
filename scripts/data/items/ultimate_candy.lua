@@ -5,9 +5,9 @@ function item:init()
     super:init(self)
 
     -- Display name
-    self.name = "UltimatCandy"
+    self.name = localize("ultimate_candy_text1")
     -- Name displayed when used in battle (optional)
-    self.use_name = "ULTIMATE CANDY"
+    self.use_name = localize("ultimate_candy_text2")
 
     -- Item type (item, key, weapon, armor)
     self.type = "item"
@@ -15,11 +15,11 @@ function item:init()
     self.icon = nil
 
     -- Battle description
-    self.effect = "Best\nhealing"
+    self.effect = localize("ultimate_candy_text3")
     -- Shop description
-    self.shop = "Perfection"
+    self.shop = localize("ultimate_candy_text4")
     -- Menu description
-    self.description = "Sparkles with perfection.\nMust be shared with everyone. +??HP"
+    self.description = localize("ultimate_candy_text5")
 
     -- Amount healed (HealItem variable)
     self.heal_amount = 1

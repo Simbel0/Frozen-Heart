@@ -4,14 +4,14 @@ function spell:init()
     super:init(self)
 
     -- Display name
-    self.name = "Tension Abs."
+    self.name = localize("tension_absorb_text1")
     -- Name displayed when cast (optional)
     self.cast_name = "Tension Absorb"
 
     -- Battle description
-    self.effect = "Calm the\nTENSION"
+    self.effect = localize("tension_absorb_text2")
     -- Menu description
-    self.description = "Absorb the TP of one enemy to prevent them from casting spells."
+    self.description = localize("tension_absorb_text3")
 
     -- TP cost
     self.cost = 30

@@ -3,7 +3,7 @@ local Ach, super = Class(Achievement)
 function Ach:init()
     super:init(self)
     
-    self.name = "I did bad, but now I'm good" -- Display name
+    self.name = localize("violentspare_text1") -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
     self.icon = "achievements/mercykill" -- Normal icon

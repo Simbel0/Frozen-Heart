@@ -58,7 +58,7 @@ return function(cutscene)
 
     local text=Text("a", 0, (SCREEN_HEIGHT/2)-100, nil, nil, {style="none", skip=false, spacing=500})
     text.align="center"
-    text:setText("\n[color:yellow]FROZEN HEART[color:reset]\n\nBy\nSimbel"..(Kristal.Config["beat_once"] and "\n\n[color:#999999]Press "..Input.getText("menu").." to speed up" or ""))
+    text:setText(localize("CREDITS_text1")..(Kristal.Config["beat_once"] and "\n\n[color:#999999]Press "..Input.getText(localize("CREDITS_text1")).." to speed up" or ""))
     text.layer=WORLD_LAYERS["top"]
     Game.world:addChild(text)
 
@@ -104,40 +104,40 @@ return function(cutscene)
 
     cutscene:wait(wait_times[1])
 
-    text:setText("A fangame for\nDELTARUNE\n\nBy\nToby Fox")
+    text:setText(localize("CREDITS_text2"))
 
     cutscene:wait(wait_times[1])
 
-    text:setText("[color:555555]Game Engine[color:reset]\nKristal\n\nThe Kristal Team")
+    text:setText(localize("CREDITS_text3"))
 
     cutscene:wait(wait_times[2])
 
-    text:setText("[color:555555]Music[color:reset]\nUntil Next Time\nFlasback Excerpt\nLost Girl\nmus_mysteriousroom2\n\nToby Fox")
+    text:setText(localize("CREDITS_text4"))
 
     cutscene:wait(wait_times[3])
 
-    text:setText("[color:555555]Music[color:reset]\nSnowgrave\n\nNick Nitro")
+    text:setText(localize("CREDITS_text5"))
 
     if Spamton then
 
         cutscene:wait(wait_times[3])
 
-        text:setText("[color:555555]Music[color:reset]\nSnowgrave NEO\n\nShinkoNet")
+        text:setText(localize("CREDITS_text6"))
 
         cutscene:wait(wait_times[3])
 
-        text:setText("[color:555555]Music[color:reset]\nDeal gone wrong (Orchestral)\n\nFAYNALY\nOriginal by Toby Fox")
+        text:setText(localize("CREDITS_text7"))
     end
 
     if Astrogirl then
         cutscene:wait(wait_times[3])
 
-        text:setText("[color:555555]Music[color:reset]\nAstrogirl (Music Box)\n\nR3 Music Box\nOriginal by Tsukumo Sana")
+        text:setText(localize("CREDITS_text8"))
     end
 
     cutscene:wait(wait_times[4])
 
-    text:setText("[color:555555]Sprites[color:reset]\n\nRipped from\nDELTARUNE")
+    text:setText(localize("CREDITS_text9"))
 
     cutscene:wait(wait_times[3])
 
@@ -146,19 +146,19 @@ return function(cutscene)
         lib_credits = lib_credits.."Yellow Soul, Spamton NEO actor, Particle System - vitellary"
     end
 
-    text:setText("[color:555555]Librairies[color:reset]\n\n"..lib_credits)
+    text:setText(localize("CREDITS_text10")..lib_credits)
 
     cutscene:wait(wait_times[3])
 
-    text:setText("[color:555555]Betatesters[color:reset]\n\nRacckoon\nOctoBox\nGlavvrach")
+    text:setText(localize("CREDITS_text11"))
 
     cutscene:wait(wait_times[5])
 
-    text:setText("[color:555555]Special Thanks[color:reset]\nThe Kristal Discord server\nfor their help and feedbacks\n\nZemete and Reaper\nfor fixing many typos")
+    text:setText(localize("CREDITS_text12"))
 
     cutscene:wait(wait_times[3])
 
-    text:setText("[color:555555]Playing this game[color:reset]\n\n"..(Game.save_name~="PLAYER" and Game.save_name or "You"))
+    text:setText(localize("CREDITS_text13")..(Game.save_name~="PLAYER" and Game.save_name or "You"))
 
     can_speed = false
     if speed_up then

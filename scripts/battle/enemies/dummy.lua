@@ -4,7 +4,7 @@ function Dummy:init()
     super:init(self)
 
     -- Enemy name
-    self.name = "Dummy"
+    self.name = localize("dummy_text1")
     -- Sets the actor, which handles the enemy's sprites (see scripts/data/actors/dummy.lua)
     self:setActor("dummy")
 

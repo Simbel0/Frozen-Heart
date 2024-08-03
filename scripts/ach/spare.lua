@@ -3,7 +3,7 @@ local Ach, super = Class(Achievement)
 function Ach:init()
     super:init(self)
     
-    self.name = "Feeling better around you" -- Display name
+    self.name = localize("spare_text1") -- Display name
 
     self.iconanimated = false -- If icons should be animated, if true then the input for both icons should be a table of paths
     self.icon = "achievements/mercy" -- Normal icon
