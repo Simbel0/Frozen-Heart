@@ -207,7 +207,7 @@ return {
         gonerText(localize("intro_text25"))
         Game.world.timer:tween(2, gFx, {color = {1, 1, 1}})
         gonerText(localize("intro_text26"))
-        gonerText(localize("intro_text27")"..string.upper(Game.save_name)..",\"")
+        gonerText(string.upper(Game.save_name)..",")
         susie:remove()
         noelle:remove()
         background.music:stop()

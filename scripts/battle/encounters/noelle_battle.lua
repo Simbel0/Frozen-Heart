@@ -194,6 +194,7 @@ function Noelle_Battle:onStateChange(old, new)
         print(Game.battle.waves, Game.battle.soul, Game.battle.arena)
         -- Due to a weird softlock possibly caused by Iceshock for some reason, we check if a wave was actually loaded. If not, go back to DEFENDINGBEGIN to retry
         if ((Game.battle.waves and #Game.battle.waves==0) or Game.battle.waves==nil) and Game.battle.soul==nil and Game.battle.arena==nil then
+            print("Prevent softlock!")
             Game.battle:setState("DEFENDINGBEGIN")
         end
     end
