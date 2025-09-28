@@ -1,7 +1,7 @@
 local Lib = {}
 
 function Lib:init()
-  print("Achievement library loaded -Courtesy of SciSpace, BrandonK7200, and AcousticJamm")
+  print("Achievement library loaded -Courtesy of SciSpace, BrendaK7200, and AcousticJamm")
 end
 
 function Lib:onRegistered()
