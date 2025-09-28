@@ -36,6 +36,7 @@ function spell:onCast(user, target)
             target:heal((user.chara:getStat("magic") * 8) * math.random(2,5))
             Game.battle:finishActionBy(user)
         end)
+        return false
     end
 end
 
