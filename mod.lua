@@ -259,6 +259,12 @@ function Mod:load(data, newfile, index)
     --end
 end
 
+function Mod:getLoadMap(map, data, newfile, index)
+    if map.id == "fountain_room" and (data.flags["plot"] == 4 or data.flags["spamton_quick"]) then
+        return "mansion_queen_prefountain"
+    end
+end
+
 function Mod:getPresenceState()
     if Game:getFlag("plot") == 3 then
         return Game.world.map.name or "Queen's Mansion"

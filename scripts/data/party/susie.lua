@@ -60,7 +60,7 @@ function character:getTitle()
 end
 
 function character:getSoulColor()
-    if Game:getFlag("plot", 0)<=3 and Game:getFlag("plot", 0)~=0 then
+    if (Game:getFlag("plot", 0)<=3 and Game:getFlag("plot", 0)~=0) or (Game:getFlag("plot", 0) == 4 and not Game.battle) then
         return 1, 1, 1, 1
     end
     return super:getSoulColor(self)

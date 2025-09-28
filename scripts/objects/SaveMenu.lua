@@ -7,7 +7,6 @@ function SaveMenu:init()
 end
 
 function SaveMenu:update()
-    print(self.state)
     if self.state == "SAVED" then
         if Input.pressed("cancel") or Input.pressed("confirm") then
             self:remove()
