@@ -26,8 +26,8 @@ function Spelling:onStart()
 	self.timer:everyInstant(2, function()
 		local word = Utils.pick(self.words)
 		local letters = {}
-		for i=1,#word do
-			table.insert(letters, word:sub(i, i))
+		for i=1,utf8.len(word) do
+			table.insert(letters, Utils.sub(word, i, i))
 		end
 
 		for i,letter in ipairs(letters) do

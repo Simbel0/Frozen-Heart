@@ -20,8 +20,8 @@ function Social:onWaveSpawn(wave)
         local font = Assets.getFont("main_mono")
 
         local word = Utils.pick(self.words)
-        for i=1,#word do
-            local char = word:sub(i, i)
+        for i=1,utf8.len(word) do
+            local char = Utils.sub(word, i, i)
             local w = font:getWidth(char)
             
             local b = wave:spawnBullet("secret/memories/letter", char, (self.x+(self.width/2))+w*i, self.y, font, false)
