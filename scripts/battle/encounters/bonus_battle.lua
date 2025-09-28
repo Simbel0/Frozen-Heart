@@ -320,6 +320,15 @@ end
 
 function Bonus_Battle:getDialogueCutscene()
     if self.sneo.health<=2400 and self.phase==1 then
+        local kris = Game.battle.party[1]
+        if kris.is_down then
+            kris:heal((-kris.chara:getHealth())+kris.chara:autoHealAmount())
+        end
+
+        if kris.chara:getHealth() <= kris.chara:autoHealAmount() then
+            self:setFlag("krisWasDown", true)
+        end
+
         self.phase=2
         self.sneo.dialogue_advance = 999
         self.sneo.text={
