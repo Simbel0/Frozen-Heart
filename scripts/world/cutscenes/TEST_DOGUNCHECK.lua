@@ -54,7 +54,7 @@ return function(cutscene)
         for i=0,2 do
             file = string.gsub(os.getenv('UserProfile'), "\\", "/").."/AppData/Local/DELTARUNE/filech2_".. i
             if file_exists(file) then
-            	if tonumber(getFileLines(file)[1468])>=1 then
+            	if tonumber(getFileLines(file)[1468] or 0)>=1 then
                 	print("Snowgrave Save file "..i.." found!")
                 	oriSaves=getFileLines(file)
                 	fileFound=true
