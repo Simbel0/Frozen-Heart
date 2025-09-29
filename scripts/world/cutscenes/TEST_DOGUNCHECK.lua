@@ -47,19 +47,16 @@ return function(cutscene)
 	end
 
 	-- Save File Reading
-	local current_os = love.system.getOS()
     oriSaves={}
     local fileFound = false
-    if current_os == "Windows" then
-        for i=0,2 do
-            file = string.gsub(os.getenv('UserProfile'), "\\", "/").."/AppData/Local/DELTARUNE/filech2_".. i
-            if file_exists(file) then
-            	if tonumber(getFileLines(file)[1468] or 0)>=1 then
-                	print("Snowgrave Save file "..i.." found!")
-                	oriSaves=getFileLines(file)
-                	fileFound=true
-                	break
-                end
+    for i=0,2 do
+        data = Utils.getDELTARUNESave(2, i)
+        if #data > 0 then
+        	if tonumber(data[1468] or 0)>=1 then
+            	print("Snowgrave Save file "..i.." found!")
+            	oriSaves=data
+            	fileFound=true
+            	break
             end
         end
     end
