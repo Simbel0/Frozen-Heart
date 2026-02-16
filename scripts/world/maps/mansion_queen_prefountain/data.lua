@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.4",
+  tiledversion = "1.10.0",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 16,
@@ -44,8 +45,7 @@ return {
     {
       name = "mansion_objects",
       firstgid = 1095,
-      filename = "../../tilesets/mansion_objects.tsx",
-      exportfilename = "../../tilesets/mansion_objects.lua"
+      filename = "../../tilesets/mansion_objects.tsx"
     }
   },
   layers = {
@@ -54,6 +54,7 @@ return {
       image = "../../../../assets/sprites/tilesets/spr_mansion_ferris_wheel_bg_0.png",
       id = 10,
       name = "Calque d'Images 1",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -72,6 +73,7 @@ return {
       height = 27,
       id = 2,
       name = "grinder_back",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -118,6 +120,7 @@ return {
       height = 27,
       id = 3,
       name = "overlay",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -164,6 +167,7 @@ return {
       height = 27,
       id = 1,
       name = "ground",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -210,6 +214,7 @@ return {
       height = 27,
       id = 4,
       name = "walls",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -256,6 +261,7 @@ return {
       height = 27,
       id = 5,
       name = "door",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -299,6 +305,7 @@ return {
       draworder = "topdown",
       id = 8,
       name = "collisions",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -509,6 +516,7 @@ return {
       draworder = "topdown",
       id = 7,
       name = "objects",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -603,7 +611,8 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["cutscene"] = "overworld.nopower"
+            ["cutscene"] = "overworld.nopower",
+            ["once"] = false
           }
         },
         {
@@ -627,6 +636,7 @@ return {
       draworder = "topdown",
       id = 9,
       name = "markers",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
