@@ -31,6 +31,7 @@ function Lost_Soul_B:init()
     -- List of possible wave ids, randomly picked each turn
     self.waves = {
         "secret/berd_fallingTornado",
+        "secret/berd_shoot",
         "secret/berd_ly"
     }
 

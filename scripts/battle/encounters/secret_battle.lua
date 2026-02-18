@@ -471,9 +471,10 @@ function secret_battle:forceDoubleWaves(waves)
     self.force_waves = waves
     Game.battle:setState("DEFENDINGBEGIN")
 end
-
+]]
 
 function secret_battle:skipPhase()
+    local Console = Kristal.Console
     if not self.berdly and not self.sneo then
         self.turns = 6
         Console:log("Advancing the fight to Berdly's section.")
@@ -491,7 +492,7 @@ function secret_battle:skipPhase()
         Console:log("Advancing the fight to the final wave.")
     end
 end
-]]
+
 
 function secret_battle:getEncounterText()
     if self.final and not self.final_passed then
