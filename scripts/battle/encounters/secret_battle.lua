@@ -466,12 +466,10 @@ function secret_battle:getNextWaves()
 end
 
 --Debug functions
---[[
 function secret_battle:forceDoubleWaves(waves)
     self.force_waves = waves
     Game.battle:setState("DEFENDINGBEGIN")
 end
-]]
 
 function secret_battle:skipPhase()
     local Console = Kristal.Console

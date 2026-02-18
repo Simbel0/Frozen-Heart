@@ -62,9 +62,9 @@ function shoot:onStart()
                 end)
             end
         else
-            self.timer:everyInstant(2, function()
+            self.timer:everyInstant(0.5, function()
                 local area = Utils.random()<0.5 and "up" or "down"
-                self:spawnBullet("secret/weird_sine", self.base.x, self.base.y, area, 0)
+                self:spawnBullet("secret/weird_sine", self.base.x, self.base.y, area, 0):setHitbox(13, 8, 14, 5)
             end, math.huge)
         end
         self.end_script = true
