@@ -163,12 +163,12 @@ function Spamton_NEO:onAct(battler, name)
     elseif name == "Snap" then
         self.sprite:snapString()
         Assets.playSound("damage")
-        self:hurt(love.math.random(55, 155), battler)
+        self:hurt(love.math.random(75, 155), battler)
         return "* "..battler.chara.name.." snapped a wire!"
     elseif name == "SnapAll" then
         self.sprite:snapStrings(love.math.random(2, 4))
         Assets.playSound("damage")
-        self:hurt(Utils.round(love.math.random(55, 155)*3.5), battler)
+        self:hurt(Utils.round(love.math.random(75, 155)*3.5), battler)
         return "* Everyone snapped wires!"
     elseif name == "Deal" or name == "HealDeal" then
         if name == "HealDeal" then

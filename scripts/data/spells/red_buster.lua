@@ -47,7 +47,7 @@ function spell:onCast(user, target)
                         damage = love.math.random(2, 5)+(pressed and 2 or 0)
                     end
                 elseif target.id == "Spamton_NEO" then
-                    damage = Utils.round(damage/2)+(pressed and 30 or 0)
+                    damage = Utils.round(damage/5)+(pressed and 30 or 0)
                 end
 
                 local flash = target:flash()

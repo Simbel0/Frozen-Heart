@@ -56,8 +56,6 @@ function actor:init()
 end
 
 function actor:onSpriteUpdate(sprite)
-    print(self.sneo_anim)
-
     if self.frozenstate==1 then
         self.sneo["arml"].frozen=true
         if self.sneo["arml"].freeze_progress<1 then

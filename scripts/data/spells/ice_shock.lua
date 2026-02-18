@@ -49,7 +49,7 @@ function spell:onCast(user, target)
         		damage = love.math.random(2, 5)
         	end
         elseif target.id == "Spamton_NEO" then
-        	damage = Utils.round(damage/2)
+        	damage = Utils.round(damage/1.5)
         end
         
         target:hurt(damage, user, function() target:freeze() end)

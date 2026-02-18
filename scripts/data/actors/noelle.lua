@@ -16,7 +16,7 @@ function actor:init()
 end
 
 function actor:getDefault()
-	if Game:getFlag("plot")==3 then
+	if Game:getFlag("plot", 0)>=3 then
 		return "walk_blush"
 	end
 	return super:getDefault(self)
